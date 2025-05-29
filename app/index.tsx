@@ -47,7 +47,7 @@ export default function HomeScreen() {
 
 
 
-        <Text style={styles.headerTitle}>My Cool App</Text>
+        <Text style={styles.headerTitle}>My Hype App</Text>
 
         <TouchableOpacity onPress={() => console.log('Profile pressed')}>
           <Image
