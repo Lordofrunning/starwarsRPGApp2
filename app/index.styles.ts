@@ -20,10 +20,19 @@ export const styles = StyleSheet.create({
     fontSize: 24,
     color: '#fff',
   },
+  menuArrow: {
+    fontSize: 40,
+    color: '#fff'
+  },
   headerTitle: {
     fontSize: 20,
     color: '#fff',
     fontWeight: 'bold',
+  },
+  headerTitleCenter: {
+    fontSize: 20,
+    color: '#fff',
+    alignContent: 'center',
   },
   profileImage: {
     width: 36,
