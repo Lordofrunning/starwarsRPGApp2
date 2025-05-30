@@ -1,6 +1,7 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Stack, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, Switch, Text, TouchableOpacity, View } from 'react-native';
 
 import { allArmor, allBlackMarketItems, allItems, allWeapons, armor, blackMarketItem, Item, shopNames, weapon } from './data/shopData';
 import { styles } from './index.styles';
@@ -11,6 +12,10 @@ export default function Page3() {
   
 
   // menue holders for each item type. (rare, normal item, wepaon, armor)
+const [shopSaved, setShopSaved] = useState(false);
+
+const [loading, setLoading] = useState(true);
+
 const [shopItems, setShopItems] = useState<Item[]>([]);
 const [blackMarketItems, setBlackMarketItems] = useState<blackMarketItem[]>([]);
 const [weaponItems, setWeaponItems] = useState<weapon[]>([]);
@@ -18,24 +23,44 @@ const [armorItems, setArmorItems] = useState<armor[]>([]);
 
   const router = useRouter();
 
-  useEffect(() => {
-    generateShop();
-  }, []);
-
-  const rollRarity = (): number => {
-    const roll = Math.random();
-    if (roll < 0.5) return 0;
-    if (roll < 0.7) return 1;
-    if (roll < 0.8) return 2;
-    if (roll < 0.87) return 3;
-    if (roll < 0.92) return 4;
-    if (roll < 0.96) return 5;
-    if (roll < 0.98) return 6;
-    if (roll < 0.99) return 7;
-    if (roll < 0.995) return 8;
-    if (roll < 0.998) return 9;
-    return 10;
+ useEffect(() => {
+  const load = async () => {
+    const saved = await AsyncStorage.getItem('savedShop');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      setShopName(parsed.shopName);
+      setShopItems(parsed.shopItems);
+      setBlackMarketItems(parsed.blackMarketItems);
+      setWeaponItems(parsed.weaponItems);
+      setArmorItems(parsed.armorItems);
+      setShopSaved(true);
+    } else {
+      generateShop();
+    }
+    setLoading(false);
   };
+
+  load();
+}, []);
+
+useEffect(() => {
+  if (shopSaved && shopName && shopItems.length) {
+    saveShop();
+  }
+}, [shopSaved, shopName, shopItems, blackMarketItems, weaponItems, armorItems]);
+
+
+  const toggleSave = async () => {
+  const newState = !shopSaved;
+  setShopSaved(newState);
+
+  if (!newState) {
+    await AsyncStorage.removeItem('savedShop');
+  }
+};
+
+
+  
 
     const getRandomSubset = (arr, count) => {
   const copy = [...arr];
@@ -48,14 +73,26 @@ const [armorItems, setArmorItems] = useState<armor[]>([]);
 
   return result;
 };
-  const generateShop = () => {
+
+
+const saveShop = async () => {
+  await AsyncStorage.setItem('savedShop', JSON.stringify({
+    shopName,
+    shopItems,
+    blackMarketItems,
+    weaponItems,
+    armorItems,
+  }));
+};
+
+ const generateShop = () => {
   const name = shopNames[Math.floor(Math.random() * shopNames.length)];
   setShopName(name);
 
-  const itemCount = Math.floor(Math.random() * 4) + 7;     // 7–10
-  const blackCount = Math.floor(Math.random() * 3);        // 0–2
-  const weaponCount = Math.floor(Math.random() * 5);       // 0–4
-  const armorCount = Math.floor(Math.random() * 3);        // 0–2
+  const itemCount = Math.floor(Math.random() * 4) + 7;
+  const blackCount = Math.floor(Math.random() * 3);
+  const weaponCount = Math.floor(Math.random() * 5);
+  const armorCount = Math.floor(Math.random() * 3);
 
   setShopItems(getRandomSubset(allItems, itemCount));
   setBlackMarketItems(getRandomSubset(allBlackMarketItems, blackCount));
@@ -93,8 +130,6 @@ const [armorItems, setArmorItems] = useState<armor[]>([]);
     </View>
   );
 }
-
-
 // function template for blackMarket items
  function BlackMarketDropdown({ items }: { items: blackMarketItem[] }) {
   const [open, setOpen] = useState(false);
@@ -152,7 +187,6 @@ const [armorItems, setArmorItems] = useState<armor[]>([]);
     </View>
   );
 }
-
 // function template for armor items
    function ArmorDropdown({ items }: { items: armor[] }) {
   const [open, setOpen] = useState(false);
@@ -182,11 +216,15 @@ const [armorItems, setArmorItems] = useState<armor[]>([]);
   );
 }
 
-
-
-
-
+if (loading) {
   return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Loading shop...</Text>
+    </View>
+  );
+}
+  return (
+     <View style={{ flex: 1, position: 'relative', backgroundColor: '#D3D3D3' }}>
     <ScrollView contentContainerStyle={styles.scrollContainer}>
     <View style={styles.container}>
       <Stack.Screen options={{ headerShown: false }} />
@@ -222,11 +260,19 @@ const [armorItems, setArmorItems] = useState<armor[]>([]);
       
 
       <View style={styles.section}>
+      
+    </View>
+
+    </View>
     
 
-    </View>
-
-    </View>
     </ScrollView>
+
+    <View style={styles.fixedToggle}>
+    <Text style={{ marginRight: 8 }}>Save?</Text>
+    <Switch value={shopSaved} onValueChange={toggleSave} />
+  </View>
+    </View>
+    
   );
 }

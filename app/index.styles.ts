@@ -11,10 +11,26 @@ emptyMessage: {
   color: '#666',
   paddingVertical: 10,
 },
+fixedToggle: {
+  position: 'absolute',
+  bottom: 20,
+  right: 20,
+  flexDirection: 'row',
+  alignItems: 'center',
+  backgroundColor: '#eee',
+  padding: 10,
+  borderRadius: 10,
+  elevation: 5,
+  shadowColor: '#000',
+  shadowOpacity: 0.2,
+  shadowOffset: { width: 0, height: 2 },
+  shadowRadius: 5,
+},
   // header stuff here
   container: {
     flex: 1,
     backgroundColor: '#D3D3D3', // light grey
+    
     
   },
    header: {
@@ -178,6 +194,7 @@ container2: {
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,
+    marginTop: 20,
   },
   listContainer: {
     paddingHorizontal: 20,
