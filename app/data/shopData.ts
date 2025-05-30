@@ -211,68 +211,69 @@ export type Item = {
   cost: number;
   rarity: number;
   description: string;
+  category: string;
 };
 
 export const allItems: Item[] = [
     // communication devices
-  { name: 'Comlink (handheld)', cost: 25, rarity: 0 , description: 'item discription' },
-  { name: 'Comlink (long range)', cost: 200, rarity: 1 , description: 'item discription' },
+  { name: 'Comlink (handheld)', cost: 25, rarity: 0 , description: 'item discription', category: "item" },
+  { name: 'Comlink (long range)', cost: 200, rarity: 1 , description: 'item discription', category: "item" },
 
   // toxins and poisons
-  { name: 'Synthetic Standard Neurotoxin (1 doese)', cost: 50, rarity: 6 , description: 'item discription' },
-  { name: 'Synthetic Standard Anesthetic (1 dose)', cost: 35, rarity: 4 , description: 'item discription' },
-  { name: 'Synthetic Standard Neuroparalytic (1 dose)', cost: 75, rarity: 75 , description: 'item discription' },
+  { name: 'Synthetic Standard Neurotoxin (1 doese)', cost: 50, rarity: 6 , description: 'item discription', category: "item" },
+  { name: 'Synthetic Standard Anesthetic (1 dose)', cost: 35, rarity: 4 , description: 'item discription', category: "item" },
+  { name: 'Synthetic Standard Neuroparalytic (1 dose)', cost: 75, rarity: 75 , description: 'item discription', category: "item" },
   
   // medical stuff
-  { name: 'Bacta (liter)', cost: 20, rarity: 1 , description: 'item discription' },
-  { name: 'Bacta (full tank)', cost: 4000, rarity: 1 , description: 'item discription' },
-  { name: 'Emergency Medpac', cost: 100, rarity: 1 , description: 'item discription' },
-  { name: 'Medpac', cost: 400, rarity: 2 , description: 'item discription' },
-  { name: 'stimpack', cost: 25, rarity: 1 , description: 'item discription' },
-  { name: 'Synthskin', cost: 10, rarity: 1 , description: 'item discription' },
+  { name: 'Bacta (liter)', cost: 20, rarity: 1 , description: 'item discription', category: "item" },
+  { name: 'Bacta (full tank)', cost: 4000, rarity: 1 , description: 'item discription', category: "item" },
+  { name: 'Emergency Medpac', cost: 100, rarity: 1 , description: 'item discription', category: "item" },
+  { name: 'Medpac', cost: 400, rarity: 2 , description: 'item discription', category: "item" },
+  { name: 'stimpack', cost: 25, rarity: 1 , description: 'item discription', category: "item" },
+  { name: 'Synthskin', cost: 10, rarity: 1 , description: 'item discription', category: "item" },
 
 
   // Detection Devices
-  { name: 'Electrobinoculars', cost: 250, rarity: 1 , description: 'item discription' },
-  { name: 'General Purpose Scanner', cost: 500, rarity: 3 , description: 'item discription' },
-  { name: 'Hand Scanner', cost: 100, rarity: 2 , description: 'item discription' },
-  { name: 'Macrobinoculars', cost: 75, rarity: 2 , description: 'item discription' },
-  { name: 'Scanner Goggles', cost: 150, rarity: 3 , description: 'item discription' },
-  { name: 'Surveillance Tagger', cost: 175, rarity: 4 , description: 'item discription' },
+  { name: 'Electrobinoculars', cost: 250, rarity: 1 , description: 'item discription', category: "item" },
+  { name: 'General Purpose Scanner', cost: 500, rarity: 3 , description: 'item discription', category: "item" },
+  { name: 'Hand Scanner', cost: 100, rarity: 2 , description: 'item discription', category: "item" },
+  { name: 'Macrobinoculars', cost: 75, rarity: 2 , description: 'item discription', category: "item" },
+  { name: 'Scanner Goggles', cost: 150, rarity: 3 , description: 'item discription' , category: "item"},
+  { name: 'Surveillance Tagger', cost: 175, rarity: 4 , description: 'item discription', category: "item" },
 
   //Security
-  { name: 'Binders', cost: 25, rarity: 0 , description: 'item discription' },
-  { name: 'Comm Jammer', cost: 400, rarity: 3 , description: 'item discription' },
-  { name: 'Comm Scrambler', cost: 1000, rarity: 5 , description: 'item discription' },
-  { name: 'Disguise Kit', cost: 100, rarity: 4 , description: 'item discription' },
-  { name: 'Electronic Lock Breaker', cost: 1000, rarity: 5 , description: 'item discription' },
-  { name: 'Restraining Bolt', cost: 35, rarity: 0 , description: 'item discription' },
-  { name: 'Slicer Gear', cost: 500, rarity: 4 , description: 'item discription' },
+  { name: 'Binders', cost: 25, rarity: 0 , description: 'item discription', category: "item" },
+  { name: 'Comm Jammer', cost: 400, rarity: 3 , description: 'item discription' , category: "item"},
+  { name: 'Comm Scrambler', cost: 1000, rarity: 5 , description: 'item discription', category: "item" },
+  { name: 'Disguise Kit', cost: 100, rarity: 4 , description: 'item discription', category: "item" },
+  { name: 'Electronic Lock Breaker', cost: 1000, rarity: 5 , description: 'item discription' , category: "item"},
+  { name: 'Restraining Bolt', cost: 35, rarity: 0 , description: 'item discription' , category: "item"},
+  { name: 'Slicer Gear', cost: 500, rarity: 4 , description: 'item discription', category: "item" },
   
   //Survival
-   { name: 'Crash Survival Kit', cost: 300, rarity: 2 , description: 'item discription' },
-   { name: 'Ration Pack', cost: 5, rarity: 0 , description: 'item discription' },
-   { name: 'Breath Mask', cost: 25, rarity: 1 , description: 'item discription' },
-   { name: 'Space Suit', cost: 100, rarity: 1 , description: 'item discription' },
-   { name: 'Tent', cost: 100, rarity: 1 , description: 'item discription' },
-   { name: 'Thermal Cloak', cost: 200, rarity: 1 , description: 'item discription' },
+   { name: 'Crash Survival Kit', cost: 300, rarity: 2 , description: 'item discription', category: "item" },
+   { name: 'Ration Pack', cost: 5, rarity: 0 , description: 'item discription', category: "item" },
+   { name: 'Breath Mask', cost: 25, rarity: 1 , description: 'item discription', category: "item" },
+   { name: 'Space Suit', cost: 100, rarity: 1 , description: 'item discription', category: "item" },
+   { name: 'Tent', cost: 100, rarity: 1 , description: 'item discription', category: "item" },
+   { name: 'Thermal Cloak', cost: 200, rarity: 1 , description: 'item discription', category: "item" },
 
   // Tools
-  { name: 'Backpack', cost: 50, rarity: 0 , description: 'item discription' },
-  { name: 'Climbing Gear', cost: 50, rarity: 2 , description: 'item discription' },
-  { name: 'Datapad', cost: 75, rarity: 1 , description: 'item discription' },
-  { name: 'Emergency Repair Patch', cost: 25, rarity: 1 , description: 'item discription' },
-  { name: 'Extra Reloads', cost: 25, rarity: 1 , description: 'item discription' },
-  { name: 'Fusion Lantern', cost: 150, rarity: 2 , description: 'item discription' },
-  { name: 'Glow Rod', cost: 10, rarity: 0 , description: 'item discription' },
-  { name: 'Jet Pack', cost: 4500, rarity: 7 , description: 'item discription' },
-  { name: 'Tool Kit', cost: 350, rarity: 2 , description: 'item discription' },
-  { name: 'Utility Belt', cost: 25, rarity: 0 , description: 'item discription' },
+  { name: 'Backpack', cost: 50, rarity: 0 , description: 'item discription' , category: "item"},
+  { name: 'Climbing Gear', cost: 50, rarity: 2 , description: 'item discription', category: "item" },
+  { name: 'Datapad', cost: 75, rarity: 1 , description: 'item discription' , category: "item"},
+  { name: 'Emergency Repair Patch', cost: 25, rarity: 1 , description: 'item discription', category: "item" },
+  { name: 'Extra Reloads', cost: 25, rarity: 1 , description: 'item discription', category: "item" },
+  { name: 'Fusion Lantern', cost: 150, rarity: 2 , description: 'item discription' , category: "item"},
+  { name: 'Glow Rod', cost: 10, rarity: 0 , description: 'item discription' , category: "item"},
+  { name: 'Jet Pack', cost: 4500, rarity: 7 , description: 'item discription' , category: "item"},
+  { name: 'Tool Kit', cost: 350, rarity: 2 , description: 'item discription', category: "item" },
+  { name: 'Utility Belt', cost: 25, rarity: 0 , description: 'item discription', category: "item" },
   // etc.
 ];
 
 
-export type blackMarketItems = {
+export type blackMarketItem = {
     name: string;
     cost: number;
     rarity: number;
@@ -280,7 +281,7 @@ export type blackMarketItems = {
 
 };
 
-export const allBlackMarketItems: blackMarketItems[] = [
+export const allBlackMarketItems: blackMarketItem[] = [
     // spice stuff
     { name: 'Avabush Spice (dose)', cost: 25, rarity: 6 , description: 'item discription' },
     { name: 'Avabush Spice (100 dose cargo container)', cost: 2000, rarity: 7 , description: 'item discription' },
@@ -294,9 +295,42 @@ export const allBlackMarketItems: blackMarketItems[] = [
     { name: 'Lesai (20 dose enviro-sealev cargo pod', cost: 7500, rarity: 10 , description: 'item discription' },
     { name: 'Yarrock (1 dose)', cost: 350, rarity: 8 , description: 'item discription' },
     { name: 'Yarrock (100 dose cargo container)', cost: 20000, rarity: 9 , description: 'item discription' },
-    
+
     // personal equipment
     { name: 'Data Breaker', cost: 1000, rarity: 6 , description: 'item discription' },
     { name: 'Flesh Camouflage Set', cost: 2500, rarity: 7 , description: 'item discription' },
     { name: 'Personal Stealth Field', cost: 20000, rarity: 9 , description: 'item discription' },
+];
+
+
+export type weapon = {
+    name: string;
+    cost: number;
+    rarity: number
+    description: string;
+    
+    damage: number;
+    critRating: number;
+    encum: number;
+    range: string;
+};
+
+export const allWeapons: weapon[] = [
+    {name: "blaster rifle", cost: 700, rarity: 4, description: "", damage: 8, critRating: 3, encum: 4, range: ''},
+]
+
+export type armor = {
+    name: string;
+    cost: number;
+    rarity: number
+    description: string;
+    
+    soak: number;
+    defense: string;
+    encum: number;
+    
+};
+
+export const allArmor: armor[] = [
+    {name: "padded clothing", cost: 200, rarity: 3, description: "", soak: 1, defense: '', encum: 4},
 ]

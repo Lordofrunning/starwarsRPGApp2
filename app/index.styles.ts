@@ -1,6 +1,16 @@
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
+
+  scrollContainer: {
+  paddingBottom: 50, // makes sure last item isn't cut off
+},
+emptyMessage: {
+  textAlign: 'center',
+  fontStyle: 'italic',
+  color: '#666',
+  paddingVertical: 10,
+},
   // header stuff here
   container: {
     flex: 1,
@@ -21,7 +31,7 @@ export const styles = StyleSheet.create({
     color: '#fff',
   },
   menuArrow: {
-    fontSize: 40,
+    fontSize: 60,
     color: '#fff'
   },
   headerTitle: {
@@ -41,6 +51,25 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#fff',
   },
+  sideButton: {
+  width: 50,
+  alignItems: 'center',
+},
+
+logoContainer: {
+  position: 'absolute',
+  left: 0,
+  right: 0,
+  top: 0,
+  bottom: 0,
+  justifyContent: 'center',
+  alignItems: 'center',
+  paddingTop: 20,
+},
+
+
+
+
   // settings box stuff
   modalBackground: {
     flex: 1,
@@ -108,6 +137,11 @@ export const styles = StyleSheet.create({
     //borderWidth: 1,
     //backgroundColor: '#ccc'
   },
+  smallImage: {
+    width: '50%',
+    height: '100%',
+
+  },
 
   // button styles here 
 
@@ -132,8 +166,55 @@ buttonText: {
   color: '#fff',
   fontSize: 16,
   fontWeight: 'bold',
-}   
+},
+
+container2: {
+    flex: 1,
+    backgroundColor: '#f7f7f7',
+    paddingTop: 40,
+  },
+  shopTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  listContainer: {
+    paddingHorizontal: 20,
+  },
+  itemBox: {
+    backgroundColor: '#eee',
+    padding: 15,
+    borderRadius: 8,
+    marginBottom: 15,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+  },
+  itemName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  section: {
+  marginBottom: 10,
+},
+
+sectionHeader: {
+  backgroundColor: '#ddd',
+  padding: 10,
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  borderRadius: 6,
+},
+
+sectionTitle: {
+  fontSize: 16,
+  fontWeight: 'bold',
+},
 
 
 
 });
+
+
