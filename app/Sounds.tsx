@@ -3,17 +3,21 @@ import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { styles } from './index.styles';
 const soundData = [
-  { label: 'Big Sound', image: null, file: require('../assets/sounds/StarWars.mp3') },
-  { label: 'Sound 1', image: null, file: require('../assets/sounds/Explosion.mp3') },
-  { label: 'Sound 2', image: null, file: require('../assets/sounds/BigExplosion.mp3') },
-  { label: 'Sound 3', image: null, file: require('../assets/sounds/StarWars.mp3') },
-  { label: 'Sound 4', image: null, file: require('../assets/sounds/StarWars.mp3') },
-  { label: 'Sound 5', image: null, file: require('../assets/sounds/StarWars.mp3') },
-  { label: 'Sound 6', image: null, file: require('../assets/sounds/StarWars.mp3') },
-  { label: 'Sound 7', image: null, file: require('../assets/sounds/StarWars.mp3') },
-  { label: 'Sound 8', image: null, file: require('../assets/sounds/StarWars.mp3') },
-  { label: 'Sound 9', image: null, file: require('../assets/sounds/StarWars.mp3') },
-  { label: 'Sound 10', image: null, file: require('../assets/sounds/DuelOfFates.mp3') },
+  { label: 'StarWars', image: null, file: require('../assets/sounds/StarWars.mp3') },
+  { label: 'Explosion', image: null, file: require('../assets/sounds/Explosion.mp3') },
+  { label: 'BigExplosion', image: null, file: require('../assets/sounds/BigExplosion.mp3') },
+  { label: 'TieFlyBy', image: null, file: require('../assets/sounds/TieFlyBy.mp3') },
+  { label: 'TieBlastt', image: null, file: require('../assets/sounds/TieBlastt.mp3') },
+  { label: 'TieBlasts', image: null, file: require('../assets/sounds/TieBlasts.mp3') },
+  { label: 'TieExplode', image: null, file: require('../assets/sounds/TieExplode.mp3') },
+  { label: 'ShipFlyBy', image: null, file: require('../assets/sounds/ShipFlyBy.mp3') },
+  { label: 'LaserTurret', image: null, file: require('../assets/sounds/LaserTurret.mp3') },
+  { label: 'TieChase', image: null, file: require('../assets/sounds/TieChase.mp3') },
+  { label: 'AsteroidChase', image: null, file: require('../assets/sounds/AsteroidChase.mp3') },
+  { label: 'CantinBand', image: null, file: require('../assets/sounds/CantinBand.mp3') },
+  { label: 'BeepBoops', image: null, file: require('../assets/sounds/BeepBoops.mp3') },
+  { label: 'Jump2', image: null, file: require('../assets/sounds/Jump2.mp3') },
+  { label: 'DuelOfFates', image: null, file: require('../assets/sounds/DuelOfFates.mp3') },
 ];
 
 export default function SoundboardPage() {
