@@ -47,7 +47,7 @@ export default function HomeScreen() {
 
 
 
-        <Text style={styles.headerTitle}>My Hype App</Text>
+        <Text style={styles.headerTitle}>GM AID</Text>
 
         <TouchableOpacity onPress={() => console.log('Profile pressed')}>
           <Image
@@ -69,17 +69,20 @@ export default function HomeScreen() {
 
          {/* Button stack */}
             <View style={styles.buttonStack}>
-              <TouchableOpacity style={styles.button} onPress={() => router.push('/page1')}>
-                <Text style={styles.buttonText}>page1</Text>
+              <TouchableOpacity style={styles.button} onPress={() => router.push('/Sounds')}>
+                <Text style={styles.buttonText}>Sounds of the Galaxy</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button} onPress={() => router.push('/page2')}>
-                <Text style={styles.buttonText}>page2</Text>
+              <TouchableOpacity style={styles.button} onPress={() => router.push('/Info')}>
+                <Text style={styles.buttonText}>Combat Info</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button} onPress={() => router.push('/page3')}>
-                <Text style={styles.buttonText}>page3</Text>
+              <TouchableOpacity style={styles.button} onPress={() => router.push('/Games')}>
+                <Text style={styles.buttonText}>Gambling Games</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button} onPress={() => router.push('/page4')}>
-                <Text style={styles.buttonText}>page4</Text>
+              <TouchableOpacity style={styles.button} onPress={() => router.push('/Shop')}>
+                <Text style={styles.buttonText}>Generate Shop</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.button} onPress={() => router.push('/Minions')}>
+                <Text style={styles.buttonText}>Minion Cards</Text>
               </TouchableOpacity>
             </View>
               </View>

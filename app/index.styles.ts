@@ -229,9 +229,104 @@ sectionTitle: {
   fontSize: 16,
   fontWeight: 'bold',
 },
-
-
-
+//From Trents Info Page
+backgroundInfoPage: {
+    flex: 1,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  overlayContainerInfoPage: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingTop: 60,
+    width: '100%',
+  },
+  containerInfoPage: {
+    flex: 1,
+    alignItems: 'center',
+    paddingTop: 60,
+  },
+  modalbackgroundInfoPage: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  popupcontainerInfoPage: {
+    backgroundColor: 'white',
+    maxHeight: '80%',
+    borderRadius: 12,
+    overflow: 'hidden',
+  },
+  closeButton: {
+    backgroundColor: '#222',
+    padding: 10,
+    alignItems: 'center',
+  },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    gap: 12,
+  },
+  buttonImage: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  imageStyle: {
+    borderRadius: 8,
+    resizeMode: 'cover',
+  },
+  defaultButton: {
+    flex: 1,
+    backgroundColor: '#444',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 8,
+  },
+  buttonLabel: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
+    textAlign: 'center',
+    padding: 8,
+  },
+  scrollContainerInfoPage: {
+    alignItems: 'center',
+    paddingBottom: 40,
+  },
+  scroll: {
+    alignItems: 'center',
+    paddingVertical: 20,
+    backgroundColor: '#D3D3D3',
+  },
+  bigButton: {
+    backgroundColor: '#444',
+    borderRadius: 10,
+    width: '90%',
+    aspectRatio: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  gridSoundsPage: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    width: '90%',
+  },
+  gridButton: {
+    backgroundColor: '#888',
+    width: '47%',
+    aspectRatio: 1,
+    marginBottom: 15,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 
