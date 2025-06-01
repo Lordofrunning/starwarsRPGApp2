@@ -144,21 +144,21 @@ export const allItems: Item[] = [
 
 
   // Detection Devices
-  { name: 'Electrobinoculars', cost: 250, rarity: 1 ,quantity: 2, description: 'item discription', category: "item" },
-  { name: 'General Purpose Scanner', cost: 500, rarity: 3 ,quantity: 2, description: 'item discription', category: "item" },
-  { name: 'Hand Scanner', cost: 100, rarity: 2 ,quantity: 2, description: 'item discription', category: "item" },
-  { name: 'Macrobinoculars', cost: 75, rarity: 2 ,quantity: 2, description: 'item discription', category: "item" },
-  { name: 'Scanner Goggles', cost: 150, rarity: 3 ,quantity: 2, description: 'item discription' , category: "item"},
-  { name: 'Surveillance Tagger', cost: 175, rarity: 4 ,quantity: 2, description: 'item discription', category: "item" },
+  { name: 'Electrobinoculars', cost: 250, rarity: 1 ,quantity: 2, description: 'These wonders allow for great magnification, and ability to peirce the darkest night', category: "item" },
+  { name: 'General Purpose Scanner', cost: 500, rarity: 3 ,quantity: 2, description: 'locate lifeforms, see heat signatutes, detect metal, all within 1 kilometer!', category: "item" },
+  { name: 'Hand Scanner', cost: 100, rarity: 2 ,quantity: 2, description: 'a perfect compact scanner, capable of many different detection programs', category: "item" },
+  { name: 'Macrobinoculars', cost: 75, rarity: 2 ,quantity: 2, description: 'less advanced than the electrobionoculars, but for a much cheaper price!', category: "item" },
+  { name: 'Scanner Goggles', cost: 150, rarity: 3 ,quantity: 2, description: 'light weight darkness pericer, as i like the call them' , category: "item"},
+  { name: 'Surveillance Tagger', cost: 175, rarity: 4 ,quantity: 2, description: 'track you prey in style with these compact trackers', category: "item" },
 
   //Security
-  { name: 'Binders', cost: 25, rarity: 2 , quantity: 2,description: 'item discription', category: "item" },
-  { name: 'Comm Jammer', cost: 400, rarity: 3 ,quantity: 2, description: 'item discription' , category: "item"},
-  { name: 'Comm Scrambler', cost: 1000, rarity: 5 ,quantity: 2, description: 'item discription', category: "item" },
-  { name: 'Disguise Kit', cost: 100, rarity: 4 ,quantity: 2, description: 'item discription', category: "item" },
-  { name: 'Electronic Lock Breaker', cost: 1000, rarity: 5 , quantity: 2,description: 'item discription' , category: "item"},
-  { name: 'Restraining Bolt', cost: 35, rarity: 2 , quantity: 2,description: 'item discription' , category: "item"},
-  { name: 'Slicer Gear', cost: 500, rarity: 4 , quantity: 2,description: 'item discription', category: "item" },
+  { name: 'Binders', cost: 25, rarity: 2 , quantity: 2,description: 'perfect for locking up anybody you dont like', category: "item" },
+  { name: 'Comm Jammer', cost: 400, rarity: 3 ,quantity: 2, description: 'with these fancy devices, you can stop any unwanted comm links' , category: "item"},
+  { name: 'Comm Scrambler', cost: 1000, rarity: 5 ,quantity: 2, description: 'decrypt your personal communications effortlesly', category: "item" },
+  { name: 'Disguise Kit', cost: 100, rarity: 4 ,quantity: 2, description: 'want to look like sombody else? now you can!', category: "item" },
+  { name: 'Electronic Lock Breaker', cost: 1000, rarity: 5 , quantity: 2,description: 'for getting into places that seem to interesting to remain locked behind a door' , category: "item"},
+  { name: 'Restraining Bolt', cost: 35, rarity: 2 , quantity: 2,description: 'got a feisty droid tailing you? use a Restraining Bolt!' , category: "item"},
+  { name: 'Slicer Gear', cost: 500, rarity: 4 , quantity: 2,description: 'open up any computer with these amazing slicers. skills not included', category: "item" },
   
   //Survival
    { name: 'Crash Survival Kit', cost: 300, rarity: 2 ,quantity: 2, description: 'item discription', category: "item" },
