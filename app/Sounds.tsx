@@ -1,4 +1,5 @@
 import { Audio } from 'expo-av';
+import { Stack, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { styles } from './index.styles';
@@ -14,7 +15,7 @@ const soundData = [
   { label: 'LaserTurret', image: null, file: require('../assets/sounds/LaserTurret.mp3') },
   { label: 'TieChase', image: null, file: require('../assets/sounds/TieChase.mp3') },
   { label: 'AsteroidChase', image: null, file: require('../assets/sounds/AsteroidChase.mp3') },
-  { label: 'CantinBand', image: null, file: require('../assets/sounds/CantinBand.mp3') },
+  { label: 'CantinBand', image: null, file: require('../assets/sounds/CantinaBand.mp3') },
   { label: 'BeepBoops', image: null, file: require('../assets/sounds/BeepBoops.mp3') },
   { label: 'Jump2', image: null, file: require('../assets/sounds/Jump2.mp3') },
   { label: 'DuelOfFates', image: null, file: require('../assets/sounds/DuelOfFates.mp3') },
@@ -23,6 +24,7 @@ const soundData = [
 export default function SoundboardPage() {
   const [sound, setSound] = useState<Audio.Sound | null>(null);
   const [playingIndex, setPlayingIndex] = useState<number | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     return () => {
@@ -51,11 +53,28 @@ export default function SoundboardPage() {
     setPlayingIndex(index);
     await newSound.playAsync();
   };
-
+//<Stack.Screen options={{ headerShown: false }} />
   return (
-    <ScrollView contentContainerStyle={styles.scroll}>
+    <View style={{ flex: 1, position: 'relative', backgroundColor: '#D3D3D3' }}>
+      <Stack.Screen options={{ headerShown: false }} />
+      
+      {/* Header */}
+            <View style={styles.headerTitleCenter}>
+              <TouchableOpacity onPress={() => router.back()} style={styles.sideButton}>
+                <Text style={styles.menuArrow}>←</Text>
+              </TouchableOpacity>
+      
+              <View style={styles.logoContainer}>
+                <Image
+                  source={require('../assets/images/logos/rpg_main_logo.png')}
+                  style={styles.smallImage}
+                  resizeMode="contain"
+                />
+              </View>
+            
+            </View>
+            <ScrollView contentContainerStyle={styles.scrollContainerInfoPage}>
       <Text style={styles.title}>Soundboard</Text>
-
       {/* Top Big Button */}
       <TouchableOpacity
         onPress={() => playSound(0)}
@@ -85,5 +104,6 @@ export default function SoundboardPage() {
         ))}
       </View>
     </ScrollView>
+    </View>
   );
 }
