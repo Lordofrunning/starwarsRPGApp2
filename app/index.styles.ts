@@ -183,6 +183,12 @@ buttonText: {
   fontSize: 16,
   fontWeight: 'bold',
 },
+buttonTextCentered: {
+  color: '#fff',
+  fontSize: 16,
+  fontWeight: 'bold',
+  textAlign: 'center',
+},
 
 container2: {
     flex: 1,
