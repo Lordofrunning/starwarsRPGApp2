@@ -229,7 +229,7 @@ export type weapon = {
 
 export const allWeapons: weapon[] = [
     {name: "blaster rifle", cost: 700, rarity: 4, description: "", damage: 8, critRating: 3, encum: 4, range: ''},
-    {name: 'Frag Grenade', cost: 50, rarity: 5, description: "", damage: 8, critRating: 2, encum: 1, range: "light" },
+    {name: 'Frag Grenade', cost: 50, rarity: 5, description: "", damage: 8, critRating: 2, encum: 1, range: "Short" },
     {name: 'Stun Grenade', cost: 75, rarity: 4, description: "", damage: 8, critRating: 0, encum: 1, range: 'Short' },
 ]
 

@@ -1,6 +1,6 @@
 import { Stack, useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { Image, Modal, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ImageBackground, Modal, Text, TouchableOpacity, View } from 'react-native';
 
 import { styles } from './index.styles';
 
@@ -57,15 +57,24 @@ export default function HomeScreen() {
         </TouchableOpacity>
       </View>
 
+
       {/* Main content below */}
-      <View style={styles.content}>
+         <ImageBackground 
+        source={require('../assets/images/hyperdrive_image4.jpg')}
+        style={{ flex: 1}}
+        resizeMode='cover'
+        >
+      
         <Stack.Screen options={{ headerShown: false }} />
-    <View style={styles.container}>
+    {/* <View style={styles.container}> */}
+         {/* <View style={[styles.imageWrapper, { backgroundColor: 'rgba(134, 134, 134, 0.4)'}]}> */}
         <Image
           source={require('../assets/images/logos/rpg_main_logo.png')}
-          style={styles.image}
+          style={styles.image }
           resizeMode="contain"
         />
+        {/* </View> */}
+        
 
          {/* Button stack */}
             <View style={styles.buttonStack}>
@@ -84,9 +93,14 @@ export default function HomeScreen() {
               <TouchableOpacity style={styles.button} onPress={() => router.push('/Minions')}>
                 <Text style={styles.buttonText}>Minion Cards</Text>
               </TouchableOpacity>
+              <TouchableOpacity style={styles.button} onPress={() => router.push('/GalaxyMap')}>
+                <Text style={styles.buttonText}>Galaxy Map</Text>
+              </TouchableOpacity> 
             </View>
-              </View>
-                </View>
+              {/* </View> */}
+              
+                
+                </ImageBackground>
               </View>
   );
 }
