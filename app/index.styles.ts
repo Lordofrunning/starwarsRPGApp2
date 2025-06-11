@@ -169,8 +169,18 @@ logoContainer: {
   alignSelf: 'center',
   justifyContent: 'center',
   marginTop: 30,
-  
-
+},
+imageWrapperMinion: {
+  backgroundColor: '#fff',
+  padding: 8,
+  borderRadius: 10,
+   borderWidth: 4,           // Add this
+  borderColor: 'grey',  
+  width: 380,
+  height: 300,
+  alignSelf: 'center',
+  justifyContent: 'center',
+  marginTop: 30,
 },
 
   title: {
@@ -188,6 +198,10 @@ logoContainer: {
     height: 200,
     //borderWidth: 1,
     //backgroundColor: '#ccc'
+  },
+  imageMinionCards: {
+    width: 360,   // adjust based on your layout
+    height: 300,  // or use 'aspectRatio' instead
   },
   smallImage: {
     width: '50%',

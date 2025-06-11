@@ -6,7 +6,7 @@ import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { styles } from './index.styles';
 
 
-export default function Page3() {
+export default function MinionGalleryPage() {
   const router = useRouter();
 
   return (
@@ -37,13 +37,33 @@ export default function Page3() {
         </TouchableOpacity>
       </View>
 
-      <Text style={styles.shopTitle}>{"shopName"}</Text>
+      <Text style={styles.shopTitle}>{"Minion Group Stats"}</Text>
 
-         
-      
-
-      <View style={styles.section}>
-    </View>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+      {[
+        require('../assets/images/minions/Thug.png'),
+        require('../assets/images/minions/Tough.png'),
+        require('../assets/images/minions/DefenseTrooper.png'),
+        require('../assets/images/minions/Security.png'),
+        require('../assets/images/minions/Gang.png'),
+        require('../assets/images/minions/Pirate.png'),
+        require('../assets/images/minions/CorporateAuthority.png'),
+        require('../assets/images/minions/Hunter.png'),
+        require('../assets/images/minions/BattleDroid.png'),
+        require('../assets/images/minions/StormTrooper.png'),
+        require('../assets/images/minions/TiePilot.png'),
+        require('../assets/images/minions/Emperial.png'),
+        require('../assets/images/minions/MechDroid.png'),
+        require('../assets/images/minions/StreetUrchin.png'),
+        require('../assets/images/minions/Mynock.png'),
+        require('../assets/images/minions/Twilek.png'),
+        // Add as many images as you like here
+      ].map((img, index) => (
+        <View key={index} style={styles.imageWrapperMinion}>
+          <Image source={img} style={styles.imageMinionCards} resizeMode="contain" />
+        </View>
+      ))}
+    </ScrollView>
     </View>
     </ScrollView>
   </View>
