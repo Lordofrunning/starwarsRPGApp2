@@ -3,8 +3,10 @@ import { Stack, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, Switch, Text, TouchableOpacity, View } from 'react-native';
 
+
 import { allArmor, allBlackMarketItems, allItems, allWeapons, armor, blackMarketItem, Item, shopNames, weapon } from './data/shopData';
 import { styles } from './index.styles';
+
 
 
 export default function Page3() {
@@ -17,6 +19,17 @@ const [shopSaved, setShopSaved] = useState(false);
 const [loading, setLoading] = useState(true);
 
 const [shopItems, setShopItems] = useState<Item[]>([]);
+
+const noBlackMarketMessages = [
+  "Nothing shady happening here....",
+  "the Imperials are just around the corner! get out of here!!!",
+  "Nothing illegal here....",
+  "Cleanest shop on the planet.",
+  "just a normal shop, selling normal items",
+  "No black market contacts here!",
+  "Im offended you would think there are illegal items in my shop!"
+];
+const [blackMarketMessage, setBlackMarketMessage] = useState("");
 const [blackMarketItems, setBlackMarketItems] = useState<blackMarketItem[]>([]);
 const [weaponItems, setWeaponItems] = useState<weapon[]>([]);
 const [armorItems, setArmorItems] = useState<armor[]>([]);
@@ -209,7 +222,21 @@ const saveShop = async () => {
   finalItems.sort((a, b) => a.rarity - b.rarity);
   setShopItems(finalItems);
 
+
+const hasBlackMarket = Math.random() < 0.3; // 30% chance
+
+if (hasBlackMarket) {
+  const blackCount = Math.floor(Math.random() * 3) + 3; // 2 to 4 items guaranteed
   setBlackMarketItems(getRandomSubset(allBlackMarketItems, blackCount));
+  setBlackMarketMessage(""); // Clear message if items exist
+} else {
+  setBlackMarketItems([]);
+  const randomMessage = noBlackMarketMessages[Math.floor(Math.random() * noBlackMarketMessages.length)];
+  setBlackMarketMessage(randomMessage); // Set message to display
+}
+
+
+
   setWeaponItems(getRandomSubset(allWeapons, weaponCount));
   setArmorItems(getRandomSubset(allArmor, armorCount));
 };
@@ -257,20 +284,20 @@ const saveShop = async () => {
         <Text>{open ? '▲' : '▼'}</Text>
       </TouchableOpacity>
 
-      {open && 
-      (
-        items.length === 0 ? (
-          <Text style={styles.emptyMessage}>No items here</Text>
-        ) : (
-          items.map((item, index) => (
-        <View key={index} style={styles.itemBox}>
-          <Text style={styles.itemName}>{item.name}</Text>
-          <Text>Cost: {item.cost}</Text>
-          <Text>Rarity: {item.rarity}</Text>
-          <Text>Description: {item.description}</Text>
-        </View>
-          ))
-      ))}
+      {open && (
+  items.length === 0 ? (
+    <Text style={styles.emptyMessage}>{blackMarketMessage || "No items here"}</Text>
+  ) : (
+    items.map((item, index) => (
+      <View key={index} style={styles.itemBox}>
+        <Text style={styles.itemName}>{item.name}</Text>
+        <Text>Cost: {item.cost}</Text>
+        <Text>Rarity: {item.rarity}</Text>
+        <Text>Description: {item.description}</Text>
+      </View>
+    ))
+  )
+)}
     </View>
   );
 }

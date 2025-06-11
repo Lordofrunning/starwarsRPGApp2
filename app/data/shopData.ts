@@ -210,6 +210,8 @@ export const allBlackMarketItems: blackMarketItem[] = [
     { name: 'Data Breaker', cost: 1000, rarity: 6 , description: 'item discription' },
     { name: 'Flesh Camouflage Set', cost: 2500, rarity: 7 , description: 'item discription' },
     { name: 'Personal Stealth Field', cost: 20000, rarity: 9 , description: 'item discription' },
+    { name: 'Thermal Detonator', cost: 2000, rarity: 8, description: 'item description'},
+    {name: 'Missle Tube (Launcher)', cost: 7500, rarity: 8, description: 'item description'}, 
 ];
 
 
@@ -227,6 +229,8 @@ export type weapon = {
 
 export const allWeapons: weapon[] = [
     {name: "blaster rifle", cost: 700, rarity: 4, description: "", damage: 8, critRating: 3, encum: 4, range: ''},
+    {name: 'Frag Grenade', cost: 50, rarity: 5, description: "", damage: 8, critRating: 2, encum: 1, range: "light" },
+    {name: 'Stun Grenade', cost: 75, rarity: 4, description: "", damage: 8, critRating: 0, encum: 1, range: 'Short' },
 ]
 
 export type armor = {

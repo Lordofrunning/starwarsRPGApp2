@@ -70,7 +70,7 @@ export default function HomeScreen() {
          {/* Button stack */}
             <View style={styles.buttonStack}>
               <TouchableOpacity style={styles.button} onPress={() => router.push('/Sounds')}>
-                <Text style={styles.buttonText}>Sounds of the Galaxy</Text>
+                <Text style={styles.buttonTextCentered}>Sounds of the Galaxy</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.button} onPress={() => router.push('/Info')}>
                 <Text style={styles.buttonText}>Combat Info</Text>
