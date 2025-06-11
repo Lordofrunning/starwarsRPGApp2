@@ -28,41 +28,44 @@ export default function InfoPage() {
       style={styles.backgroundInfoPage}
       resizeMode="contain"
       >
-      <View><Stack.Screen options={{ headerShown: false }} />
-
+        <>
+      <Stack.Screen options={{ headerShown: false }} />
+        </>
       {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.sideButton}>
-          <Text style={styles.menuArrow}>←</Text>
-        </TouchableOpacity>
-      </View> </View>
+      <TouchableOpacity onPress={() => router.back()} style={{ position: 'absolute', top: 80, left: 30, zIndex: 1 }}>
+        <Text style={styles.menuArrow}>←</Text>
+      </TouchableOpacity>
+
+      {visibleSection === null && (
       <View style={styles.overlayContainerInfoPage}>
-        {/* Buttons */}
+        {/* Buttons was modalbackgroundInfoPageTrent*/}
         <TouchableOpacity
           style={styles.button}
           onPress={() => setVisibleSection('section1')}
         >
-          <Text style={styles.buttonText}>Section 1</Text>
+          <Text style={styles.buttonText}>Actions</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.button}
           onPress={() => setVisibleSection('section2')}
         >
-          <Text style={styles.buttonText}>Section 2</Text>
+          <Text style={styles.buttonText}>Manuevers</Text>
         </TouchableOpacity>
       </View>
+      )}
 
       {/* Modal Section */}
       <Modal
         transparent={true}
-        animationType="slide"
+        animationType="none"
         visible={visibleSection !== null}
         onRequestClose={() => setVisibleSection(null)}
       >
-        <View style={styles.modalbackgroundInfoPage}>
-          <View style={[styles.popupcontainerInfoPage, { width: popupWidth }]}>
-            <ScrollView>
+        <View style={styles.modalbackgroundInfoPageTrent}>
+          <View style={[styles.popupcontainerInfoPageTrent, { width: popupWidth }]}>
+            <View style={{ maxHeight: 500, overflow: 'hidden' }}>
+            <ScrollView contentContainerStyle={{ paddingTop: 0 }}>
               <Image
                 source={
                   visibleSection === 'section1'
@@ -72,10 +75,14 @@ export default function InfoPage() {
                 style={{ width: popupWidth, resizeMode: 'contain' }}
               />
             </ScrollView>
-            <TouchableOpacity onPress={() => setVisibleSection(null)} style={styles.closeButton}>
-              <Text style={{ color: 'white' }}>Close</Text>
-            </TouchableOpacity>
-          </View>
+          </View></View>
+          {/* Close Button */}
+    <TouchableOpacity
+      onPress={() => setVisibleSection(null)}
+      style={styles.closeButtonFixed}
+    >
+      <Text style={styles.closeButtonText}>Close</Text>
+    </TouchableOpacity>
         </View>
       </Modal>
     </ImageBackground>

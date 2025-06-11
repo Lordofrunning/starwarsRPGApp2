@@ -42,12 +42,26 @@ fixedToggle: {
     paddingHorizontal: 15,
     paddingTop: 30,
   },
+  headerLeft: {
+  height: 120,
+  backgroundColor: '#444',
+  flexDirection: 'row',
+  alignItems: 'center',      // vertical centering in row
+  justifyContent: 'flex-start', // horizontal alignment to left
+  paddingHorizontal: 15,
+  paddingTop: 30,
+},
   menuText: {
     fontSize: 24,
     color: '#fff',
   },
   menuArrow: {
     fontSize: 60,
+    color: '#fff'
+  },
+  menuArrowTrent: {
+    fontSize: 60,
+    alignItems: 'center',
     color: '#fff'
   },
   headerTitle: {
@@ -155,8 +169,18 @@ logoContainer: {
   alignSelf: 'center',
   justifyContent: 'center',
   marginTop: 30,
-  
-
+},
+imageWrapperMinion: {
+  backgroundColor: '#fff',
+  padding: 8,
+  borderRadius: 10,
+   borderWidth: 4,           // Add this
+  borderColor: 'grey',  
+  width: 380,
+  height: 300,
+  alignSelf: 'center',
+  justifyContent: 'center',
+  marginTop: 30,
 },
 
   title: {
@@ -174,6 +198,10 @@ logoContainer: {
     height: 200,
     //borderWidth: 1,
     //backgroundColor: '#ccc'
+  },
+  imageMinionCards: {
+    width: 360,   // adjust based on your layout
+    height: 300,  // or use 'aspectRatio' instead
   },
   smallImage: {
     width: '50%',
@@ -268,9 +296,65 @@ backgroundInfoPage: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
-    paddingTop: 60,
+    paddingTop: 140,
     width: '100%',
   },
+  modalbackgroundInfoPageTrent: {
+  flex: 1,
+  alignItems: 'center',
+  justifyContent: 'flex-start',
+  paddingTop: 140,
+  width: '100%',
+  backgroundColor: 'transparent', // this line is key!
+},
+closeButtonTrent: {
+  position: 'absolute',
+  top: 10,
+  right: 10,
+  zIndex: 1,
+  padding: 8,
+  backgroundColor: '#0008',
+  borderRadius: 20,
+},
+modalBackgroundTouchable: {
+  flex: 1,
+  backgroundColor: 'rgba(0, 0, 0, 0.5)', // or make fully clear: 'transparent'
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+
+popupWrapper: {
+  backgroundColor: 'white', // or any color you want
+  borderRadius: 10,
+  padding: 10,
+  width: '80%',
+  maxHeight: '80%',
+},
+closeButtonFixed: {
+  position: 'absolute',
+  bottom: 56,
+  alignSelf: 'center',
+  backgroundColor: '#70110a', // dark brown 4d0c07
+  paddingVertical: 8,
+  paddingHorizontal: 25,
+  borderRadius: 8,
+  zIndex: 10,
+},
+closeButtonText: {
+  color: 'white',
+  fontSize: 12,
+  fontWeight: 'bold',
+},
+popupcontainerInfoPage: {
+  backgroundColor: '#222', // or any card color
+  padding: 20,
+  borderRadius: 10,
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.5,
+  shadowRadius: 4,
+  elevation: 5,
+},
   containerInfoPage: {
     flex: 1,
     alignItems: 'center',
@@ -282,12 +366,13 @@ backgroundInfoPage: {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  popupcontainerInfoPage: {
-    backgroundColor: 'white',
-    maxHeight: '80%',
-    borderRadius: 12,
-    overflow: 'hidden',
-  },
+  popupcontainerInfoPageTrent: {
+  padding: 0,           // remove padding if you want full edge-to-edge image
+  borderRadius: 0,      // remove round corners
+  backgroundColor: 'transparent',  // no background
+  shadowOpacity: 0,     // no shadow
+  elevation: 0,         // Android shadow
+},
   closeButton: {
     backgroundColor: '#222',
     padding: 10,
