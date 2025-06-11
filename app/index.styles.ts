@@ -137,6 +137,28 @@ logoContainer: {
     flex: 1,
     padding: 20,
   },
+  normalContent: {
+    alignContent: 'center',
+    padding: 2,
+    backgroundColor: '#fff',
+    height: 150, 
+    width: 100,
+  },
+  imageWrapper: {
+  backgroundColor: '#fff',
+  padding: 12,
+  borderRadius: 10,
+   borderWidth: 2,           // Add this
+  borderColor: 'skyblue',  
+  width: 300,
+  height: 225,
+  alignSelf: 'center',
+  justifyContent: 'center',
+  marginTop: 30,
+  
+
+},
+
   title: {
     fontSize: 28,
     fontWeight: 'bold',
