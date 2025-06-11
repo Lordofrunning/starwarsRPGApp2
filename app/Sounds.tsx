@@ -11,24 +11,34 @@ const soundData = [
   { label: 'Tie Chase', image: null, file: require('../assets/sounds/TieChase.mp3') },
 
   { label: 'DL44 Blaster Pistol', image: null, file: require('../assets/sounds/DL44BlasterPistol.mp3') },
+  { label: 'Stun Blaster', image: null, file: require('../assets/sounds/StunBlaster.mp3') },
+  { label: 'Blaster Fight', image: null, file: require('../assets/sounds/BlasterFight.mp3') },
   { label: 'Wilhelm Scream', image: null, file: require('../assets/sounds/WilhelmScream.mp3') },
-  { label: 'Beep Boops', image: null, file: require('../assets/sounds/BeepBoops.mp3') },
+  { label: 'Excited Droid', image: null, file: require('../assets/sounds/DroidSounds.mp3') },
+  { label: 'Booping Droid', image: null, file: require('../assets/sounds/BBDroid.mp3') },
   { label: 'Hyperspace Jump', image: null, file: require('../assets/sounds/Jump2.mp3') },
+  { label: 'Hyperdrive Trouble', image: null, file: require('../assets/sounds/HyperDriveTrouble.mp3') },
+
+  { label: 'Alarm Siren', image: null, file: require('../assets/sounds/Siren.mp3') },
+  { label: 'Space Ship Blast', image: null, file: require('../assets/sounds/SpaceShipBlast.mp3') },
 
   { label: 'Explosion', image: null, file: require('../assets/sounds/Explosion.mp3') },
   { label: 'Big Explosion', image: null, file: require('../assets/sounds/BigExplosion.mp3') },
   { label: 'Ship Fly By', image: null, file: require('../assets/sounds/ShipFlyBy.mp3') },
   { label: 'Laser Turret', image: null, file: require('../assets/sounds/LaserTurret.mp3') },
-  
-  { label: 'Tie Fly By', image: null, file: require('../assets/sounds/TieFlyBy.mp3') },
+
   { label: 'Tie Blast', image: null, file: require('../assets/sounds/TieBlastt.mp3') },
-  { label: 'Tie Blasts', image: null, file: require('../assets/sounds/TieBlasts.mp3') },
+  { label: 'Tie Blasts', image: null, file: require('../assets/sounds/Blastsss.mp3') },
+  { label: 'Tie Fly By', image: null, file: require('../assets/sounds/TieFlyBy.mp3') },
   { label: 'Tie Explode', image: null, file: require('../assets/sounds/TieExplode.mp3') },
   { label: 'Pew', image: null, file: require('../assets/sounds/Pew.mp3') },
-  { label: 'Prowler', image: null, file: require('../assets/sounds/Prowler.mp3') },
+  { label: 'Light Saber On Off', image: null, file: require('../assets/sounds/LightSaberOnOff.mp3') },
 
+  { label: 'Prowler', image: null, file: require('../assets/sounds/Prowler.mp3') },
   { label: 'Monster Roar', image: null, file: require('../assets/sounds/Roar.mp3') },
   { label: 'Far Away Growl', image: null, file: require('../assets/sounds/Growl.mp3') },
+
+  { label: 'Yoda Wisdom', image: null, file: require('../assets/sounds/DoOrDoNot.mp3') },
 
   { label: 'Death Radio', image: null, file: require('../assets/sounds/tmp.mp3') },
   { label: 'Galaxy Meme', image: null, file: require('../assets/sounds/GalaxyMeme.mp3') },
@@ -88,7 +98,7 @@ export default function SoundboardPage() {
             
             </View>
             <ScrollView contentContainerStyle={styles.scrollContainerInfoPage}>
-      <Text style={styles.title}>Soundboard</Text>
+      <Text style={styles.title}>Sound Board</Text>
       {/* Top Big Button */}
       <TouchableOpacity
         onPress={() => playSound(0)}
