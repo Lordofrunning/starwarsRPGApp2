@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Stack, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { Image, ScrollView, Switch, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ImageBackground, ScrollView, Switch, Text, TouchableOpacity, View } from 'react-native';
 
 
 import { allArmor, allBlackMarketItems, allItems, allWeapons, armor, blackMarketItem, Item, shopNames, weapon } from './data/shopData';
@@ -393,7 +393,11 @@ if (loading) {
           />
         </TouchableOpacity>
       </View>
-
+      <ImageBackground
+  source={require('../assets/images/shop_backgroun_image_full.jpg')}
+  style={styles.container}
+  resizeMode="cover"
+>
       <Text style={styles.shopTitle}>{shopName}</Text>
 
          <ItemsDropdown items={shopItems} />
@@ -405,7 +409,7 @@ if (loading) {
       <View style={styles.section}>
       
     </View>
-
+      </ImageBackground>
     </View>
     
 
@@ -415,6 +419,7 @@ if (loading) {
     <Text style={{ marginRight: 8 }}>Save?</Text>
     <Switch value={shopSaved} onValueChange={toggleSave} />
   </View>
+  
     </View>
     
   );

@@ -1,5 +1,5 @@
-import { useRouter } from 'expo-router';
-import React from 'react';
+import { Stack, useRouter } from 'expo-router';
+import React, { useState } from 'react';
 import {
   Dimensions,
   Image,
@@ -12,7 +12,6 @@ import ImageZoom from 'react-native-image-pan-zoom';
 
 import { styles } from './index.styles';
 
-const { width, height } = Dimensions.get('window');
 const styles2 = StyleSheet.create({
   mapContainer: {
     flexGrow: 1,
@@ -31,11 +30,29 @@ const styles2 = StyleSheet.create({
   },
 });
 
+
+
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+
+// This should match the actual dimensions of your galaxy image
+const IMAGE_WIDTH = 2449;
+const IMAGE_HEIGHT = 2449;
+const HEADER_HEIGHT = 210;
+
+const widthScale = screenWidth / IMAGE_WIDTH;
+const heightScale = screenHeight / IMAGE_HEIGHT;
+const fitScale = Math.min(widthScale, heightScale);
+
+
+
+
 const GalaxyMap = () => {
   const router = useRouter();
+  const [menuVisible, setMenuVisible] = useState(false);
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: 'black' }}>
+      <Stack.Screen options={{ headerShown: false }} />
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()} style={styles.sideButton}>
@@ -58,19 +75,33 @@ const GalaxyMap = () => {
         </TouchableOpacity>
       </View>
 
+       {/* Zoomable Galaxy Map */}
+       {/* Zoomable Map */}
       <ImageZoom
-        cropWidth={width}
-        cropHeight={height}
-        imageWidth={1200}
-        imageHeight={1000}
-        minScale={0.5}
+        cropWidth={screenWidth}
+        cropHeight={screenHeight - HEADER_HEIGHT}
+        imageWidth={IMAGE_WIDTH}
+        imageHeight={IMAGE_HEIGHT}
+        minScale={fitScale}
         maxScale={3}
+        enableCenterFocus={false}
+        useNativeDriver={true}
+        panToMove={true}
+        pinchToZoom={true}
       >
-        <Image
-          source={require('../assets/images/galaxy_map_main_image.webp')}
-          style={{ width: 1200, height: 1000 }}
-          resizeMode="contain"
-        />
+        <View style={{
+          width: IMAGE_WIDTH,
+          height: IMAGE_HEIGHT,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'black', 
+        }}>
+          <Image
+            source={require('../assets/images/galaxy_map_2nd_try__upscale_gentle.jpg')}
+            style={{ width: IMAGE_WIDTH, height: IMAGE_HEIGHT }}
+            resizeMode="contain"
+          />
+        </View>
       </ImageZoom>
     </View>
   );
