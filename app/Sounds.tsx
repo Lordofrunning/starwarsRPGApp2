@@ -4,21 +4,35 @@ import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { styles } from './index.styles';
 const soundData = [
-  { label: 'StarWars', image: null, file: require('../assets/sounds/StarWars.mp3') },
+  { label: 'Star Wars', image: null, file: require('../assets/sounds/StarWars.mp3') },
+  { label: 'Duel Of Fates', image: null, file: require('../assets/sounds/DuelOfFates.mp3') },
+  { label: 'Cantina Band', image: null, file: require('../assets/sounds/CantinaBand.mp3') },
+  { label: 'Asteroid Chase', image: null, file: require('../assets/sounds/AsteroidChase.mp3') },
+  { label: 'Tie Chase', image: null, file: require('../assets/sounds/TieChase.mp3') },
+
+  { label: 'DL44 Blaster Pistol', image: null, file: require('../assets/sounds/DL44BlasterPistol.mp3') },
+  { label: 'Wilhelm Scream', image: null, file: require('../assets/sounds/WilhelmScream.mp3') },
+  { label: 'Beep Boops', image: null, file: require('../assets/sounds/BeepBoops.mp3') },
+  { label: 'Hyperspace Jump', image: null, file: require('../assets/sounds/Jump2.mp3') },
+
   { label: 'Explosion', image: null, file: require('../assets/sounds/Explosion.mp3') },
-  { label: 'BigExplosion', image: null, file: require('../assets/sounds/BigExplosion.mp3') },
-  { label: 'TieFlyBy', image: null, file: require('../assets/sounds/TieFlyBy.mp3') },
-  { label: 'TieBlastt', image: null, file: require('../assets/sounds/TieBlastt.mp3') },
-  { label: 'TieBlasts', image: null, file: require('../assets/sounds/TieBlasts.mp3') },
-  { label: 'TieExplode', image: null, file: require('../assets/sounds/TieExplode.mp3') },
-  { label: 'ShipFlyBy', image: null, file: require('../assets/sounds/ShipFlyBy.mp3') },
-  { label: 'LaserTurret', image: null, file: require('../assets/sounds/LaserTurret.mp3') },
-  { label: 'TieChase', image: null, file: require('../assets/sounds/TieChase.mp3') },
-  { label: 'AsteroidChase', image: null, file: require('../assets/sounds/AsteroidChase.mp3') },
-  { label: 'CantinBand', image: null, file: require('../assets/sounds/CantinaBand.mp3') },
-  { label: 'BeepBoops', image: null, file: require('../assets/sounds/BeepBoops.mp3') },
-  { label: 'Jump2', image: null, file: require('../assets/sounds/Jump2.mp3') },
-  { label: 'DuelOfFates', image: null, file: require('../assets/sounds/DuelOfFates.mp3') },
+  { label: 'Big Explosion', image: null, file: require('../assets/sounds/BigExplosion.mp3') },
+  { label: 'Ship Fly By', image: null, file: require('../assets/sounds/ShipFlyBy.mp3') },
+  { label: 'Laser Turret', image: null, file: require('../assets/sounds/LaserTurret.mp3') },
+  
+  { label: 'Tie Fly By', image: null, file: require('../assets/sounds/TieFlyBy.mp3') },
+  { label: 'Tie Blast', image: null, file: require('../assets/sounds/TieBlastt.mp3') },
+  { label: 'Tie Blasts', image: null, file: require('../assets/sounds/TieBlasts.mp3') },
+  { label: 'Tie Explode', image: null, file: require('../assets/sounds/TieExplode.mp3') },
+  { label: 'Pew', image: null, file: require('../assets/sounds/Pew.mp3') },
+  { label: 'Prowler', image: null, file: require('../assets/sounds/Prowler.mp3') },
+
+  { label: 'Monster Roar', image: null, file: require('../assets/sounds/Roar.mp3') },
+  { label: 'Far Away Growl', image: null, file: require('../assets/sounds/Growl.mp3') },
+
+  { label: 'Death Radio', image: null, file: require('../assets/sounds/tmp.mp3') },
+  { label: 'Galaxy Meme', image: null, file: require('../assets/sounds/GalaxyMeme.mp3') },
+  { label: 'Lava Chicken', image: null, file: require('../assets/sounds/LavaChicken.mp3') },
 ];
 
 export default function SoundboardPage() {
