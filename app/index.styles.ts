@@ -197,6 +197,19 @@ imageWrapperMinion: {
   marginTop: 30,
 },
 
+imageWrapperMinionBig: {
+  backgroundColor: '#fff',
+  padding: 8,
+  borderRadius: 10,
+   borderWidth: 4,           // Add this
+  borderColor: 'grey',  
+  width: 380,
+  height: 540,
+  alignSelf: 'center',
+  justifyContent: 'center',
+  marginTop: 30,
+},
+
   title: {
     fontSize: 28,
     fontWeight: 'bold',
@@ -216,6 +229,10 @@ imageWrapperMinion: {
   imageMinionCards: {
     width: 360,   // adjust based on your layout
     height: 300,  // or use 'aspectRatio' instead
+  },
+  imageMinionCardsBig: {
+    width: 360,   // adjust based on your layout
+    height: 800,  // or use 'aspectRatio' instead
   },
   smallImage: {
     width: '50%',
@@ -243,7 +260,15 @@ button: {
   width: '60%',
   alignItems: 'center',
 },
-
+buttonBig: {
+  backgroundColor: '#555',
+  paddingVertical: 40,
+  paddingHorizontal: 30,
+  marginVertical: 8,
+  borderRadius: 8,
+  width: '80%',
+  alignItems: 'center',
+},
 buttonText: {
   color: '#fff',
   fontSize: 16,
