@@ -96,6 +96,9 @@ export default function HomeScreen() {
               <TouchableOpacity style={styles.button} onPress={() => router.push('/GalaxyMap')}>
                 <Text style={styles.buttonText}>Galaxy Map</Text>
               </TouchableOpacity> 
+               <TouchableOpacity style={styles.button} onPress={() => router.push('/DiceRoller')}>
+                <Text style={styles.buttonText}>Dice Roller</Text>
+              </TouchableOpacity> 
             </View>
               {/* </View> */}
               
