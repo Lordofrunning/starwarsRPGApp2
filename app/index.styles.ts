@@ -31,7 +31,11 @@ fixedToggle: {
     flex: 1,
     backgroundColor: '#D3D3D3', // light grey
     
-    
+  },
+  transparentContainer: {
+    flex: 1, 
+   
+
   },
    header: {
     height: 120,
@@ -144,7 +148,17 @@ logoContainer: {
   marginVertical: 10,
 },
 
-
+//image and background stuff here 
+ background: {
+  position: 'absolute',
+  width: '100%',
+height: '100%',
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  zIndex: -10,
+},
 
 // normal content starting here
   content: {
@@ -209,6 +223,8 @@ imageWrapperMinion: {
 
   },
 
+
+
   // button styles here 
 
 
@@ -251,6 +267,7 @@ container2: {
     textAlign: 'center',
     marginBottom: 20,
     marginTop: 20,
+    color: 'white',
   },
   listContainer: {
     paddingHorizontal: 20,
@@ -285,6 +302,9 @@ sectionTitle: {
   fontSize: 16,
   fontWeight: 'bold',
 },
+
+
+
 //From Trents Info Page
 backgroundInfoPage: {
     flex: 1,
