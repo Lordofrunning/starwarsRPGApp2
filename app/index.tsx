@@ -90,8 +90,8 @@ export default function HomeScreen() {
               <TouchableOpacity style={styles.button} onPress={() => router.push('/Shop')}>
                 <Text style={styles.buttonText}>Generate Shop</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button} onPress={() => router.push('/Minions')}>
-                <Text style={styles.buttonText}>Minion Cards</Text>
+              <TouchableOpacity style={styles.button} onPress={() => router.push('/NPCs')}>
+                <Text style={styles.buttonText}>Enemies / NPCs</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.button} onPress={() => router.push('/GalaxyMap')}>
                 <Text style={styles.buttonText}>Galaxy Map</Text>

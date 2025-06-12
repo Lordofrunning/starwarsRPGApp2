@@ -11,7 +11,6 @@ export default function MinionGalleryPage() {
 
   return (
      <View style={{ flex: 1, position: 'relative', backgroundColor: '#D3D3D3' }}>
-    <ScrollView contentContainerStyle={styles.scrollContainer}>
     <View style={styles.container}>
       <Stack.Screen options={{ headerShown: false }} />
 
@@ -37,9 +36,9 @@ export default function MinionGalleryPage() {
         </TouchableOpacity>
       </View>
 
-      <Text style={styles.shopTitle}>{"Minion Group Stats"}</Text>
-
+      
         <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <Text style={styles.shopTitle}>{"Minion Group Stat Blocks"}</Text>
       {[
         require('../assets/images/minions/Thug.png'),
         require('../assets/images/minions/Tough.png'),
@@ -65,7 +64,6 @@ export default function MinionGalleryPage() {
       ))}
     </ScrollView>
     </View>
-    </ScrollView>
   </View>
     //<ItemsDropdown items={Items} />
   );
