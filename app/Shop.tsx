@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Stack, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { Image, ImageBackground, ScrollView, Switch, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, Switch, Text, TouchableOpacity, View } from 'react-native';
 
 
 import { allArmor, allBlackMarketItems, allItems, allWeapons, armor, blackMarketItem, Item, shopNames, weapon } from './data/shopData';
@@ -367,9 +367,15 @@ if (loading) {
   );
 }
   return (
-     <View style={{ flex: 1, position: 'relative', backgroundColor: '#D3D3D3' }}>
+     //<View style={{ flex: 1, position: 'relative', backgroundColor: '#D3D3D3' }}>
+      <View style={{ flex: 1 }}>
+       <Image
+        source={require('../assets/images/shop_backgroun_image_full.jpg')}
+        style={styles.background}
+        resizeMode="stretch"
+      />
     <ScrollView contentContainerStyle={styles.scrollContainer}>
-    <View style={styles.container}>
+    <View style={styles.transparentContainer}>
       <Stack.Screen options={{ headerShown: false }} />
 
       {/* Header */}
@@ -393,11 +399,10 @@ if (loading) {
           />
         </TouchableOpacity>
       </View>
-      <ImageBackground
-  source={require('../assets/images/shop_backgroun_image_full.jpg')}
-  style={styles.container}
-  resizeMode="cover"
->
+      
+       {/* Fixed background image */}
+     
+
       <Text style={styles.shopTitle}>{shopName}</Text>
 
          <ItemsDropdown items={shopItems} />
@@ -409,7 +414,7 @@ if (loading) {
       <View style={styles.section}>
       
     </View>
-      </ImageBackground>
+      
     </View>
     
 
