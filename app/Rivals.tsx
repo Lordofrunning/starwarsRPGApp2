@@ -11,20 +11,75 @@ export default function MinionGalleryPage() {
   const imageData = [
   {
     src: require('../assets/images/RivalsNemesis/Barabel.png'),
-    style: { width: 360, height: 300 },
-    boxStyle: { width: 380, height: 300 },
-  },
-  {
-    src: require('../assets/images/RivalsNemesis/Barabel.png'),
-    style: { width: 360, height: 480 }, // Taller image
-    boxStyle: { width: 380, height: 480 },
-  },
-  {
-    src: require('../assets/images/RivalsNemesis/Barabel.png'),
     style: { width: 350, height: 540 }, // Taller image
     boxStyle: { width: 380, height: 560 },
   },
+  {
+    src: require('../assets/images/RivalsNemesis/HeavyGunner.png'),
+    style: { width: 350, height: 600 }, // Taller image
+    boxStyle: { width: 380, height: 620 },
+  },
+  {
+    src: require('../assets/images/RivalsNemesis/ConArtist.png'),
+    style: { width: 360, height: 640 }, // Taller image
+    boxStyle: { width: 380, height: 660 },
+  },
+  {
+    src: require('../assets/images/RivalsNemesis/RebelTrooper.png'),
+    style: { width: 350, height: 540 }, // Taller image
+    boxStyle: { width: 380, height: 560 },
+  },
+  {
+    src: require('../assets/images/RivalsNemesis/B2SuperBattleDroid.png'),
+    style: { width: 350, height: 540 }, // Taller image
+    boxStyle: { width: 380, height: 200 },
+  },
+  {
+    src: require('../assets/images/RivalsNemesis/DestroyerDroid.png'),
+    style: { width: 350, height: 540 }, // Taller image
+    boxStyle: { width: 380, height: 320 },
+  },
+  {
+    src: require('../assets/images/RivalsNemesis/StormSergeant.png'),
+    style: { width: 350, height: 540 }, // Taller image
+    boxStyle: { width: 380, height: 560 },
+  },
+  {
+    src: require('../assets/images/RivalsNemesis/SecurityDroid.png'),
+    style: { width: 350, height: 540 }, // Taller image
+    boxStyle: { width: 380, height: 560 },
+  },
+  {
+    src: require('../assets/images/RivalsNemesis/WookieGladiator.png'),
+    style: { width: 350, height: 540 }, // Taller image
+    boxStyle: { width: 380, height: 560 },
+  },
+  {
+    src: require('../assets/images/RivalsNemesis/Smuggler.png'),
+    style: { width: 360, height: 500 },
+    boxStyle: { width: 380, height: 520 },
+  },
+  {
+    src: require('../assets/images/RivalsNemesis/Slicer.png'),
+    style: { width: 360, height: 420 },
+    boxStyle: { width: 380, height: 440 },
+  },
   // Add more images with custom styles
+  {
+    src: require('../assets/images/RivalsNemesis/AstromechDroid.png'),
+    style: { width: 350, height: 500 }, // Taller image
+    boxStyle: { width: 380, height: 520 },
+  },
+  {
+    src: require('../assets/images/RivalsNemesis/CorruptBureaucrat.png'),
+    style: { width: 350, height: 420 },
+    boxStyle: { width: 380, height: 360 },
+  },
+  {
+    src: require('../assets/images/RivalsNemesis/WealthyNoble.png'),
+    style: { width: 350, height: 420 },
+    boxStyle: { width: 380, height: 360 },
+  },
 ];
 
   return (
