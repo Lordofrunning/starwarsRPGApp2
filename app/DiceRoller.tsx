@@ -8,6 +8,11 @@ const diceStyles = StyleSheet.create({
     paddingTop: 10,
     backgroundColor: '#FFFFFF',
   },
+  tallyContainer:{
+    flex: 1,
+    paddingTop: 10,
+    backgroundColor: '#FFFFFF',
+  },
   diceSelector: {
   flexDirection: 'row',
   flexWrap: 'wrap',
@@ -22,7 +27,7 @@ buttonsContainer: {
 },
 dieButton: {
   alignItems: 'center',
-  margin: 6,
+  margin: 8,
 },
 
 dieIcon: {
@@ -32,7 +37,7 @@ dieIcon: {
 },
 
 dieText: {
-  color: 'white',
+  color: 'black',
   fontSize: 14,
   textTransform: 'capitalize',
 },
@@ -70,8 +75,8 @@ resultsWrapper: {
 },
 
 poolIcon: {
-  width: 40,
-  height: 40,
+  width: 50,
+  height: 50,
   margin: 4,
   borderWidth: 0,
   borderColor: '#FFFFFF',
@@ -145,7 +150,7 @@ const setbackDie = [
 ];
 
 const redDie = [
-  { src: require('../assets/dice/red/side7_blank.jpg'), characters: {} },
+  { src: require('../assets/dice/red/side7_blank.jpg'), characters: {} },//customWeight ? { failure: 1, threat: 1 } : 
   { src: require('../assets/dice/red/side2_1thr.jpg'), characters: { threat: 1 } },
   { src: require('../assets/dice/red/side3_1fail.jpg'), characters: { failure: 1 } },
   { src: require('../assets/dice/red/side4_2thr.jpg'), characters: { threat: 2 } },
@@ -180,7 +185,9 @@ type DieType = 'Ability' | 'Proficiency' | 'Difficulty' | 'Challenge' | 'Advanta
 
 interface DicePoolItem {
   type: DieType;
+  result?: { src: any; characters: Record<string, number> }; // optional result
 }
+
 
 // You'll also need this where your dice arrays are set up
 const diceTypes: Record<DieType, any[]> = {
@@ -203,15 +210,16 @@ const diceIcons: Record<DieType, any> = {
   force: require('../assets/dice/ForceDiceFull.jpg'),
 };
 
-
-
-
-
-
 export default function DiceRoller() {
   const router = useRouter();
   const [dicePool, setDicePool] = useState<DicePoolItem[]>([]);
   const [results, setResults] = useState<any[]>([]);
+const [tally, setTally] = useState({
+  netSuccess: 0,
+  netAdvantage: 0,
+  triumph: 0,
+  despair: 0
+});
 
   const addDieToPool = (type: DieType) => {
     setDicePool([...dicePool, { type }]);
@@ -221,18 +229,64 @@ export default function DiceRoller() {
 };
 
   const rollDice = () => {
-    const newResults = dicePool.map(die => {
-      const sides = diceTypes[die.type];
-      const randomIndex = Math.floor(Math.random() * sides.length);//I question how this works correctly
-      return sides[randomIndex];
-    });
-    setResults(newResults);
-  };
+  const newPool = dicePool.map(die => {
+    const sides = diceTypes[die.type];
+    const randomIndex = Math.floor(Math.random() * sides.length);
+    const result = sides[randomIndex];
+    return { ...die, result };  // Attach result to die
+  });
+
+  setDicePool(newPool);  // Update pool with results
+
+  // Also update the separate results array if you want to keep it (optional)
+  setResults(newPool.map(die => die.result));
+
+  // Tally logic
+  let success = 0;
+  let advantage = 0;
+  let triumph = 0;
+  let failure = 0;
+  let threat = 0;
+  let despair = 0;
+
+  newPool.forEach(die => {
+    const chars = die.result?.characters || {};
+    success += chars.success || 0;
+    advantage += chars.advantage || 0;
+    triumph += chars.triumph || 0;
+    failure += chars.failure || 0;
+    threat += chars.threat || 0;
+    despair += chars.despair || 0;
+  });
+
+  const netSuccess = success - failure;
+  const netAdvantage = advantage - threat;
+
+  setTally({
+    netSuccess,
+    netAdvantage,
+    triumph,
+    despair
+  });
+};
 
   const clearPool = () => {
-    setDicePool([]);
-    setResults([]);
-  };
+  setDicePool([]);
+  setResults([]);
+  setTally({
+    netSuccess: 0,
+    netAdvantage: 0,
+    triumph: 0,
+    despair: 0
+  });
+};
+
+
+
+  //const clearPool = () => {
+    //setDicePool([]);
+    //setResults([]);
+  //};
 
   return (
        <View style={{ flex: 1, position: 'relative', backgroundColor: '#D3D3D3' }}>
@@ -259,6 +313,7 @@ export default function DiceRoller() {
               />
             </TouchableOpacity>
           </View>
+          {/* Dice to choose from */}
     <View style={diceStyles.container}>
       <View style={diceStyles.diceSelector}>
   {Object.keys(diceTypes).map(type => (
@@ -269,7 +324,7 @@ export default function DiceRoller() {
   ))}
 </View>
 
- 
+ {/* Actions buttons */}
   <View style={diceStyles.buttonsContainer}>
     <Button title="Roll Dice" onPress={rollDice} disabled={dicePool.length === 0} />
     <Button title="Clear" onPress={clearPool} color="gray" />
@@ -277,37 +332,37 @@ export default function DiceRoller() {
 
 
       <ScrollView style={diceStyles.middleScroll}>
+        {/* Dice to be rolled */}
   <View style={diceStyles.poolContainer}>
     <Text style={diceStyles.poolLabel}>Dice Pool:</Text>
     <View style={diceStyles.poolDiceWrapper}>
       {dicePool.map((die, index) => (
-        <TouchableOpacity key={index} onPress={() => removeDieFromPool(index)}>
-          <Image source={diceTypes[die.type][0].src} style={diceStyles.poolIcon} />
-        </TouchableOpacity>
-      ))}
+  <TouchableOpacity key={index} onPress={() => removeDieFromPool(index)}>
+    <Image
+      source={die.result ? die.result.src : diceTypes[die.type][0].src}
+      style={diceStyles.poolIcon}
+    />
+  </TouchableOpacity>
+))}
     </View>
   </View>
+  {/* Add results here with symbols?? */}
 
-  <View style={diceStyles.resultsContainer}>
-    <Text style={diceStyles.poolLabel}>Results:</Text>
-    <View style={diceStyles.resultsWrapper}>
-      {results.map((img, i) => (
-        <Image key={i} source={img.src} style={diceStyles.resultIcon} />
-      ))}
-    </View>
-  </View>
-  
+  {/* Results textually*/}
+  <View style={diceStyles.tallyContainer}>
+  <Text style={diceStyles.poolLabel}>Tally:</Text>
+  <Text>Successes: {tally.netSuccess >= 0 ? tally.netSuccess : 0}</Text>
+  <Text>Failures: {tally.netSuccess < 0 ? Math.abs(tally.netSuccess) : 0}</Text>
+  <Text>Advantages: {tally.netAdvantage >= 0 ? tally.netAdvantage : 0}</Text>
+  <Text>Threats: {tally.netAdvantage < 0 ? Math.abs(tally.netAdvantage) : 0}</Text>
+  <Text>Triumphs: {tally.triumph}</Text>
+  <Text>Despairs: {tally.despair}</Text>
+</View>
 </ScrollView>
-
     </View>
     </View>
     </View>
   );
 }
-
-
-
-
-
 
 
