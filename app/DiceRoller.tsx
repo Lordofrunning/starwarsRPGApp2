@@ -1,6 +1,9 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect } from 'react';
+
 import { Stack, useRouter } from 'expo-router';
 import { default as React, useState } from 'react';
-import { Button, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Button, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { styles } from './index.styles';
 const diceStyles = StyleSheet.create({
   container: {
@@ -21,6 +24,7 @@ const diceStyles = StyleSheet.create({
   gap: 1, // optional if you're using React Native 0.71+
 },
 buttonsContainer: {
+    
   flexDirection: 'row',
   justifyContent: 'space-around',
   marginVertical: 10,
@@ -91,6 +95,13 @@ resultIcon: {
   borderColor: '#FFFFFF',
   borderRadius: 0,
 },
+divider: {
+  height: 4,
+  backgroundColor: 'black', // or white, gray, etc.
+   marginVertical: 5, // spacing above and below the line
+  width: '100%',
+},
+
 });
 
 
@@ -210,6 +221,8 @@ const diceIcons: Record<DieType, any> = {
   force: require('../assets/dice/ForceDiceFull.jpg'),
 };
 
+
+
 export default function DiceRoller() {
   const router = useRouter();
   const [dicePool, setDicePool] = useState<DicePoolItem[]>([]);
@@ -227,6 +240,60 @@ const [tally, setTally] = useState({
   const removeDieFromPool = (indexToRemove: number) => {
   setDicePool(prev => prev.filter((_, index) => index !== indexToRemove));
 };
+
+// stuff for saving dice pools
+const [isModalVisible, setIsModalVisible] = useState(false);
+const [poolName, setPoolName] = useState('');
+const [savedPools, setSavedPools] = useState<Record<string, DicePoolItem[]>>({});
+//stuff for deleting dice pools
+const [poolToDelete, setPoolToDelete] = useState<string | null>(null);
+const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
+
+const [hasLoadedPools, setHasLoadedPools] = useState(false);
+
+useEffect(() => {
+  const loadPoolsFromStorage = async () => {
+    try {
+      const json = await AsyncStorage.getItem('savedDicePools');
+      if (json) {
+        const parsed = JSON.parse(json);
+        setSavedPools(parsed);
+      }
+    } catch (error) {
+      console.error('Failed to load saved pools:', error);
+    } finally {
+      setHasLoadedPools(true); // ✅ Mark as loaded
+    }
+  };
+
+  loadPoolsFromStorage();
+}, []);
+
+useEffect(() => {
+  if (!hasLoadedPools) return; // ⛔ Don't save yet
+  const savePoolsToStorage = async () => {
+    try {
+      const json = JSON.stringify(savedPools);
+      await AsyncStorage.setItem('savedDicePools', json);
+    } catch (error) {
+      console.error('Failed to save pools:', error);
+    }
+  };
+
+  savePoolsToStorage();
+}, [savedPools, hasLoadedPools]);
+
+const saveCurrentPool = () => {
+  setIsModalVisible(true);
+};
+const loadPool = (name: string) => {
+  const pool = savedPools[name];
+  if (pool) {
+    setDicePool([...pool]);
+    setResults([]); // optionally clear previous results
+  }
+};
+
 
   const rollDice = () => {
   const newPool = dicePool.map(die => {
@@ -293,9 +360,9 @@ const [tally, setTally] = useState({
       <View style={styles.container}>
         <Stack.Screen options={{ headerShown: false }} />
     {/* Header */}
-          <View style={styles.header}>
+          <View style={styles.headerSmall}>
             <TouchableOpacity onPress={() => router.back()} style={styles.sideButton}>
-              <Text style={styles.menuArrow}>←</Text>
+              <Text style={styles.smallMenuArrow}>←</Text>
             </TouchableOpacity>
     
             <View style={styles.logoContainer}>
@@ -313,27 +380,60 @@ const [tally, setTally] = useState({
               />
             </TouchableOpacity>
           </View>
-          {/* Dice to choose from */}
-    <View style={diceStyles.container}>
-      <View style={diceStyles.diceSelector}>
-  {Object.keys(diceTypes).map(type => (
-    <TouchableOpacity key={type} onPress={() => addDieToPool(type as DieType)} style={diceStyles.dieButton}>
-      <Image source={diceIcons[type as DieType]} style={diceStyles.dieIcon} />
-      <Text style={diceStyles.dieText}>{type}</Text>
-    </TouchableOpacity>
-  ))}
-</View>
 
- {/* Actions buttons */}
-  <View style={diceStyles.buttonsContainer}>
-    <Button title="Roll Dice" onPress={rollDice} disabled={dicePool.length === 0} />
-    <Button title="Clear" onPress={clearPool} color="gray" />
+         <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
+  {/* Dice section - takes 2/3 of width */}
+  <View style={{ flex: 2 }}>
+    {/* Dice grid 2x3 */}
+    <View style={{
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      justifyContent: 'space-between',
+      marginBottom: 8,
+    }}>
+      {Object.keys(diceTypes)
+        .filter((_, i) => i < 7)  // first 6 dice for grid
+        .map((type) => (
+          <TouchableOpacity
+            key={type}
+            onPress={() => addDieToPool(type as DieType)}
+            style={{
+              width: '25%',    // ~3 per row
+              aspectRatio: 1,
+              marginBottom: 2,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Image source={diceIcons[type as DieType]} style={diceStyles.dieIcon} />
+            
+          </TouchableOpacity>
+        ))}
+    </View>
+
   </View>
+
+  {/* Buttons section - takes 1/3 of width */}
+  <View style={{
+    flex: 1,
+    justifyContent: 'center',
+    marginLeft: 10,
+    height: 120,
+  }}>
+    <View style={{ marginBottom: 10 }}>
+      <Button title="Roll Dice" onPress={rollDice} disabled={dicePool.length === 0} />
+    </View>
+    <View>
+      <Button title="Clear" onPress={clearPool} color="gray" />
+    </View>
+  </View>
+    </View>
 
 
       <ScrollView style={diceStyles.middleScroll}>
         {/* Dice to be rolled */}
   <View style={diceStyles.poolContainer}>
+    <View style={diceStyles.divider} />
     <Text style={diceStyles.poolLabel}>Dice Pool:</Text>
     <View style={diceStyles.poolDiceWrapper}>
       {dicePool.map((die, index) => (
@@ -359,7 +459,129 @@ const [tally, setTally] = useState({
   <Text>Despairs: {tally.despair}</Text>
 </View>
 </ScrollView>
+
+        {/* saved dice pools display here, above the save pool button */}
+    {isModalVisible && (
+  <View style={{
+    position: 'absolute',
+    top: 0, left: 0, right: 0, bottom: 0,
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20
+  }}>
+    <View style={{ backgroundColor: '#fff', padding: 20, borderRadius: 10, width: '80%' }}>
+      <Text style={{ marginBottom: 10 }}>Enter a name for the dice pool:</Text>
+      <TextInput
+        placeholder="e.g. Blaster Squad"
+        value={poolName}
+        onChangeText={setPoolName}
+        style={{ borderWidth: 1, borderColor: '#ccc', padding: 10, marginBottom: 10 }}
+      />
+      <Button
+        title="Save"
+        onPress={() => {
+          if (poolName.trim()) {
+            setSavedPools(prev => ({ ...prev, [poolName.trim()]: [...dicePool] }));
+            setPoolName('');
+            setIsModalVisible(false);
+          }
+        }}
+      />
+      <Button title="Cancel" onPress={() => setIsModalVisible(false)} color="gray" />
     </View>
+  </View>
+)}
+    {/* // deleting the dice pools modal here */}
+    {deleteConfirmVisible && poolToDelete && (
+  <View style={{
+    position: 'absolute',
+    top: 0, left: 0, right: 0, bottom: 0,
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20
+  }}>
+    <View style={{ backgroundColor: '#fff', padding: 20, borderRadius: 10, width: '80%' }}>
+      <Text style={{ marginBottom: 10 }}>
+        Delete "{poolToDelete}"?
+      </Text>
+      <Button
+        title="Delete"
+        color="red"
+        onPress={() => {
+          const updated = { ...savedPools };
+          delete updated[poolToDelete];
+          setSavedPools(updated);
+          setDeleteConfirmVisible(false);
+          setPoolToDelete(null);
+        }}
+      />
+      <Button title="Cancel" onPress={() => {
+        setDeleteConfirmVisible(false);
+        setPoolToDelete(null);
+      }} color="gray" />
+    </View>
+  </View>
+)}
+   <View style={{ flex: 1 }}>
+  {/* Saved Dice Pools in a scrollable grid */}
+  <ScrollView contentContainerStyle={{ padding: 2 }}>
+    <Text style={{ color: 'white', marginBottom: 6 }}>Saved Dice Pools:</Text>
+    <View style={{
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      justifyContent: 'center'
+    }}>
+      {Object.keys(savedPools).map((name) => (
+        <TouchableOpacity
+  key={name}
+  onPress={() => setDicePool(savedPools[name])}
+  onLongPress={() => {
+    setPoolToDelete(name);
+    setDeleteConfirmVisible(true);
+  }}
+  delayLongPress={500}
+  style={{
+    width: '22%',
+    aspectRatio: 1,
+    backgroundColor: '#333',
+    margin: 6,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#777',
+  }}
+>
+  <Text style={{ color: 'white', textAlign: 'center', fontSize: 12 }}>{name}</Text>
+</TouchableOpacity>
+      ))}
+    </View>
+  </ScrollView>
+
+  {/* Fixed Save Button */}
+  <View style={{
+    position: 'absolute',
+    bottom: 20,
+    left: 20,
+    right: 20,
+    backgroundColor: '#222',
+    padding: 10,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5,
+    marginVertical: 15
+  }}>
+    <Button title="Save Dice Pool" onPress={saveCurrentPool} />
+  </View>
+</View>
+
+
+    
     </View>
     </View>
   );

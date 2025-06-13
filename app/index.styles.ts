@@ -55,12 +55,27 @@ fixedToggle: {
   paddingHorizontal: 15,
   paddingTop: 30,
 },
+ headerSmall: {
+    height: 80,
+    backgroundColor: '#444',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 15,
+    paddingTop: 30,
+    
+  
+  },
   menuText: {
     fontSize: 24,
     color: '#fff',
   },
   menuArrow: {
     fontSize: 60,
+    color: '#fff'
+  },
+  smallMenuArrow: {
+    fontSize: 30,
     color: '#fff'
   },
   menuArrowTrent: {
