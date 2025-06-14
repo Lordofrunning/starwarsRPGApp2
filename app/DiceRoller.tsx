@@ -5,6 +5,9 @@ import { Stack, useRouter } from 'expo-router';
 import { default as React, useState } from 'react';
 import { Button, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { styles } from './index.styles';
+import SettingsDrawer from './SettingsDrawer'; // Adjust path if needed
+
+
 const diceStyles = StyleSheet.create({
   container: {
     flex: 1,
@@ -227,6 +230,8 @@ export default function DiceRoller() {
   const router = useRouter();
   const [dicePool, setDicePool] = useState<DicePoolItem[]>([]);
   const [results, setResults] = useState<any[]>([]);
+  const [settingsVisible, setSettingsVisible] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false);
 const [tally, setTally] = useState({
   netSuccess: 0,
   netAdvantage: 0,
@@ -373,12 +378,11 @@ const loadPool = (name: string) => {
               />
             </View>
     
-            <TouchableOpacity onPress={() => console.log('Profile pressed')} style={styles.sideButton}>
-              <Image
-                source={require('../assets/images/empty_profile_pic.png')}
-                style={styles.profileImage}
-              />
+            <TouchableOpacity onPress={() => setDrawerVisible(true)} style={styles.sideButton2}>
+              <Image source={require('../assets/images/blackSettingsIcon.png')} style={styles.profileImage} />
             </TouchableOpacity>
+            {/* Settings drawer */}
+            <SettingsDrawer visible={drawerVisible} onClose={() => setDrawerVisible(false)} />
           </View>
 
          <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>

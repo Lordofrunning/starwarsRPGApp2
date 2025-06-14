@@ -4,7 +4,6 @@ import { Image, ImageBackground, Modal, Text, TouchableOpacity, View } from 'rea
 
 import { styles } from './index.styles';
 
-
 export default function HomeScreen() {
   const [menuVisible, setMenuVisible] = useState(false);
   const router = useRouter();

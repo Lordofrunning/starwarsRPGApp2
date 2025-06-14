@@ -104,7 +104,11 @@ fixedToggle: {
   width: 50,
   alignItems: 'center',
 },
-
+sideButton2: {
+  width: 50,
+  alignItems: 'center',
+    color: '#DDDDDD',
+},
 logoContainer: {
   position: 'absolute',
   left: 0,
@@ -500,6 +504,39 @@ popupcontainerInfoPage: {
     justifyContent: 'center',
     alignItems: 'center',
   },
+  drawer: {
+      position: 'absolute',
+      top: 0,
+      right: 0,
+      height: '100%',
+      width: '80%',
+      backgroundColor: 'white',
+      padding: 20,
+      shadowColor: '#000',
+      shadowOpacity: 0.5,
+      shadowOffset: { width: -2, height: 0 },
+      shadowRadius: 5,
+      elevation: 5,
+      zIndex: 999
+    },
+    closeButtonDrawer: {
+      position: 'absolute',
+      top: 10,
+      left: 10,
+      padding: 5
+    },
+    titleDrawer: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      marginTop: 40, // give space for the close button
+      marginBottom: 20
+    },
+    rowDrawer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: 20
+    }
 });
 
 

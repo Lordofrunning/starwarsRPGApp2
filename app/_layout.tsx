@@ -1,5 +1,10 @@
 import { Stack } from "expo-router";
+import { DiceSettingsProvider } from './DiceSettingsContext';
 
 export default function RootLayout() {
-  return <Stack />;
+  return (
+    <DiceSettingsProvider>
+      <Stack />
+    </DiceSettingsProvider>
+  );
 }
