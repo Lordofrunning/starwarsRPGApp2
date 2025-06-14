@@ -49,7 +49,7 @@ export default function NPCButtonsPage() {
                       <TouchableOpacity style={styles.buttonBig} onPress={() => router.push('/Nemeses')}>
                         <Text style={styles.buttonText}>Corellian Roulette</Text>
                       </TouchableOpacity>
-                      <TouchableOpacity style={styles.buttonBig} onPress={() => router.push('/NPCs')}>
+                      <TouchableOpacity style={styles.buttonBig} onPress={() => router.push('/DroidFight')}>
                         <Text style={styles.buttonText}>Droid Duel</Text>
                       </TouchableOpacity>
                     </View>
