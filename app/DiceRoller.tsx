@@ -17,7 +17,7 @@ const diceStyles = StyleSheet.create({
   tallyContainer:{
     flex: 1,
     paddingTop: 10,
-    backgroundColor: '#FFFFFF',
+    
   },
   diceSelector: {
   flexDirection: 'row',
@@ -50,12 +50,12 @@ dieText: {
 },
   middleScroll: {
   flex: 1,
-  marginVertical: 10,
+  marginVertical: 5,
+  minHeight: 130
 },
 
 poolContainer: {
   marginBottom: 16,
-  
 },
 
 poolLabel: {
@@ -69,6 +69,7 @@ poolDiceWrapper: {
   flexDirection: 'row',
   flexWrap: 'wrap',
   justifyContent: 'center',
+  backgroundColor: 'white',
 },
 
 resultsContainer: {
@@ -104,6 +105,11 @@ divider: {
    marginVertical: 5, // spacing above and below the line
   width: '100%',
 },
+whiteBorder: {
+    borderColor: 'white',
+    borderWidth: 2,
+    padding: 2
+}
 
 });
 
@@ -384,60 +390,64 @@ const loadPool = (name: string) => {
             {/* Settings drawer */}
             <SettingsDrawer visible={drawerVisible} onClose={() => setDrawerVisible(false)} />
           </View>
-
+{/* // all the code for the top dice, roll buttons, clear, ect */}
          <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
-  {/* Dice section - takes 2/3 of width */}
-  <View style={{ flex: 2 }}>
-    {/* Dice grid 2x3 */}
-    <View style={{
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      justifyContent: 'space-between',
-      marginBottom: 8,
-    }}>
-      {Object.keys(diceTypes)
-        .filter((_, i) => i < 7)  // first 6 dice for grid
-        .map((type) => (
-          <TouchableOpacity
-            key={type}
-            onPress={() => addDieToPool(type as DieType)}
-            style={{
-              width: '25%',    // ~3 per row
-              aspectRatio: 1,
-              marginBottom: 2,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Image source={diceIcons[type as DieType]} style={diceStyles.dieIcon} />
-            
-          </TouchableOpacity>
-        ))}
-    </View>
+            {/* Dice section - takes 2/3 of width */}
+            <View style={{ flex: 2 }}>
+                {/* Dice grid 2x3 */}
+                <View style={{
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                justifyContent: 'space-between',
+                marginBottom: 8,
+                }}>
+                {Object.keys(diceTypes)
+                    .filter((_, i) => i < 7)  // first 6 dice for grid
+                    .map((type) => (
+                    <TouchableOpacity
+                        key={type}
+                        onPress={() => addDieToPool(type as DieType)}
+                        style={{
+                        width: '25%',    // ~3 per row
+                        aspectRatio: 1,
+                        marginBottom: 2,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        }}
+                    >
+                        <Image source={diceIcons[type as DieType]} style={diceStyles.dieIcon} />
+                        
+                    </TouchableOpacity>
+                    ))}
+                </View>
 
-  </View>
+            </View>
 
-  {/* Buttons section - takes 1/3 of width */}
-  <View style={{
-    flex: 1,
-    justifyContent: 'center',
-    marginLeft: 10,
-    height: 120,
-  }}>
-    <View style={{ marginBottom: 10 }}>
-      <Button title="Roll Dice" onPress={rollDice} disabled={dicePool.length === 0} />
-    </View>
-    <View>
-      <Button title="Clear" onPress={clearPool} color="gray" />
-    </View>
-  </View>
-    </View>
+            {/* Buttons section - takes 1/3 of width */}
+            <View style={{
+                flex: 1,
+                justifyContent: 'center',
+                marginLeft: 10,
+                height: 120,
+            }}>
+                <View style={{ marginBottom: 10 }}>
+                <Button title="Roll Dice" onPress={rollDice} disabled={dicePool.length === 0} />
+                </View>
+                <View>
+                <Button title="Clear" onPress={clearPool} color="gray" />
+                </View>
+            </View>
 
+
+    </View>
+        <View style={diceStyles.divider}>
+
+        </View>
 
       <ScrollView style={diceStyles.middleScroll}>
         {/* Dice to be rolled */}
   <View style={diceStyles.poolContainer}>
-    <View style={diceStyles.divider} />
+   
     <Text style={diceStyles.poolLabel}>Dice Pool:</Text>
     <View style={diceStyles.poolDiceWrapper}>
       {dicePool.map((die, index) => (
@@ -450,17 +460,31 @@ const loadPool = (name: string) => {
 ))}
     </View>
   </View>
-  {/* Add results here with symbols?? */}
+  
 
-  {/* Results textually*/}
-  <View style={diceStyles.tallyContainer}>
-  <Text style={diceStyles.poolLabel}>Tally:</Text>
-  <Text>Successes: {tally.netSuccess >= 0 ? tally.netSuccess : 0}</Text>
-  <Text>Failures: {tally.netSuccess < 0 ? Math.abs(tally.netSuccess) : 0}</Text>
-  <Text>Advantages: {tally.netAdvantage >= 0 ? tally.netAdvantage : 0}</Text>
-  <Text>Threats: {tally.netAdvantage < 0 ? Math.abs(tally.netAdvantage) : 0}</Text>
-  <Text>Triumphs: {tally.triumph}</Text>
-  <Text>Despairs: {tally.despair}</Text>
+  <View style={{ flexDirection: 'row', padding: 10, flexWrap: 'nowrap' }}>
+  {/* Left side (2/3 width) - your dice pool or other content */}
+  <View style={{ flex: 2, paddingRight: 10 }}>
+    {/* Add results here with symbols?? */}
+    <Text>hola</Text>
+  </View>
+
+  {/* Right side (1/3 width) - tally container */}
+  <View style={{ flex: 1, backgroundColor: '#222', padding: 10, borderRadius: 8 }}>
+    <Text style={{ fontWeight: 'bold', color: '#fff', marginBottom: 6 }}>Tally:</Text>
+    <View style={diceStyles.whiteBorder}> 
+        <Text style={{ color: '#eee' }}>Successes: {tally.netSuccess >= 0 ? tally.netSuccess : 0}</Text>
+        <Text style={{ color: '#eee' }}>Failures: {tally.netSuccess < 0 ? Math.abs(tally.netSuccess) : 0}</Text>
+    </View>
+    <View style={diceStyles.whiteBorder}> 
+        <Text style={{ color: '#eee' }}>Advantages: {tally.netAdvantage >= 0 ? tally.netAdvantage : 0}</Text>
+        <Text style={{ color: '#eee' }}>Threats: {tally.netAdvantage < 0 ? Math.abs(tally.netAdvantage) : 0}</Text>
+    </View>
+    <View style={diceStyles.whiteBorder}> 
+        <Text style={{ color: '#eee' }}>Triumphs: {tally.triumph}</Text>
+        <Text style={{ color: '#eee' }}>Despairs: {tally.despair}</Text>
+    </View>
+  </View>
 </View>
 </ScrollView>
 
@@ -528,10 +552,11 @@ const loadPool = (name: string) => {
     </View>
   </View>
 )}
+
    <View style={{ flex: 1 }}>
   {/* Saved Dice Pools in a scrollable grid */}
   <ScrollView contentContainerStyle={{ padding: 2 }}>
-    <Text style={{ color: 'white', marginBottom: 6 }}>Saved Dice Pools:</Text>
+    <Text style={{ color: 'white', marginBottom: 2 }}>Saved Dice Pools:</Text>
     <View style={{
       flexDirection: 'row',
       flexWrap: 'wrap',
