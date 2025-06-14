@@ -53,8 +53,6 @@ dieText: {
 
 poolContainer: {
   marginBottom: 16,
-  
-  
 },
 
 poolLabel: {

@@ -84,7 +84,7 @@ export default function HomeScreen() {
               <TouchableOpacity style={styles.button} onPress={() => router.push('/Info')}>
                 <Text style={styles.buttonText}>Combat Info</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button} onPress={() => router.push('/Games')}>
+              <TouchableOpacity style={styles.button} onPress={() => router.push('/GameList')}>
                 <Text style={styles.buttonText}>Gambling Games</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.button} onPress={() => router.push('/Shop')}>
