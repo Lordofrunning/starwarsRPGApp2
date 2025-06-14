@@ -3,7 +3,9 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   Dimensions,
   StyleSheet,
+  Switch,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -23,147 +25,211 @@ const ICON_LIFETIME = 1000;
 const SPAWN_INTERVAL = 700;
 const MIN_DISTANCE = 60;
 
-export default function TopHalfReactionGame() {
-  const [icons, setIcons] = useState<IconData[]>([]);
-  const [bottomIcons, setBottomIcons] = useState<IconData[]>([]);
-  const [player1Score, setPlayer1Score] = useState(0);
-  const [player2Score, setPlayer2Score] = useState(0);
-  const iconId = useRef(0);
+export default function TwoPlayerGame() {
+   
+  const [playing, setPlaying] = useState(false);
+  const [winner, setWinner] = useState<"P1" | "P2" | null>(null);
+const [topIcons, setTopIcons] = useState<IconData[]>([]);
+const [bottomIcons, setBottomIcons] = useState<IconData[]>([]);
 
-  function isPositionValid(x: number, y: number, icons: IconData[]) {
-    for (const icon of icons) {
-      const dx = icon.x - x;
-      const dy = icon.y - y;
-      if (Math.sqrt(dx * dx + dy * dy) < MIN_DISTANCE) return false;
-    }
-    return true;
-  }
+  // Settings
+  const [endScore, setEndScore] = useState(20);
+  const [spawnSpeed, setSpawnSpeed] = useState(700);
+  const [randomSpawnCount, setRandomSpawnCount] = useState(true);
 
-  function getRandomPosition(top: number, bottom: number, existing: IconData[]) {
-    let x, y, tries = 0;
-    do {
-      x = Math.random() * (width - ICON_SIZE);
-      y = top + Math.random() * (bottom - top - ICON_SIZE);
-      tries++;
-      if (tries > 30) break;
-    } while (!isPositionValid(x, y, existing));
-    return { x, y };
-  }
+  const startGame = () => {
+    setWinner(null);
+    setPlaying(true);
+  };
 
-  function spawnIcons() {
-    const count = Math.floor(Math.random() * 3) + 1;
-    setIcons((current) => {
-      const newIcons: IconData[] = [];
-      for (let i = 0; i < count; i++) {
-        iconId.current++;
-        const pos = getRandomPosition(0, height / 2, [...current, ...newIcons]);
-        newIcons.push({
-          id: iconId.current,
-          appearedAt: Date.now(),
-          tapped: false,
-          x: pos.x,
-          y: pos.y,
-        });
-      }
-      return [...current, ...newIcons];
-    });
-  }
+  const handleWin = (who: "P1" | "P2") => {
+    setWinner(who);
+    setPlaying(false);
 
-  function spawnBottomIcons() {
-    const count = Math.floor(Math.random() * 3) + 1;
-    setBottomIcons((current) => {
-      const newIcons: IconData[] = [];
-      for (let i = 0; i < count; i++) {
-        iconId.current++;
-        const pos = getRandomPosition(height / 2, height, [...current, ...newIcons]);
-        newIcons.push({
-          id: iconId.current,
-          appearedAt: Date.now(),
-          tapped: false,
-          x: pos.x,
-          y: pos.y,
-        });
-      }
-      return [...current, ...newIcons];
-    });
-  }
-
-  useEffect(() => {
-    const cleaner = setInterval(() => {
-      const now = Date.now();
-      setIcons((current) =>
-        current.filter((icon) => now - icon.appearedAt < ICON_LIFETIME && !icon.tapped)
-      );
-      setBottomIcons((current) =>
-        current.filter((icon) => now - icon.appearedAt < ICON_LIFETIME && !icon.tapped)
-      );
-    }, 200);
-    return () => clearInterval(cleaner);
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(spawnIcons, SPAWN_INTERVAL);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(spawnBottomIcons, SPAWN_INTERVAL);
-    return () => clearInterval(interval);
-  }, []);
-
-  const handleIconTap = (id: number, isTop: boolean) => {
-    const now = Date.now();
-    if (isTop) {
-      setIcons((prev) =>
-        prev.map((icon) => {
-          if (icon.id === id && !icon.tapped) {
-            const timeAlive = now - icon.appearedAt;
-            const score = timeAlive < 300 ? 3 : timeAlive < 600 ? 2 : 1;
-            setPlayer1Score((s) => s + score);
-            return { ...icon, tapped: true };
-          }
-          return icon;
-        })
-      );
-    } else {
-      setBottomIcons((prev) =>
-        prev.map((icon) => {
-          if (icon.id === id && !icon.tapped) {
-            const timeAlive = now - icon.appearedAt;
-            const score = timeAlive < 300 ? 3 : timeAlive < 600 ? 2 : 1;
-            setPlayer2Score((s) => s + score);
-            return { ...icon, tapped: true };
-          }
-          return icon;
-        })
-      );
-    }
+    // Optional: Auto return to menu after 3 seconds
+    setTimeout(() => {
+      setWinner(null);
+    }, 3000);
   };
 
   return (
-    <View style={styles.container}>
+    <View style={{ flex: 1 }}>
       <Stack.Screen options={{ headerShown: false }} />
+      {/* GAME LAYER — always rendered */}
+      <GameArea
+        playing={playing}
+        endScore={endScore}
+        spawnSpeed={spawnSpeed}
+        randomSpawnCount={randomSpawnCount}
+        onWin={handleWin}
+      />
+
+      {/* MENU / WINNER OVERLAY */}
+      {(winner !== null || !playing) && (
+        <View style={styles.menuOverlay}>
+          {winner ? (
+            <View style={styles.menuBox}>
+              <Text style={styles.title}>
+                {winner === "P1" ? "Player 1 Wins!" : "Player 2 Wins!"}
+              </Text>
+              <Text style={styles.label}>Returning to menu...</Text>
+            </View>
+          ) : (
+            <View style={styles.menuBox}>
+              <Text style={styles.title}>2 Player Reaction Game</Text>
+
+              <Text style={styles.label}>End Score</Text>
+              <TextInput
+                keyboardType="numeric"
+                style={styles.input}
+                value={endScore.toString()}
+                onChangeText={(text) => setEndScore(Number(text))}
+              />
+
+              <Text style={styles.label}>Spawn Speed (ms)</Text>
+              <TextInput
+                keyboardType="numeric"
+                style={styles.input}
+                value={spawnSpeed.toString()}
+                onChangeText={(text) => setSpawnSpeed(Number(text))}
+              />
+
+              <View style={styles.row}>
+                <Text style={styles.label}>Random Spawn Count</Text>
+                <Switch value={randomSpawnCount} onValueChange={setRandomSpawnCount} />
+              </View>
+
+              <TouchableOpacity onPress={startGame} style={styles.startButton}>
+                <Text style={styles.startText}>Start Game</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        </View>
+      )}
+    </View>
+  );
+}
+function GameArea({
+  playing,
+  endScore,
+  spawnSpeed,
+  randomSpawnCount,
+  onWin,
+}: {
+  playing: boolean;
+  endScore: number;
+  spawnSpeed: number;
+  randomSpawnCount: boolean;
+  onWin: (who: "P1" | "P2") => void;
+}) {
+  const [scoreP1, setScoreP1] = useState(0);
+  const [scoreP2, setScoreP2] = useState(0);
+  const [topIcons, setTopIcons] = useState<IconData[]>([]);
+  const [bottomIcons, setBottomIcons] = useState<IconData[]>([]);
+  const iconIdRef = useRef(0);
+
+  useEffect(() => {
+    if (!playing) {
+      setScoreP1(0);
+      setScoreP2(0);
+      setTopIcons([]);
+      setBottomIcons([]);
+      return;
+    }
+
+    const interval = setInterval(() => {
+      spawnIcons(setTopIcons, 0, height / 2);
+      spawnIcons(setBottomIcons, height / 2, height);
+    }, spawnSpeed);
+
+    const cleaner = setInterval(() => {
+      const now = Date.now();
+      setTopIcons((icons) => icons.filter((icon) => now - icon.appearedAt < ICON_LIFETIME && !icon.tapped));
+      setBottomIcons((icons) => icons.filter((icon) => now - icon.appearedAt < ICON_LIFETIME && !icon.tapped));
+    }, 300);
+
+    return () => {
+      clearInterval(interval);
+      clearInterval(cleaner);
+    };
+  }, [playing, spawnSpeed]);
+
+  useEffect(() => {
+    if (scoreP1 >= endScore) onWin("P1");
+    else if (scoreP2 >= endScore) onWin("P2");
+  }, [scoreP1, scoreP2]);
+
+  function spawnIcons(setIcons: Function, minY: number, maxY: number) {
+    const count = randomSpawnCount ? Math.floor(Math.random() * 2) + 1 : 1;
+    setIcons((prev: IconData[]) => {
+      const newIcons: IconData[] = [];
+      for (let i = 0; i < count; i++) {
+        iconIdRef.current++;
+        newIcons.push({
+          id: iconIdRef.current,
+          appearedAt: Date.now(),
+          tapped: false,
+          x: Math.random() * (width - ICON_SIZE),
+          y: minY + Math.random() * (maxY - minY - ICON_SIZE),
+        });
+      }
+      return [...prev, ...newIcons];
+    });
+  }
+
+  const handleTap = (iconId: number, area: "top" | "bottom") => {
+    const now = Date.now();
+    const setIcons = area === "top" ? setTopIcons : setBottomIcons;
+    const icons = area === "top" ? topIcons : bottomIcons;
+
+    const tappedIcon = icons.find((icon) => icon.id === iconId);
+    if (!tappedIcon || tappedIcon.tapped) return;
+
+    const timeAlive = now - tappedIcon.appearedAt;
+    const points = timeAlive < 300 ? 3 : timeAlive < 600 ? 2 : 1;
+
+    if (area === "top") {
+      setScoreP1((s) => s + points);
+    } else {
+      setScoreP2((s) => s + points);
+    }
+
+    setIcons((prev: IconData[]) =>
+      prev.map((icon) =>
+        icon.id === iconId ? { ...icon, tapped: true } : icon
+      )
+    );
+  };
+
+  return (
+    <View style={{ flex: 1 }}>
+      
       <View style={styles.topHalf}>
-        <Text style={styles.scoreText}>P1: {player1Score}</Text>
-        {icons.map((icon) => (
+        <Text style={styles.scoreText}>Player 1: {scoreP1}</Text>
+        {topIcons.map((icon) => (
           <TouchableOpacity
             key={icon.id}
-            style={[styles.icon, { left: icon.x, top: icon.y }]}
-            onPress={() => handleIconTap(icon.id, true)}
-            activeOpacity={0.7}
+            style={[
+              styles.icon,
+              { top: icon.y, left: icon.x, backgroundColor: icon.tapped ? "#888" : "#feda4a" },
+            ]}
+            onPress={() => handleTap(icon.id, "top")}
           >
             <Text style={styles.iconText}>🎯</Text>
           </TouchableOpacity>
         ))}
       </View>
+
       <View style={styles.bottomHalf}>
-        <Text style={styles.scoreText}>P2: {player2Score}</Text>
+        <Text style={styles.scoreText}>Player 2: {scoreP2}</Text>
         {bottomIcons.map((icon) => (
           <TouchableOpacity
             key={icon.id}
-            style={[styles.icon, { left: icon.x, top: icon.y - height / 2 }]} // shift y upward since it's inside bottomHalf
-            onPress={() => handleIconTap(icon.id, false)}
-            activeOpacity={0.7}
+            style={[
+              styles.icon,
+              { top: icon.y - height / 2, left: icon.x, backgroundColor: icon.tapped ? "#888" : "#4af" },
+            ]}
+            onPress={() => handleTap(icon.id, "bottom")}
           >
             <Text style={styles.iconText}>🎯</Text>
           </TouchableOpacity>
@@ -271,5 +337,5 @@ const styles = StyleSheet.create({
     color: "#bbb",
     marginTop: 10,
   },
-  
+
 });
