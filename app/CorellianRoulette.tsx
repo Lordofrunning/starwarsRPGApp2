@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   pointer: {
   position: "absolute",
   top: "50%",
-  right: 10, // nudges it outside the spinner
+  right: 10, 
   marginTop: -10,
   width: 0,
   height: 0,
