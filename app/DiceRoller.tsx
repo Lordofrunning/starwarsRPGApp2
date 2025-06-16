@@ -4,10 +4,9 @@ import { useEffect } from 'react';
 import { Stack, useRouter } from 'expo-router';
 import { default as React, useState } from 'react';
 import { Button, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { useDiceSettings } from './DiceSettingsContext';
 import { styles } from './index.styles';
 import SettingsDrawer from './SettingsDrawer'; // Adjust path if needed
-
-
 const diceStyles = StyleSheet.create({
   container: {
     flex: 1,
@@ -69,7 +68,7 @@ poolDiceWrapper: {
   flexDirection: 'row',
   flexWrap: 'wrap',
   justifyContent: 'center',
-  backgroundColor: 'white',
+  backgroundColor: '#FBFBFB',//The same off-white as the dice pics
 },
 
 resultsContainer: {
@@ -106,7 +105,7 @@ divider: {
   width: '100%',
 },
 whiteBorder: {
-    borderColor: 'white',
+    borderColor: '#888888',//I changed this from white to grey
     borderWidth: 2,
     padding: 2
 }
@@ -135,7 +134,7 @@ const advantageDie = [
 ];
 
 const yellowDie = [
-  { src: require('../assets/dice/yellow/side7_blank.jpg'), characters: {} },
+  { src: require('../assets/dice/yellow/side7_blank.jpg'), characters: {}},
   { src: require('../assets/dice/yellow/side2_1advantage.jpg'), characters: { advantage: 1 } },
   { src: require('../assets/dice/yellow/side3_2suc.jpg'), characters: { success: 2 } },
   { src: require('../assets/dice/yellow/side4_1suc.jpg'), characters: { success: 1 } },
@@ -170,7 +169,7 @@ const setbackDie = [
 ];
 
 const redDie = [
-  { src: require('../assets/dice/red/side7_blank.jpg'), characters: {} },//customWeight ? { failure: 1, threat: 1 } : 
+  { src: require('../assets/dice/red/side7_blank.jpg'), characters:{} }, 
   { src: require('../assets/dice/red/side2_1thr.jpg'), characters: { threat: 1 } },
   { src: require('../assets/dice/red/side3_1fail.jpg'), characters: { failure: 1 } },
   { src: require('../assets/dice/red/side4_2thr.jpg'), characters: { threat: 2 } },
@@ -233,6 +232,7 @@ const diceIcons: Record<DieType, any> = {
 
 
 export default function DiceRoller() {
+  const { diceOption1, diceOption2, diceOption3 } = useDiceSettings();
   const router = useRouter();
   const [dicePool, setDicePool] = useState<DicePoolItem[]>([]);
   const [results, setResults] = useState<any[]>([]);
@@ -244,6 +244,13 @@ const [tally, setTally] = useState({
   triumph: 0,
   despair: 0
 });
+if(diceOption1){
+  yellowDie[0] = { src: require('../assets/dice/yellow/side6_1ad_1suc.jpg'), characters: { success: 1, advantage: 1 } }
+  redDie[0] = { src: require('../assets/dice/red/side5_1thr_1fail.jpg'), characters: { failure: 1, threat: 1 } }
+} else {
+  yellowDie[0] = { src: require('../assets/dice/yellow/side7_blank.jpg'), characters: {}}
+  redDie[0] = { src: require('../assets/dice/red/side7_blank.jpg'), characters:{} }
+}
 
   const addDieToPool = (type: DieType) => {
     setDicePool([...dicePool, { type }]);
