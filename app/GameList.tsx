@@ -16,7 +16,7 @@ export default function NPCButtonsPage() {
 
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.sideButton}>
+        <TouchableOpacity onPress={() => router.push('/')} style={styles.sideButton}>
           <Text style={styles.menuArrow}>←</Text>
         </TouchableOpacity>
 

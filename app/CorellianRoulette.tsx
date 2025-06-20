@@ -1,8 +1,10 @@
+import { Stack, useRouter } from 'expo-router';
 import React, { useRef, useState } from "react";
 import {
     Animated,
     Dimensions,
     Easing,
+    Image,
     Modal,
     StyleSheet,
     Text,
@@ -10,19 +12,44 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
-const spinnerSlots = [
+
+
+const initialSlots = [
   { label: "x1.1", multiplier: 1.1, description: "you gain 1/5 of your bet!" },
   { label: "x0.6", multiplier: 0.6, description: "you lose 1/5 of your bet!." }, 
   { label: "x1.3", multiplier: 1.3, description: "you gain 1/2 of your bet!" },
-   { label: "Zap", effect: "" , description: "take 3 stain and 3 wounds! " },
+  { label: "Zap", effect: "" , description: "take 3 stain and 3 wounds! " },
   { label: "DRAIN", multiplier: 0 , description: "you lose your bet!" },
   { label: "x1.4", multiplier: 1.4, description: "you double your bet!" },
   { label: "x1.0", multiplier: 1.0, description: "you gain nothing" },
-  { label: "x0.3", multiplier: 0.3 , description: "you lose half your bet" },
-  { label: "Zap", effect: "" , description: "take 3 stain and 3 wounds! " },
+  { label: "x0.6", multiplier: 0.6 , description: "you lose half your bet" },
+  { label: "Zap", effect: "" , description: "take 5 wounds! " },
   { label: "x0.9", multiplier: .9 , description: "Your bet is multiplied by 2." },
-  { label: "DOUBLE DRAIN", multiplier: -1 , description: "you lose your bet, and that much again in credits" },
+  { label: "Mystery DRAIN", effect: "mystery", description: "you lose your bet, and that much again in credits" },
   { label: "x1.1", multiplier: 1.1, description: "you gain 1/5 of your bet!" },
+];
+
+const mysteryDrainOutcomes = [
+  {
+    description: "You lose all your credits!",
+    apply: (credits: number) => 0,
+  },
+  {
+    description: "You lose half your credits, and that much again from your account",
+    apply: (credits: number) => Math.floor(credits * 0.5),
+  },
+  {
+    description: "You lose half your credits, and take 4 wounds",
+    apply: (credits: number) => Math.floor(credits * 0.5),
+  },
+  {
+    description: "You take 2 wounds, 5 Strain, and lose 15% of your credits",
+    apply: (credits: number) => Math.floor(credits * 0.85),
+  },
+  {
+    description: "You lose all your credits, and that much again from your account",
+    apply: (credits: number) => Math.max(credits * - 1),
+  },
 ];
 
 const { width } = Dimensions.get("window");
@@ -30,6 +57,7 @@ const WHEEL_SIZE = width * 0.8;
 const wheelOuter = width * 0.9;
 
 export default function Spinner() {
+    const router = useRouter();
   const spinAnim = useRef(new Animated.Value(0)).current;
   const [resultIndex, setResultIndex] = useState<number | null>(null);
   const [isSpinning, setIsSpinning] = useState(false);
@@ -37,66 +65,72 @@ export default function Spinner() {
   // state stuff? 
   const [credits, setCredits] = useState<number | null>(null); // null = not started
    const [creditInput, setCreditInput] = useState("1000");
+   const [currentSlot, setCurrentSlot] = useState<any | null>(null);
+const [customDescription, setCustomDescription] = useState<string | null>(null);
 
 const [startModalVisible, setStartModalVisible] = useState(true);
 const [spins, setSpins] = useState(0);
+// for saving the origonal slot numbers
+const [spinnerSlots, setSpinnerSlots] = useState(() =>
+  JSON.parse(JSON.stringify(initialSlots)) // deep copy to avoid mutation
+);
+const resetSpinnerSlots = () => {
+  setSpinnerSlots(JSON.parse(JSON.stringify(initialSlots))); // reset to original
+};
 
- const spin = () => {
-  if (isSpinning || credits === null || credits <= 0 ) return;
 
+const spin = () => {
+  if (isSpinning || credits === null || credits <= 0) return;
   setIsSpinning(true);
   const selected = Math.floor(Math.random() * spinnerSlots.length);
-  setResultIndex(selected);
-
-  // Step 1: Deduct the bet upfront
- 
-
+  setResultIndex(selected); // used for displaying result in modal
   const segmentAngle = 360 / spinnerSlots.length;
   const spinAmount = 360 * 5;
   const endAngle = spinAmount + segmentAngle * selected * -1;
-
   spinAnim.setValue(0);
 
- Animated.timing(spinAnim, {
-  toValue: endAngle,
-  duration: 3000,
-  useNativeDriver: true,
-  easing: Easing.out(Easing.cubic),
-}).start(() => {
-  const result = spinnerSlots[selected];
 
-  if (credits !== null) {
-    // Apply multiplier if it's a number (normal outcome)
-    if (typeof result.multiplier === "number") {
-      const newCredits = Math.floor(credits * result.multiplier);
-      setCredits(newCredits);
+  Animated.timing(spinAnim, {
+    toValue: endAngle,
+    duration: 3000,
+    useNativeDriver: true,
+    easing: Easing.out(Easing.cubic),
+  }).start(() => {
+const result = spinnerSlots[selected];
+setCurrentSlot(result); // 🟢 store the slot for the modal
+
+
+if (credits !== null) {
+  if (typeof result.multiplier === "number") {
+    const newCredits = Math.floor(credits * result.multiplier);
+    setCredits(newCredits);
+    setCustomDescription(null); // no custom text needed
+  }else if (result.effect === "mystery") {
+      const randomEffect = mysteryDrainOutcomes[Math.floor(Math.random() * mysteryDrainOutcomes.length)];
+      const updatedCredits = randomEffect.apply(credits);
+      setCredits(updatedCredits);
+      setCustomDescription(randomEffect.description); // 💥 Set the effect description
     }
-
-    // You could handle effects like "Zap" here too if needed
-  }
-
-  // Bump up all positive multipliers by +0.1
-  spinnerSlots.forEach(slot => {
-    if (typeof slot.multiplier === "number" && slot.multiplier > 1) {
-      slot.multiplier = parseFloat((slot.multiplier + 0.1).toFixed(1));
-      slot.label = `x${slot.multiplier.toFixed(1)}`;
-    }
+}
+    // Show modal first — delay updates
+    setModalVisible(true);
+    setSpins(prev => prev + 1);
+    setIsSpinning(false);
   });
-
-  setSpins(prev => prev + 1);
-  setIsSpinning(false);
-  setModalVisible(true);
-});
-
-
 };
 
-    const generateDescription = (slot) => {
+ 
+
+    const generateDescription = (slot, customDesc?: string) => {
   const { label, multiplier } = slot;
+
+  if (customDesc && slot.effect === "mystery") {
+    return `Mystery Drain! ${customDesc}`;
+  }
 
   if (label === "Zap") return "Take 3 strain and 3 wounds!";
   if (label === "DRAIN") return "You lose your bet!";
-  if (label === "DOUBLE DRAIN") return "You lose your bet, and that much again in credits.";
+  if (label === "Mystery DRAIN") return "Missed custom desc.....";
 
   if (multiplier === 1.0) return "You break even.";
 
@@ -121,8 +155,32 @@ const [spins, setSpins] = useState(0);
 
   return (
     <View style={styles.container}>
+        <Stack.Screen options={{ headerShown: false }} />
+        {/* header here */}
+        <View style={styles.header}>
+                <TouchableOpacity onPress={() => router.push('/GameList')} style={styles.sideButton}>
+                  <Text style={styles.menuArrow}>←</Text>
+                </TouchableOpacity>
         
+                <View style={styles.logoContainer}>
+                  <Image
+                    source={require('../assets/images/logos/rpg_main_logo.png')}
+                    style={styles.smallImage}
+                    resizeMode="contain"
+                  />
+                </View>
+        
+                <TouchableOpacity onPress={() => console.log('Profile pressed')} style={styles.sideButton}>
+                  <Image
+                    source={require('../assets/images/empty_profile_pic.png')}
+                    style={styles.profileImage}
+                  />
+                </TouchableOpacity>
+              </View>
+         
+
         {credits === null && (
+            // start menue/ credit input modal
   <Modal
     visible={startModalVisible}
     transparent
@@ -170,13 +228,32 @@ const [spins, setSpins] = useState(0);
   >
     <View style={styles.modalOverlay}>
       <View style={styles.modalContent}>
-        <Text style={styles.modalHeader}>{spinnerSlots[resultIndex].label}</Text>
+         <Text style={styles.modalHeader}>{currentSlot?.label ?? ""}</Text>
         <Text style={styles.modalDescription}>
-            {generateDescription(spinnerSlots[resultIndex])}
-        </Text>
+  {currentSlot ? generateDescription(currentSlot, customDescription ?? undefined) : ""}
+</Text>
         <TouchableOpacity
           style={styles.closeButton}
-          onPress={() => setModalVisible(false)}
+          onPress={() => {
+  setModalVisible(false);
+  setCustomDescription(null);
+  setCurrentSlot(null);
+
+  // THEN apply +0.1x updates
+  setSpinnerSlots(prevSlots =>
+    prevSlots.map(slot => {
+      if (typeof slot.multiplier === "number" && slot.multiplier > 0) {
+        const newMultiplier = parseFloat((slot.multiplier + 0.1).toFixed(1));
+        return {
+          ...slot,
+          multiplier: newMultiplier,
+          label: `x${newMultiplier.toFixed(1)}`,
+        };
+      }
+      return slot;
+    })
+  );
+}}
         >
           <Text style={styles.closeButtonText}>Close</Text>
         </TouchableOpacity>
@@ -232,6 +309,32 @@ const [spins, setSpins] = useState(0);
         </Text>
       )}
 
+      <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 60, padding: 30 }}>
+  <TouchableOpacity
+    style={[styles.closeButton, { flex: 1, borderColor: 'navy', borderWidth: 2, justifyContent: 'center', alignItems: 'center' }]}
+    onPress={() => {
+      setModalVisible(false);
+      resetSpinnerSlots();
+      setCredits(null);
+      setSpins(0);
+      router.push("./GameList");
+    }}
+  >
+    <Text style={styles.closeButtonText}>Close</Text>
+  </TouchableOpacity>
+
+  <TouchableOpacity
+    style={[styles.closeButton, { flex: 1, borderColor: 'navy', borderWidth: 2, justifyContent: 'center', alignItems: 'center'  }]}
+    onPress={() => {
+      setModalVisible(false);
+      resetSpinnerSlots();
+      setCredits(null);
+      setSpins(0);
+    }}
+  >
+    <Text style={[styles.closeButtonText, {}]}>Restart</Text>
+  </TouchableOpacity>
+</View>
       
     </View>
     
@@ -241,7 +344,7 @@ const [spins, setSpins] = useState(0);
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    paddingTop: 60,
+    paddingTop: 0,
     backgroundColor: 'grey',
     flex: 1,
   },
@@ -360,4 +463,107 @@ input: {
   width: "100%",
   backgroundColor: "#fff",
 },
+
+// header stuff here
+  containerH: {
+    flex: 1,
+    backgroundColor: '#D3D3D3', // light grey
+    
+  },
+  transparentContainer: {
+    flex: 1, 
+   
+
+  },
+   header: {
+    height: 120,
+    backgroundColor: '#444',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 15,
+    paddingTop: 30,
+    width: '100%',
+    marginBottom: 20,
+  },
+  headerLeft: {
+  height: 120,
+  backgroundColor: '#444',
+  flexDirection: 'row',
+  alignItems: 'center',      // vertical centering in row
+  justifyContent: 'flex-start', // horizontal alignment to left
+  paddingHorizontal: 15,
+  paddingTop: 30,
+},
+ headerSmall: {
+    height: 80,
+    backgroundColor: '#444',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 15,
+    paddingTop: 30,
+    
+  
+  },
+  menuText: {
+    fontSize: 24,
+    color: '#fff',
+  },
+  menuArrow: {
+    fontSize: 60,
+    color: '#fff'
+  },
+  smallMenuArrow: {
+    fontSize: 30,
+    color: '#fff'
+  },
+  menuArrowTrent: {
+    fontSize: 60,
+    alignItems: 'center',
+    color: '#fff'
+  },
+  headerTitle: {
+    fontSize: 20,
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  headerTitleCenter: {
+    fontSize: 20,
+    color: '#fff',
+    alignContent: 'center',
+  },
+  profileImage: {
+    width: 36,
+    height: 36,
+    borderRadius: 18, // makes it circular
+    borderWidth: 1,
+    borderColor: '#fff',
+  },
+  sideButton: {
+  width: 50,
+  alignItems: 'center',
+},
+sideButton2: {
+  width: 50,
+  alignItems: 'center',
+    color: '#DDDDDD',
+},
+logoContainer: {
+  position: 'absolute',
+  left: 0,
+  right: 0,
+  top: 0,
+  bottom: 0,
+  justifyContent: 'center',
+  alignItems: 'center',
+  paddingTop: 20,
+},
+smallImage: {
+    width: '50%',
+    height: '100%',
+
+  },
+
+
 });
