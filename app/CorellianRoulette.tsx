@@ -2,29 +2,29 @@ import { Audio } from 'expo-av';
 import { Stack, useRouter } from 'expo-router';
 import React, { useRef, useState } from "react";
 import {
-    Animated,
-    Dimensions,
-    Easing,
-    Image,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Animated,
+  Dimensions,
+  Easing,
+  Image,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 
 const initialSlots = [
-  { label: "x1.1", multiplier: 1.1, description: "you gain 1/5 of your bet!" },
-  { label: "x0.6", multiplier: 0.6, description: "you lose 1/5 of your bet!." }, 
-  { label: "x1.3", multiplier: 1.3, description: "you gain 1/2 of your bet!" },
+  { label: "x0.9", multiplier: 0.9, description: "you gain 1/5 of your bet!" },
+  { label: "x0.5", multiplier: 0.5, description: "you lose 1/5 of your bet!." }, 
+  { label: "x1.2", multiplier: 1.2, description: "you gain 1/2 of your bet!" },
   { label: "Zap", effect: "" , description: "take 3 stain and 3 wounds! " },
   { label: "DRAIN", multiplier: 0 , description: "you lose your bet!" },
-  { label: "x1.0", multiplier: 1.4, description: "you double your bet!" },
+  { label: "x1.0", multiplier: 1.0, description: "you double your bet!" },
    { label: "Zap", effect: "" , description: "take 4 stain and 3 wounds! " },
-  { label: "x0.6", multiplier: 0.6 , description: "you lose half your bet" },
+  { label: "x0.4", multiplier: 0.4 , description: "you lose half your bet" },
   { label: "Zap", effect: "" , description: "take 5 wounds! " },
   { label: "x0.9", multiplier: .9 , description: "Your bet is multiplied by 2." },
   { label: "Mystery DRAIN", effect: "mystery", description: "you lose your bet, and that much again in credits" },
@@ -64,6 +64,7 @@ export default function Spinner() {
   const [resultIndex, setResultIndex] = useState<number | null>(null);
   const [isSpinning, setIsSpinning] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [confirmationVisible, setConfirmationVisible] = useState(false);
   // state stuff? 
   const [credits, setCredits] = useState<number | null>(null); // null = not started
    const [creditInput, setCreditInput] = useState("1000");
@@ -260,12 +261,13 @@ if (credits !== null) {
   setCustomDescription(null);
   setCurrentSlot(null);
 
-  setSpinnerSlots(prevSlots =>
+ setSpinnerSlots(prevSlots =>
   prevSlots.map(slot => {
     if (
       typeof slot.multiplier === "number" &&
       slot.multiplier > 0 &&
-      spins % 2 === 1 // Only update every 2nd spin
+      spins < 10 &&                  // ✅ Only increase if spins are less than 10
+      spins % 2 === 1                // ✅ Still only on every 2nd spin
     ) {
       const newMultiplier = parseFloat((slot.multiplier + 0.1).toFixed(1));
       return {
@@ -312,11 +314,11 @@ if (credits !== null) {
         
         <Text style={styles.modalHeaderMedium}>Dual/Spinning</Text>
         <Text style={styles.modalDescriptionBig}>
-            for going Head to Head with person, a 2v2, or even 3v3
-            {"\n\n"}players battle to end with the most amount of credits. if playing in teams, you add your credits after locking them in.
+            for going Head to Head with another person, a 2v2, or even 3v3
+             {"\n\n"} the best way is to have 2 wheels going at the same time. but you could go one after the other.
+            {"\n\n"}players battle to end with the most amount of credits. if playing in teams, you add your credits and your teamates credits after locking them in.
             {"\n\n"} you may stop spinning at any time, and lock in your current credit amount
             {"\n\n"} each player/team spins their own wheel.
-
 
 
         </Text>
@@ -324,6 +326,51 @@ if (credits !== null) {
       <TouchableOpacity style={styles.closeButtonBig} onPress={() => setInfoModalVisible(false)}>
         <Text style={styles.closeButtonTextBig}>Got it</Text>
       </TouchableOpacity>
+    </View>
+  </View>
+</Modal>
+
+  {/* lock in modal/winning modal */}
+<Modal
+  visible={confirmationVisible}
+  transparent
+  animationType="fade"
+  onRequestClose={() => setConfirmationVisible(false)}
+>
+  <View style={styles.modalOverlay}>
+    <View style={[styles.modalContent, { padding: 24 }]}>
+      <Text style={styles.modalHeader}>Credits Locked In</Text>
+      <Text style={styles.modalDescription}>
+        You locked in {credits} credits!
+      </Text>
+
+      <TouchableOpacity
+        style={[styles.closeButton, { marginTop: 20 }]}
+        onPress={() => {
+          setConfirmationVisible(false);
+          setModalVisible(false);
+          resetSpinnerSlots();
+          setCredits(1000);
+          setSpins(0);
+        }}
+      >
+        <Text style={styles.closeButtonText}>Play Again</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={[styles.closeButton, { marginTop: 20 }]}
+        onPress={() => {
+          setConfirmationVisible(false);
+          setModalVisible(false);
+          resetSpinnerSlots();
+          setCredits(1000);
+          setSpins(0);
+          router.push('./')
+        }}
+      >
+        <Text style={styles.closeButtonText}>Exit</Text>
+      </TouchableOpacity>
+
     </View>
   </View>
 </Modal>
@@ -369,11 +416,7 @@ if (credits !== null) {
         <Text style={styles.spinText}>{isSpinning ? "Spinning..." : "SPIN"}</Text>
       </TouchableOpacity>
 
-      {resultIndex !== null && !isSpinning && (
-        <Text style={styles.resultText}>
-          Result: {spinnerSlots[resultIndex].label}
-        </Text>
-      )}
+     
 
       <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 60, padding: 30 }}>
   <TouchableOpacity
@@ -401,6 +444,16 @@ if (credits !== null) {
     <Text style={[styles.closeButtonText, {}]}>Restart</Text>
   </TouchableOpacity>
 </View>
+
+    <TouchableOpacity
+    style={[styles.closeButton, { flex: 1, borderColor: 'navy', borderWidth: 2, justifyContent: 'center', alignItems: 'center', backgroundColor: '#484848', marginBottom: 40, width: '100%'  }]}
+    onPress={() => {
+      setConfirmationVisible(true);
+    }}
+  >
+    <Text style={[styles.closeButtonText, {color: 'white'}]}>Lock in Credits</Text>
+  </TouchableOpacity>
+
       
     </View>
     
