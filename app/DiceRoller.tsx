@@ -112,6 +112,16 @@ whiteBorder: {
 
 });
 
+const symbolImages: Record<string, any> = {
+      success: require('../assets/dice/symbols/Success.png'),
+      advantage: require('../assets/dice/symbols/Advantage.png'),
+      triumph: require('../assets/dice/symbols/Triumph.png'),
+      failure: require('../assets/dice/symbols/Failure.png'),
+      threat: require('../assets/dice/symbols/Threat.png'),
+      despair: require('../assets/dice/symbols/Despair.png'),
+      //light: require('../assets/dice/symbols/light.png'),
+      //dark: require('../assets/dice/symbols/dark.png'),
+    };
 
 const greenDie = [
   { src: require('../assets/dice/green/side1_blank.jpg'), characters: {} },
@@ -244,6 +254,10 @@ const [tally, setTally] = useState({
   triumph: 0,
   despair: 0
 });
+const [narrative, setNarrative] = useState({
+  advantage: 0,
+  threat: 0,
+});
 if(diceOption1){
   yellowDie[0] = { src: require('../assets/dice/yellow/side6_1ad_1suc.jpg'), characters: { success: 1, advantage: 1 } }
   redDie[0] = { src: require('../assets/dice/red/side5_1thr_1fail.jpg'), characters: { failure: 1, threat: 1 } }
@@ -343,7 +357,7 @@ const loadPool = (name: string) => {
     threat += chars.threat || 0;
     despair += chars.despair || 0;
   });
-
+  //if(diceOption2){}
   const netSuccess = success - failure;
   const netAdvantage = advantage - threat;
 
@@ -352,6 +366,10 @@ const loadPool = (name: string) => {
     netAdvantage,
     triumph,
     despair
+  });
+  setNarrative({
+    advantage,
+    threat,
   });
 };
 
@@ -363,6 +381,10 @@ const loadPool = (name: string) => {
     netAdvantage: 0,
     triumph: 0,
     despair: 0
+  });
+  setNarrative({
+    advantage: 0,
+    threat: 0,
   });
 };
 
@@ -473,7 +495,73 @@ const loadPool = (name: string) => {
   {/* Left side (2/3 width) - your dice pool or other content */}
   <View style={{ flex: 2, paddingRight: 10 }}>
     {/* Add results here with symbols?? */}
-    <Text>hola</Text>
+    {/*<Text>Results:</Text>*/}
+    <View style={{ marginTop: 8 }}>
+  {results.length > 0 && (
+    <Text style={{ fontWeight: 'bold', marginBottom: 4, color: '#333' }}>Results:</Text>
+  )}
+  <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+    {(() => {
+      // Sum up all symbols across all dice
+      const totalSymbols: Record<string, number> = {};
+      results.forEach(result => {
+        if (!result) return;
+        const chars = result.characters || {};
+        Object.entries(chars).forEach(([symbol, count]) => {
+          if (typeof count === 'number') {
+            totalSymbols[symbol] = (totalSymbols[symbol] || 0) + count;
+          }
+        });
+      });
+
+      // Calculate net values
+      const netSuccess = (totalSymbols.success || 0) - (totalSymbols.failure || 0);
+      const netAdvantage = (totalSymbols.advantage || 0) - (totalSymbols.threat || 0);
+      const triumph = totalSymbols.triumph || 0;
+      const despair = totalSymbols.despair || 0;
+
+      // Prepare display order and net symbol logic
+      const display: { symbol: string; count: number }[] = [];
+
+      if (netSuccess > 0) {
+        display.push({ symbol: 'success', count: netSuccess });
+      } else if (netSuccess < 0) {
+        display.push({ symbol: 'failure', count: Math.abs(netSuccess) });
+      }
+      if(diceOption2){
+        display.push({ symbol: 'advantage', count: totalSymbols.advantage });
+        display.push({ symbol: 'threat', count: totalSymbols.threat });
+      }else{
+        if (netAdvantage > 0) {
+          display.push({ symbol: 'advantage', count: netAdvantage });
+        } else if (netAdvantage < 0) {
+          display.push({ symbol: 'threat', count: Math.abs(netAdvantage) });
+        }
+      }
+
+      if (triumph > 0) {
+        display.push({ symbol: 'triumph', count: triumph });
+      }
+      if (despair > 0) {
+        display.push({ symbol: 'despair', count: despair });
+      }
+
+      // Render the net symbols
+      return display.map(({ symbol, count }) =>
+        symbolImages[symbol]
+          ? Array.from({ length: count }).map((_, i) => (
+              <Image
+                key={symbol + i}
+                source={symbolImages[symbol]}
+                style={{ width: 32, height: 32, marginRight: 2 }}
+                resizeMode="contain"
+              />
+            ))
+          : null
+      );
+    })()}
+  </View>
+</View>
   </View>
 
   {/* Right side (1/3 width) - tally container */}
@@ -484,8 +572,16 @@ const loadPool = (name: string) => {
         <Text style={{ color: '#eee' }}>Failures: {tally.netSuccess < 0 ? Math.abs(tally.netSuccess) : 0}</Text>
     </View>
     <View style={diceStyles.whiteBorder}> 
-        <Text style={{ color: '#eee' }}>Advantages: {tally.netAdvantage >= 0 ? tally.netAdvantage : 0}</Text>
-        <Text style={{ color: '#eee' }}>Threats: {tally.netAdvantage < 0 ? Math.abs(tally.netAdvantage) : 0}</Text>
+        <Text style={{ color: '#eee' }}>
+          Advantages: {diceOption2 ? 
+        (narrative.advantage) : 
+        (tally.netAdvantage >= 0 ? tally.netAdvantage : 0)}
+        </Text>
+        <Text style={{ color: '#eee' }}>
+          Threats: {diceOption2 ? 
+          (narrative.threat) : 
+          (tally.netAdvantage < 0 ? Math.abs(tally.netAdvantage) : 0)}
+          </Text>
     </View>
     <View style={diceStyles.whiteBorder}> 
         <Text style={{ color: '#eee' }}>Triumphs: {tally.triumph}</Text>

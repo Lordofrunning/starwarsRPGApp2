@@ -52,33 +52,38 @@ const SettingsDrawer: React.FC<SettingsDrawerProps> = ({ visible, onClose }) => 
             <Switch value={diceOption1} onValueChange={setDiceOption1} />
           </View>
           <View style={setstyles.optionRowSmall}>
-            <Text style={setstyles.optionSubText}>Proficiency and Challenge dice are a tiny bit better.</Text>
+            <Text style={setstyles.optionSubText}>Proficiency and Challenge dice are a tiny bit better</Text>
           </View>
           <View style={setstyles.optionRow}>
-            <Text style={setstyles.optionSubText}>Replaces blank space with the two normal symbols for that die.</Text>
+            <Text style={setstyles.optionSubText}>Replaces blank space with the two normal symbols for that die</Text>
           </View>
           <View style={setstyles.optionRow}>
             <Text></Text>
           </View>
 
           <View style={setstyles.optionRow}>
-            <Text style={setstyles.optionText}>Nerf Ability Die</Text>
+            <Text style={setstyles.optionText}>Seperate Narrative Results</Text>
             <Switch value={diceOption2} onValueChange={setDiceOption2} />
           </View>
           <View style={setstyles.optionRow}>
-            <Text style={setstyles.optionSubText}>Green (ability) has the two success and two advantage sides reduced to one.</Text>
+            <Text style={setstyles.optionSubText}>Stops subtracting advantage and threat results from each other</Text>
+          </View>
+          <View style={setstyles.optionRow}>
+            <Text style={setstyles.optionSubText}>During crafting or other situations, threat and advantage can each be used seperately</Text>
           </View>
           <View style={setstyles.optionRow}>
             <Text style={setstyles.optionText}></Text>
           </View>
 
           <View style={setstyles.optionRow}>
-            <Text style={setstyles.optionText}>Dice Option 3</Text>
+            <Text style={setstyles.optionText}>Add Symbols As Dice</Text>
             <Switch value={diceOption3} onValueChange={setDiceOption3} />
           </View>
           <View style={setstyles.optionRow}>
-            <Text style={setstyles.optionSubText}>Proficiency and Challenge dice are a tiny bit better.
-               Replaces blank space with the two normal symbols for that die.</Text>
+            <Text style={setstyles.optionSubText}>Can add success and advantage as automatic results to the pool</Text>
+          </View>
+          <View style={setstyles.optionRow}>
+            <Text style={setstyles.optionSubText}>Some talents, tools, or mods add these to your results</Text>
           </View>
           <View style={setstyles.optionRow}>
             <Text style={setstyles.optionText}></Text>
