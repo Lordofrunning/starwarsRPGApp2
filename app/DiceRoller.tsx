@@ -193,6 +193,14 @@ const redDie = [
   { src: require('../assets/dice/red/side12_1thr.jpg'), characters: { threat: 1 } },
 ];
 
+const successDie = [
+  { src: require('../assets/dice/symbols/Success.png'), characters: { success: 1 } }
+];
+
+const advantageDieSymbol = [
+  { src: require('../assets/dice/symbols/Advantage.png'), characters: { advantage: 1 } }
+];
+
 const forceDie = [
   { src: require('../assets/dice/force/side1_1ds.jpg'), characters: { dark: 1 } },
   { src: require('../assets/dice/force/side2_2ls.jpg'), characters: { light: 2 } },
@@ -210,7 +218,15 @@ const forceDie = [
 
 
 // Assuming you've already imported diceTypes and declared the types
-type DieType = 'Ability' | 'Proficiency' | 'Difficulty' | 'Challenge' | 'Advantage' | 'Setback' | 'force';
+type DieType = 'Ability' | 
+'Proficiency' | 
+'Difficulty' | 
+'Challenge' | 
+'Advantage' | 
+'Setback' |
+'SuccessSymbol' |
+'AdvantageSymbol' |
+'force';
 
 interface DicePoolItem {
   type: DieType;
@@ -226,6 +242,8 @@ const diceTypes: Record<DieType, any[]> = {
   Challenge: redDie,
   Advantage: advantageDie,
   Setback: setbackDie,
+  SuccessSymbol: successDie,
+  AdvantageSymbol: advantageDieSymbol,
   force: forceDie,
 };
 
@@ -236,9 +254,21 @@ const diceIcons: Record<DieType, any> = {
   Challenge: require('../assets/dice/RedDiceFull.jpg'),
   Advantage: require('../assets/dice/BlueDiceFull.jpg'),
   Setback: require('../assets/dice/BlackDiceFull.jpg'),
+  SuccessSymbol: require('../assets/dice/symbols/Success.png'),
+  AdvantageSymbol: require('../assets/dice/symbols/Advantage.png'),
   force: require('../assets/dice/ForceDiceFull.jpg'),
 };
-
+const diceGridOrder: DieType[] = [
+  'Ability',
+  'Proficiency',
+  'Difficulty',
+  'Challenge',
+  'Advantage',
+  'Setback',
+  'SuccessSymbol',
+  'AdvantageSymbol',
+  'force',
+];
 
 
 export default function DiceRoller() {
@@ -395,6 +425,23 @@ const loadPool = (name: string) => {
     //setResults([]);
   //};
 
+  const getDiceGridOrder = () => {
+    const baseOrder: DieType[] = [
+      'Ability',
+      'Proficiency',
+      'Difficulty',
+      'Challenge',
+      'Advantage',
+      'Setback',
+    ];
+    if (diceOption3) {
+      baseOrder.push('SuccessSymbol', 'AdvantageSymbol');
+    }else{
+      baseOrder.push('force');
+    }
+    return baseOrder;
+  };
+
   return (
        <View style={{ flex: 1, position: 'relative', backgroundColor: '#D3D3D3' }}>
       <View style={styles.container}>
@@ -430,21 +477,26 @@ const loadPool = (name: string) => {
                 justifyContent: 'space-between',
                 marginBottom: 8,
                 }}>
-                {Object.keys(diceTypes)
-                    .filter((_, i) => i < 7)  // first 6 dice for grid
-                    .map((type) => (
+                {getDiceGridOrder().map((type) => (
                     <TouchableOpacity
                         key={type}
-                        onPress={() => addDieToPool(type as DieType)}
+                        onPress={() => addDieToPool(type)}
                         style={{
-                        width: '25%',    // ~3 per row
+                        width: (type === 'SuccessSymbol' || type === 'AdvantageSymbol') ? '25%' : '25%',    // ~3 per row
                         aspectRatio: 1,
                         marginBottom: 2,
                         justifyContent: 'center',
                         alignItems: 'center',
                         }}
                     >
-                        <Image source={diceIcons[type as DieType]} style={diceStyles.dieIcon} />
+                        <Image
+                            source={diceIcons[type]}
+                            style={{
+          width: type === 'SuccessSymbol' || type === 'AdvantageSymbol' ? 40 : 50,
+          height: type === 'SuccessSymbol' || type === 'AdvantageSymbol' ? 40 : 50,
+          marginBottom: 4,
+        }}
+        />
                         
                     </TouchableOpacity>
                     ))}
