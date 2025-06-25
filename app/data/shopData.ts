@@ -161,16 +161,16 @@ export const allItems: Item[] = [
   { name: 'Slicer Gear', cost: 500, rarity: 4 , quantity: 2,description: 'open up any computer with these amazing slicers. skills not included', category: "item" },
   
   //Survival
-   { name: 'Crash Survival Kit', cost: 300, rarity: 2 ,quantity: 2, description: 'item discription', category: "item" },
-   { name: 'Ration Pack', cost: 5, rarity: 1 ,quantity: 2, description: 'item discription', category: "item" },
-   { name: 'Breath Mask', cost: 25, rarity: 1 , quantity: 2,description: 'item discription', category: "item" },
-   { name: 'Space Suit', cost: 100, rarity: 1 ,quantity: 2, description: 'item discription', category: "item" },
-   { name: 'Tent', cost: 100, rarity: 1 , quantity: 2,description: 'item discription', category: "item" },
-   { name: 'Thermal Cloak', cost: 200, rarity: 1 ,quantity: 2, description: 'item discription', category: "item" },
+   { name: 'Crash Survival Kit', cost: 300, rarity: 2 ,quantity: 2, description: 'Filled with all the basic necesities for survival in harsh ecosystems', category: "item" },
+   { name: 'Ration Pack', cost: 5, rarity: 1 ,quantity: 2, description: 'food, duh', category: "item" },
+   { name: 'Breath Mask', cost: 25, rarity: 1 , quantity: 2,description: 'provides any type of air needed to survive', category: "item" },
+   { name: 'Space Suit', cost: 100, rarity: 1 ,quantity: 2, description: 'suitable for short space walks. not ready for long term space journies', category: "item" },
+   { name: 'Tent', cost: 100, rarity: 1 , quantity: 2,description: 'provides protection from the elements', category: "item" },
+   { name: 'Thermal Cloak', cost: 200, rarity: 1 ,quantity: 2, description: 'a cloak to help with the extream heat and cold', category: "item" },
 
   // Tools
-  { name: 'Backpack', cost: 50, rarity: 1 , quantity: 2,description: 'item discription' , category: "holds your gear for when you run out of room. "},
-  { name: 'Climbing Gear', cost: 50, rarity: 2 ,quantity: 2, description: 'item discription', category: "comes with a synthrope line, and 4 suction pads that can afix to any surface" },
+  { name: 'Backpack', cost: 50, rarity: 1 , quantity: 2,description: 'need more room? take this handy backpack' , category: "holds your gear for when you run out of room. "},
+  { name: 'Climbing Gear', cost: 50, rarity: 2 ,quantity: 2, description: 'ascend to places you cant reach yourself', category: "comes with a synthrope line, and 4 suction pads that can afix to any surface" },
   { name: 'Datapad', cost: 75, rarity: 1 , quantity: 2,description: 'item discription' , category: "usefull for storing and displaying information"},
   { name: 'Emergency Repair Patch', cost: 25, rarity: 1 ,quantity: 2, description: 'item discription', category: "quick and easy patch for any machine you have" },
   { name: 'Extra Reloads', cost: 25, rarity: 1 , quantity: 2,description: 'item discription', category: "extra packs for when you run out of ammo" },
