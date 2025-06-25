@@ -16,7 +16,7 @@ export default function NPCButtonsPage() {
 
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.sideButton}>
+        <TouchableOpacity onPress={() => router.push('/')} style={styles.sideButton}>
           <Text style={styles.menuArrow}>←</Text>
         </TouchableOpacity>
 
@@ -46,7 +46,7 @@ export default function NPCButtonsPage() {
                       <TouchableOpacity style={styles.buttonBig} onPress={() => router.push('/Pazaak')}>
                         <Text style={styles.buttonText}>Pazaak</Text>
                       </TouchableOpacity>
-                      <TouchableOpacity style={styles.buttonBig} onPress={() => router.push('/Nemeses')}>
+                      <TouchableOpacity style={styles.buttonBig} onPress={() => router.push('/CorellianRoulette')}>
                         <Text style={styles.buttonText}>Corellian Roulette</Text>
                       </TouchableOpacity>
                       <TouchableOpacity style={styles.buttonBig} onPress={() => router.push('/DroidFight')}>

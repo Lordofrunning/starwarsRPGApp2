@@ -169,11 +169,11 @@ export const allItems: Item[] = [
    { name: 'Thermal Cloak', cost: 200, rarity: 1 ,quantity: 2, description: 'item discription', category: "item" },
 
   // Tools
-  { name: 'Backpack', cost: 50, rarity: 1 , quantity: 2,description: 'item discription' , category: "item"},
-  { name: 'Climbing Gear', cost: 50, rarity: 2 ,quantity: 2, description: 'item discription', category: "item" },
-  { name: 'Datapad', cost: 75, rarity: 1 , quantity: 2,description: 'item discription' , category: "item"},
-  { name: 'Emergency Repair Patch', cost: 25, rarity: 1 ,quantity: 2, description: 'item discription', category: "item" },
-  { name: 'Extra Reloads', cost: 25, rarity: 1 , quantity: 2,description: 'item discription', category: "item" },
+  { name: 'Backpack', cost: 50, rarity: 1 , quantity: 2,description: 'item discription' , category: "holds your gear for when you run out of room. "},
+  { name: 'Climbing Gear', cost: 50, rarity: 2 ,quantity: 2, description: 'item discription', category: "comes with a synthrope line, and 4 suction pads that can afix to any surface" },
+  { name: 'Datapad', cost: 75, rarity: 1 , quantity: 2,description: 'item discription' , category: "usefull for storing and displaying information"},
+  { name: 'Emergency Repair Patch', cost: 25, rarity: 1 ,quantity: 2, description: 'item discription', category: "quick and easy patch for any machine you have" },
+  { name: 'Extra Reloads', cost: 25, rarity: 1 , quantity: 2,description: 'item discription', category: "extra packs for when you run out of ammo" },
   { name: 'Fusion Lantern', cost: 150, rarity: 2 , quantity: 2,description: 'item discription' , category: "item"},
   { name: 'Glow Rod', cost: 10, rarity: 1 , quantity: 2,description: 'item discription' , category: "item"},
   { name: 'Jet Pack', cost: 4500, rarity: 7 , quantity: 2,description: 'item discription' , category: "item"},

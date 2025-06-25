@@ -1,8 +1,21 @@
+import { Audio } from 'expo-av';
 import { Stack, useRouter } from 'expo-router';
-import React, { useState } from 'react';
-import { Image, ImageBackground, Modal, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Image, ImageBackground, Modal, Text, TouchableOpacity, View, } from 'react-native';
 
 import { styles } from './index.styles';
+
+useEffect(() => {
+  Audio.setAudioModeAsync({
+    allowsRecordingIOS: false,
+    staysActiveInBackground: false,
+    interruptionModeIOS: 1, // DO_NOT_MIX
+    playsInSilentModeIOS: true,
+    shouldDuckAndroid: false,
+    interruptionModeAndroid: 1, // DO_NOT_MIX
+    playThroughEarpieceAndroid: false,
+  });
+}, []);
 
 export default function HomeScreen() {
   const [menuVisible, setMenuVisible] = useState(false);
