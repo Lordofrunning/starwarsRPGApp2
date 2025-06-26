@@ -1,11 +1,13 @@
 import { Stack, useRouter } from 'expo-router';
 import React, { useState } from "react";
 import {
+    Dimensions,
     Image,
+    ScrollView,
     StyleSheet,
     Text,
     TouchableOpacity,
-    View
+    View,
 } from "react-native";
 import { styles as sharedStyles } from './index.styles';
 
@@ -81,86 +83,166 @@ const sabaccDeck = [
   { id: 'card_back', name: 'Card Back', value: 0, image: require('../assets/Cards/card_back.png') },
 ];
 
+ 
 
 export default function GenerateCard() {
   const router = useRouter();
 
-  const [drawnCard, setDrawnCard] = useState(null);
+  const [hand, setHand] = useState([]);
+  const [folded, setFolded] = useState(false);
+  const [turnEnded, setTurnEnded] = useState(false);
 
-  const drawRandomCard = () => {
+  const drawCard = () => {
+    if (folded || turnEnded) return;
     const random = sabaccDeck[Math.floor(Math.random() * sabaccDeck.length)];
-    setDrawnCard(random);
+    setHand(prev => [...prev, random]);
   };
 
-  return (
-    <View style={sharedStyles.container}>
-        <Stack.Screen options={{ headerShown: false }} />
-      {/* Header */}
-      <View style={sharedStyles.header}>
-        <TouchableOpacity onPress={() => router.push('/')} style={sharedStyles.sideButton}>
-          <Text style={sharedStyles.menuArrow}>←</Text>
-        </TouchableOpacity>
+  const discardCard = (index) => {
+    const newHand = [...hand];
+    newHand.splice(index, 1);
+    setHand(newHand);
+  };
 
-        <View style={sharedStyles.logoContainer}>
-          <Image
-            source={require('../assets/images/logos/rpg_main_logo.png')}
-            style={sharedStyles.smallImage}
-            resizeMode="contain"
-          />
+  const passTurn = () => {
+    if (folded) return;
+    setTurnEnded(true);
+  };
+
+  const foldHand = () => {
+    setFolded(true);
+    setHand([]);
+  };
+
+  const totalValue = hand.reduce((sum, card) => sum + card.value, 0);
+
+  // --- Fan Layout Math ---
+  const cardWidth = 100;
+  const horizontalSpacing = 30;
+  const total = hand.length;
+  const startAngle = -10;
+  const endAngle = 10;
+  const angleStep = total > 1 ? (endAngle - startAngle) / (total - 1) : 0;
+  const startX = (Dimensions.get('window').width - (cardWidth + horizontalSpacing * (total - 1))) / 2;
+
+  return (
+    <>
+      <Stack.Screen options={{ headerShown: false }} />
+      <ScrollView contentContainerStyle={sharedStyles.container}>
+        {/* Header */}
+        <View style={sharedStyles.header}>
+          <TouchableOpacity onPress={() => router.push('/')} style={sharedStyles.sideButton}>
+            <Text style={sharedStyles.menuArrow}>←</Text>
+          </TouchableOpacity>
+
+          <View style={sharedStyles.logoContainer}>
+            <Image
+              source={require('../assets/images/logos/rpg_main_logo.png')}
+              style={sharedStyles.smallImage}
+              resizeMode="contain"
+            />
+          </View>
+
+          <TouchableOpacity onPress={() => console.log('Profile pressed')} style={sharedStyles.sideButton}>
+            <Image
+              source={require('../assets/images/empty_profile_pic.png')}
+              style={sharedStyles.profileImage}
+            />
+          </TouchableOpacity>
         </View>
 
-        <TouchableOpacity onPress={() => console.log('Profile pressed')} style={sharedStyles.sideButton}>
-          <Image
-            source={require('../assets/images/empty_profile_pic.png')}
-            style={sharedStyles.profileImage}
-          />
-        </TouchableOpacity>
-      </View>
+        {/* Main */}
+        <View style={localStyles.main}>
 
-      {/* Main content */}
-      <View style={localStyles.main}>
-        <TouchableOpacity style={localStyles.cardButton} onPress={drawRandomCard}>
-          <Text style={localStyles.cardButtonText}>Draw a Card</Text>
-        </TouchableOpacity>
+          {/* Fan Layout Hand */}
+          <View
+            style={{
+              width: '100%',
+              height: 250,
+              position: 'relative',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(255,0,0,0.1)', // Debug red background
+              marginBottom: 40,
+            }}
+          >
+            {hand.map((card, index) => {
+              const rotation = startAngle + angleStep * index;
+              const left = startX + index * horizontalSpacing;
 
-        {drawnCard && (
-          <View style={localStyles.cardDisplay}>
-            <Image source={drawnCard.image} style={localStyles.cardImage} />
-            <Text style={localStyles.cardName}>{drawnCard.name}</Text>
+              return (
+                <TouchableOpacity
+                  key={card.id}
+                  onPress={() => discardCard(index)}
+                  style={{
+                    position: 'absolute',
+                    left,
+                    top: 10,
+                    zIndex: index,
+                    transform: [{ rotate: `${rotation}deg` }],
+                  }}
+                >
+                  <Image source={card.image} style={[localStyles.cardImage, { width: cardWidth, height: 180 }]} />
+                  <Text style={localStyles.cardName}>{card.name}</Text>
+                  <Text style={{ color: 'red', fontSize: 14 }}>Tap to Discard</Text>
+                </TouchableOpacity>
+              );
+            })}
           </View>
-        )}
-      </View>
-    </View>
+
+          {/* Total Value */}
+          <Text style={localStyles.totalValueText}>Total Value: {totalValue}</Text>
+
+          {/* Buttons */}
+          <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 20, width: '100%' }}>
+            <TouchableOpacity style={localStyles.actionButton} onPress={drawCard}>
+              <Text style={localStyles.cardButtonText}>Draw</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={localStyles.actionButton} onPress={passTurn}>
+              <Text style={localStyles.cardButtonText}>Pass</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={localStyles.actionButton} onPress={foldHand}>
+              <Text style={localStyles.cardButtonText}>Junk</Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* Messages */}
+          {folded && <Text style={{ color: 'red', marginTop: 10 }}>You folded your hand.</Text>}
+          {turnEnded && !folded && <Text style={{ color: 'yellow', marginTop: 10 }}>You passed your turn.</Text>}
+        </View>
+      </ScrollView>
+    </>
   );
 }
 
 const localStyles = StyleSheet.create({
   main: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+    paddingBottom: 50,
   },
-  cardButton: {
-    backgroundColor: '#444',
-    padding: 16,
-    borderRadius: 10,
-    marginBottom: 20,
+  cardImage: {
+    resizeMode: 'contain',
+    marginBottom: 5,
+  },
+  cardName: {
+    fontSize: 14,
+    color: 'white',
+    textAlign: 'center',
+  },
+  totalValueText: {
+    fontSize: 22,
+    color: 'lightgreen',
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  actionButton: {
+    backgroundColor: '#333',
+    padding: 12,
+    borderRadius: 8,
   },
   cardButtonText: {
     color: 'white',
     fontSize: 18,
-  },
-  cardDisplay: {
-    alignItems: 'center',
-  },
-  cardImage: {
-    width: 180,
-    height: 270,
-    resizeMode: 'contain',
-    marginBottom: 10,
-  },
-  cardName: {
-    fontSize: 20,
-    color: 'white',
   },
 });
