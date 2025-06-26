@@ -35,7 +35,6 @@ export default function InfoPage() {
       <TouchableOpacity onPress={() => router.back()} style={{ position: 'absolute', top: 80, left: 30, zIndex: 1 }}>
         <Text style={styles.menuArrow}>←</Text>
       </TouchableOpacity>
-
       {visibleSection === null && (
       <View style={styles.overlayContainerInfoPage}>
         {/* Buttons was modalbackgroundInfoPageTrent*/}
@@ -63,37 +62,37 @@ export default function InfoPage() {
           style={styles.button}
           onPress={() => setVisibleSection('section4')}
         >
-          <Text style={styles.buttonText}>Healing Rules</Text>
+          <Text style={styles.buttonText}>Healing Rules?</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
           onPress={() => setVisibleSection('section4')}
         >
-          <Text style={styles.buttonText}>Crafting Rules</Text>
+          <Text style={styles.buttonText}>Crafting Rules?</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
           onPress={() => setVisibleSection('section4')}
         >
-          <Text style={styles.buttonText}>Buying and Selling</Text>
+          <Text style={styles.buttonText}>Buying and Selling?</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
           onPress={() => setVisibleSection('section4')}
         >
-          <Text style={styles.buttonText}>Starship Fighting</Text>
+          <Text style={styles.buttonText}>Starship Fighting?</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
           onPress={() => setVisibleSection('section4')}
         >
-          <Text style={styles.buttonText}>Starship Crit Chart</Text>
+          <Text style={styles.buttonText}>Starship Crit Chart?</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
           onPress={() => setVisibleSection('section4')}
         >
-          <Text style={styles.buttonText}>Landspeader Chase</Text>
+          <Text style={styles.buttonText}>Landspeader Chase?</Text>
         </TouchableOpacity>
       </View>
       )}
@@ -106,12 +105,25 @@ export default function InfoPage() {
         onRequestClose={() => setVisibleSection(null)}
       >
         <View style={styles.modalbackgroundInfoPageTrent}>
-          <View style={[styles.popupcontainerInfoPageTrent, { width: popupWidth }]}>
-            <View style={{ maxHeight: 500, overflow: 'hidden' }}>
-            <ScrollView contentContainerStyle={{ paddingTop: 0 }}>
+          {/* Back Arrow for Modal */}
+          <TouchableOpacity
+            onPress={() => setVisibleSection(null)}
+            style={{ position: 'absolute', top: 48, left: 30, zIndex: 2 }}
+          >
+            <Text style={styles.menuArrow}>←</Text>
+          </TouchableOpacity>
+          <View style={[styles.popupcontainerInfoPageTrent, { width: popupWidth, paddingTop: 0, height: 800, paddingBottom: 0 }]}>
+            <View style={{ maxHeight: 540, overflow: 'hidden', paddingTop: 0, paddingBottom: 0 }}>
+            <ScrollView contentContainerStyle={{
+                        flexGrow: 0,
+                        paddingTop: 0,
+                        paddingBottom: 0,//20
+                        alignItems: 'flex-start',
+                      }}
+                  >
               {/* d100 button and result for section3 */}
-          {visibleSection === 'section3' && (
-            <View style={{ alignItems: 'center', marginVertical: 10 }}>
+          {((visibleSection === 'section3') || (visibleSection === 'section4')) && (
+            <View style={{width: '100%', alignItems: 'flex-start', marginVertical: 0 }}>
               <TouchableOpacity
                 style={[styles.button, { width: 120 }]}
                 onPress={() => setD100Result(Math.floor(Math.random() * 100) + 1)}
@@ -128,16 +140,22 @@ export default function InfoPage() {
           <Image
                 source={
                   visibleSection === 'section1'
-                    ? require('../assets/images/section1.png')
+                    ? require('../assets/images/Actions.jpg')
                     : visibleSection === 'section2'
-                    ? require('../assets/images/section2.png')
+                    ? require('../assets/images/Maneuvers.jpg')
                     : visibleSection === 'section3'
                     ? require('../assets/images/section3.jpg')
                     : visibleSection === 'section4'
                     ? require('../assets/images/section2.png')
                     : null
                 }
-                style={{ width: popupWidth, resizeMode: 'contain' }}
+                style={{ width: popupWidth, 
+                  resizeMode: 'contain',
+                  alignSelf: 'flex-start', // Ensures image is at the top
+                  height: 700,
+                  marginTop: 0,
+                  //marginBottom: 100,
+                }}
               />
               
             </ScrollView>

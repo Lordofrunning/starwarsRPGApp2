@@ -366,8 +366,8 @@ backgroundInfoPage: {
   modalbackgroundInfoPageTrent: {
   flex: 1,
   alignItems: 'center',
-  justifyContent: 'flex-start',
-  paddingTop: 140,
+  justifyContent: 'center',
+  paddingTop: 280,
   width: '100%',
   backgroundColor: 'transparent', // this line is key!
 },
