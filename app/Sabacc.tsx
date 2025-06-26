@@ -90,7 +90,7 @@ const sabaccDeck = [
 export default function GenerateCard() {
     const [modalVisible, setModalVisible] = useState(false);
 const [selectedCardIndex, setSelectedCardIndex] = useState<number | null>(null);
-
+const [infoModalVisible, setInfoModalVisible] = useState(false);
   const router = useRouter();
 
   const [hand, setHand] = useState([]);
@@ -98,6 +98,21 @@ const [selectedCardIndex, setSelectedCardIndex] = useState<number | null>(null);
   const [turnEnded, setTurnEnded] = useState(false);
 const [startModalVisible, setStartModalVisible] = useState(true);
 const [deck, setDeck] = useState([...sabaccDeck]); // mutable deck
+
+const [flippedCards, setFlippedCards] = useState<Set<string>>(new Set())
+const anyCardFaceDown = hand.some(card => !flippedCards.has(card.id));
+
+const toggleFlipCard = (cardId: string) => {
+  setFlippedCards(prev => {
+    const newSet = new Set(prev);
+    if (newSet.has(cardId)) {
+      newSet.delete(cardId);
+    } else {
+      newSet.add(cardId);
+    }
+    return newSet;
+  });
+};
 
  const drawCard = () => {
   if (folded || turnEnded || deck.length === 0) return;
@@ -146,11 +161,14 @@ const [deck, setDeck] = useState([...sabaccDeck]); // mutable deck
   const resetDeck = () => {
   setDeck([...sabaccDeck]);
   setHand([]);
+  setFlippedCards(new Set()); // reset all cards to face-down
+  startGame();
   setFolded(false);
   setTurnEnded(false);
 };
 
   const totalValue = hand.reduce((sum, card) => sum + card.value, 0);
+  const displayTotalValue = anyCardFaceDown ? '???' : totalValue;
 
   // --- Fan Layout Math ---
   const cardWidth = 150;
@@ -162,7 +180,7 @@ const [deck, setDeck] = useState([...sabaccDeck]); // mutable deck
   const startX = (Dimensions.get('window').width - (cardWidth + horizontalSpacing * (total - 1))) / 2;
 
   // switch options and stuff
-  const [allowNegative, setAllowNegative] = useState(true);
+  const [publicDeck, setpublicDeck] = useState(false);
 const [enableFanning, setEnableFanning] = useState(false);
 
   return (
@@ -171,10 +189,15 @@ const [enableFanning, setEnableFanning] = useState(false);
       <ScrollView contentContainerStyle={sharedStyles.container}>
         {/* Header */}
         <View style={sharedStyles.header}>
-          <TouchableOpacity onPress={() => router.push('/')} style={sharedStyles.sideButton}>
-            <Text style={sharedStyles.menuArrow}>←</Text>
-          </TouchableOpacity>
-
+          <TouchableOpacity
+                onPress={() => {
+                    resetDeck();       // ← Call your function
+                    router.push('/');  // ← Then navigate
+                }}
+                style={sharedStyles.sideButton}
+                >
+                <Text style={sharedStyles.menuArrow}>←</Text>
+        </TouchableOpacity>
           <View style={sharedStyles.logoContainer}>
             <Image
               source={require('../assets/images/logos/rpg_main_logo.png')}
@@ -183,12 +206,12 @@ const [enableFanning, setEnableFanning] = useState(false);
             />
           </View>
 
-          <TouchableOpacity onPress={() => console.log('Profile pressed')} style={sharedStyles.sideButton}>
-            <Image
-              source={require('../assets/images/empty_profile_pic.png')}
-              style={sharedStyles.profileImage}
-            />
-          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setInfoModalVisible(true)} style={localStyles.sideButton}>
+                              <Image
+                                  source={require('../assets/images/Icons/informationIcon1.png')}
+                                  style={[localStyles.profileImage, { backgroundColor: 'white' }]}
+                              />
+                          </TouchableOpacity>
         </View>
 
             {/* start game menue modal here */}
@@ -199,16 +222,16 @@ const [enableFanning, setEnableFanning] = useState(false);
 >
   <View style={localStyles.modalOverlay}>
     <View style={localStyles.modalContent}>
-      <Text style={localStyles.modalTextHeader}>Ready to play Sabacc?</Text>
+      <Text style={localStyles.modalTextHeader}>Sabacc</Text>
 
       {/* You can add future options here */}
 
        <View style={localStyles.toggleRow}>
-  <Text style={localStyles.toggleLabel}>Allow Negative Cards</Text>
+  <Text style={localStyles.toggleLabel}>Use as Game Deck</Text>
   <Switch
-    value={allowNegative}
-    onValueChange={setAllowNegative}
-    thumbColor={allowNegative ? '#33dd33' : '#888'}
+    value={publicDeck}
+    onValueChange={setpublicDeck}
+    thumbColor={publicDeck ? '#33dd33' : '#888'}
     trackColor={{ false: '#444', true: '#77cc77' }}
   />
 </View>
@@ -235,28 +258,87 @@ const [enableFanning, setEnableFanning] = useState(false);
     </View>
   </View>
 </Modal>
+{/* // modal for info button */}
+
+        <Modal
+          visible={infoModalVisible}
+          animationType="slide"
+          transparent={true}
+          onRequestClose={() => setInfoModalVisible(false)}
+        >
+          <View style={localStyles.modalOverlayBig}>
+            <View style={localStyles.modalContentBig}>
+              <Text style={localStyles.modalHeaderBig}>Game Info {"\n"}</Text>
+              <ScrollView contentContainerStyle={localStyles.scrollViewContent}>
+                <Text style={localStyles.modalHeaderMedium}>Basic Sabacc</Text>
+                <Text style={localStyles.modalDescriptionBig}>
+                  {/* Put your long info text here */}
+                  🎰 Corellian Roulette is a game of chance. Spin the wheel and see how your bet multiplies — or vanishes.
+                  {"\n\n"}- "Zap" inflicts damage.
+                  {"\n"}- "DRAIN" wipes your credits.
+                  {"\n"}- "Mystery DRAIN" applies a surprise penalty.
+                  {"\n\n"}General Rules: you can stop spinning at any time, and lock in your credits
+                  {'\n'}No Healing while spinning. all wounds and strain are applied directly to threasholds, no soak is applyed
+                </Text>
+                <View style={[localStyles.divider,{marginBottom: 20}]}></View>
+                
+                <Text style={localStyles.modalHeaderMedium}>Dual/Spinning</Text>
+                <Text style={localStyles.modalDescriptionBig}>
+                    for going Head to Head with another person, a 2v2, or even 3v3
+                     {"\n\n"} the best way is to have 2 wheels going at the same time. but you could go one after the other.
+                    {"\n\n"}players battle to end with the most amount of credits. if playing in teams, you add your credits and your teamates credits after locking them in.
+                    {"\n\n"} you may stop spinning at any time, and lock in your current credit amount
+                    {"\n\n"} each player/team spins their own wheel.
+        
+        
+                </Text>
+              </ScrollView>
+              <TouchableOpacity style={localStyles.closeButtonBig} onPress={() => setInfoModalVisible(false)}>
+                <Text style={localStyles.closeButtonTextBig}>Got it</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
 
         {/* Main */}
         <View style={localStyles.main}>
 
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 10 }}>
   {hand.map((card, index) => (
-    <TouchableOpacity key={card.id} onLongPress={() => {
-  setSelectedCardIndex(index);
-  setModalVisible(true);
-}} style={{ alignItems: 'center' }}>
-      <Image source={card.image} style={[localStyles.cardImage, { width: 120, height: 180 }]} />
-      <Text style={localStyles.cardName}>{card.name}</Text>
+    <TouchableOpacity key={card.id} 
+    onPress={() => toggleFlipCard(card.id)}
+    onLongPress={() => {setSelectedCardIndex(index);setModalVisible(true); }} 
+    style={{ alignItems: 'center' }}>
+
+      <Image  source={flippedCards.has(card.id) ? card.image : require('../assets/Cards/card_back.png') } 
+      style={[localStyles.cardImage, { width: 120, height: 180 }]} />
+
+<View style={{ height: 30, justifyContent: 'center' }}>
+      {flippedCards.has(card.id) && (
+  <Text
+  style={[
+    localStyles.cardName,
+    { color: flippedCards.has(card.id) ? 'white' : 'transparent' }
+  ]}
+>
+  {card.name}
+</Text>
+
+)}
+</View>
       
     </TouchableOpacity>
+    
   ))}
 </View>
 
+
+
           {/* Total Value */}
-          <Text style={localStyles.totalValueText}>Total Value: {totalValue}</Text>
+          <Text style={localStyles.totalValueText}>Total Value: {displayTotalValue}</Text>
 
           {/* Buttons */}
-          <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 20, width: '100%' }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 20, marginBottom: 80, width: '100%' }}>
             <TouchableOpacity style={localStyles.actionButton} onPress={drawCard}>
               <Text style={localStyles.cardButtonText}>Draw</Text>
             </TouchableOpacity>
@@ -268,9 +350,18 @@ const [enableFanning, setEnableFanning] = useState(false);
             </TouchableOpacity>
           </View>
 
+                 
+             <TouchableOpacity style={[ localStyles.resetButton,{height: 50, position: 'absolute', bottom: 80, justifyContent: 'center'} ]} onPress={resetDeck}>
+              <Text style={localStyles.resetButtonText}>Reset</Text>
+            </TouchableOpacity>
+            
+
           {/* Messages */}
           {folded && <Text style={{ color: 'red', marginTop: 10 }}>You folded your hand.</Text>}
           {turnEnded && !folded && <Text style={{ color: 'yellow', marginTop: 10 }}>You passed your turn.</Text>}
+
+            
+
         </View>
       </ScrollView>
 
@@ -396,6 +487,44 @@ modalButtonText: {
   fontSize: 20,        
 },
 
+// big modal stuff here 
+  modalOverlayBig: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.7)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContentBig: {
+    backgroundColor: "#222",
+    borderRadius: 12,
+    width: '90%',  // almost full width
+    height: '85%', // limit max height so it doesn't cover entire screen
+    padding: 20,
+  },
+    sideButton: {
+  width: 50,
+  alignItems: 'center',
+},
+ resetButton: {
+    backgroundColor: '#CC3333', // deep red
+    paddingVertical: 5,
+    paddingHorizontal: 25,
+    borderRadius: 10,
+    marginTop: 30,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.4,
+    shadowRadius: 4,
+    elevation: 5, // Android shadow
+  },
+  resetButtonText: {
+    color: 'white',
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+
+
 // toggle stuff
 toggleRow: {
   flexDirection: 'row',
@@ -408,4 +537,49 @@ toggleLabel: {
   color: 'white',
   fontSize: 16,
 },
+  divider: {
+  height: 4,
+  backgroundColor: "#0ff", // or white, gray, etc.
+   marginVertical: 5, // spacing above and below the line
+  width: '100%',
+},
+scrollViewContent: {
+    paddingBottom: 20,  // add space below scroll content for comfortable scrolling
+  },
+  modalHeaderBig: {
+    fontSize: 30,
+    fontWeight: "bold",
+    color: "#0ff",
+    marginBottom: 12,
+  },
+  modalHeaderMedium: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "yellow",
+    marginBottom: 12,
+  },
+   modalDescriptionBig: {
+    fontSize: 16,
+    color: "#fff",
+    lineHeight: 22,
+  },
+  closeButtonBig: {
+    backgroundColor: "#0f0",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 8,
+    marginTop: 15,
+    alignSelf: "center",
+  },
+  closeButtonTextBig: {
+    color: "#000",
+    fontWeight: "bold",
+  },
+   profileImage: {
+    width: 36,
+    height: 36,
+    borderRadius: 18, // makes it circular
+    borderWidth: 1,
+    borderColor: '#fff',
+  },
 });
