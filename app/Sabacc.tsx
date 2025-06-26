@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import {
     Dimensions,
     Image,
+    Modal,
     ScrollView,
     StyleSheet,
     Text,
@@ -86,17 +87,30 @@ const sabaccDeck = [
  
 
 export default function GenerateCard() {
+    const [modalVisible, setModalVisible] = useState(false);
+const [selectedCardIndex, setSelectedCardIndex] = useState<number | null>(null);
+
   const router = useRouter();
 
   const [hand, setHand] = useState([]);
   const [folded, setFolded] = useState(false);
   const [turnEnded, setTurnEnded] = useState(false);
+const [deck, setDeck] = useState([...sabaccDeck]);
 
   const drawCard = () => {
-    if (folded || turnEnded) return;
-    const random = sabaccDeck[Math.floor(Math.random() * sabaccDeck.length)];
-    setHand(prev => [...prev, random]);
-  };
+  if (folded || turnEnded || deck.length === 0) return;
+
+  const randomIndex = Math.floor(Math.random() * deck.length);
+  const drawn = deck[randomIndex];
+
+  // Remove that card from the deck
+  const newDeck = [...deck];
+  newDeck.splice(randomIndex, 1);
+  setDeck(newDeck);
+
+  // Add card to hand
+  setHand(prev => [...(prev || []), drawn]);
+};
 
   const discardCard = (index) => {
     const newHand = [...hand];
@@ -114,10 +128,17 @@ export default function GenerateCard() {
     setHand([]);
   };
 
+  const resetDeck = () => {
+  setDeck([...sabaccDeck]);
+  setHand([]);
+  setFolded(false);
+  setTurnEnded(false);
+};
+
   const totalValue = hand.reduce((sum, card) => sum + card.value, 0);
 
   // --- Fan Layout Math ---
-  const cardWidth = 100;
+  const cardWidth = 150;
   const horizontalSpacing = 30;
   const total = hand.length;
   const startAngle = -10;
@@ -154,41 +175,18 @@ export default function GenerateCard() {
         {/* Main */}
         <View style={localStyles.main}>
 
-          {/* Fan Layout Hand */}
-          <View
-            style={{
-              width: '100%',
-              height: 250,
-              position: 'relative',
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: 'rgba(255,0,0,0.1)', // Debug red background
-              marginBottom: 40,
-            }}
-          >
-            {hand.map((card, index) => {
-              const rotation = startAngle + angleStep * index;
-              const left = startX + index * horizontalSpacing;
-
-              return (
-                <TouchableOpacity
-                  key={card.id}
-                  onPress={() => discardCard(index)}
-                  style={{
-                    position: 'absolute',
-                    left,
-                    top: 10,
-                    zIndex: index,
-                    transform: [{ rotate: `${rotation}deg` }],
-                  }}
-                >
-                  <Image source={card.image} style={[localStyles.cardImage, { width: cardWidth, height: 180 }]} />
-                  <Text style={localStyles.cardName}>{card.name}</Text>
-                  <Text style={{ color: 'red', fontSize: 14 }}>Tap to Discard</Text>
-                </TouchableOpacity>
-              );
-            })}
-          </View>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 10 }}>
+  {hand.map((card, index) => (
+    <TouchableOpacity key={card.id} onPress={() => {
+  setSelectedCardIndex(index);
+  setModalVisible(true);
+}} style={{ alignItems: 'center' }}>
+      <Image source={card.image} style={[localStyles.cardImage, { width: 120, height: 180 }]} />
+      <Text style={localStyles.cardName}>{card.name}</Text>
+      <Text style={{ color: 'red', fontSize: 14 }}>Tap to Discard</Text>
+    </TouchableOpacity>
+  ))}
+</View>
 
           {/* Total Value */}
           <Text style={localStyles.totalValueText}>Total Value: {totalValue}</Text>
@@ -211,6 +209,43 @@ export default function GenerateCard() {
           {turnEnded && !folded && <Text style={{ color: 'yellow', marginTop: 10 }}>You passed your turn.</Text>}
         </View>
       </ScrollView>
+
+    {/* confirm button to discard card */}
+      <Modal
+  visible={modalVisible}
+  transparent
+  animationType="fade"
+  onRequestClose={() => setModalVisible(false)}
+>
+  <View style={localStyles.modalOverlay}>
+    <View style={localStyles.modalContent}>
+      <Text style={localStyles.modalText}>Are you sure you want to discard this card?</Text>
+      <View style={localStyles.modalButtons}>
+        <TouchableOpacity
+          style={[localStyles.modalButton, { backgroundColor: '#cc4444' }]}
+          onPress={() => {
+            if (selectedCardIndex !== null) {
+              discardCard(selectedCardIndex);
+              setSelectedCardIndex(null);
+            }
+            setModalVisible(false);
+          }}
+        >
+          <Text style={localStyles.modalButtonText}>Discard</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[localStyles.modalButton, { backgroundColor: '#555' }]}
+          onPress={() => {
+            setModalVisible(false);
+            setSelectedCardIndex(null);
+          }}
+        >
+          <Text style={localStyles.modalButtonText}>Cancel</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  </View>
+</Modal>
     </>
   );
 }
@@ -245,4 +280,39 @@ const localStyles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
   },
+  modalOverlay: {
+  flex: 1,
+  backgroundColor: 'rgba(0, 0, 0, 0.6)',
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+modalContent: {
+  backgroundColor: '#222',
+  padding: 20,
+  borderRadius: 10,
+  width: '80%',
+  alignItems: 'center',
+},
+modalText: {
+  color: 'white',
+  fontSize: 16,
+  marginBottom: 20,
+  textAlign: 'center',
+},
+modalButtons: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  width: '100%',
+},
+modalButton: {
+  flex: 1,
+  padding: 10,
+  marginHorizontal: 5,
+  borderRadius: 6,
+  alignItems: 'center',
+},
+modalButtonText: {
+  color: 'white',
+  fontWeight: 'bold',
+},
 });
