@@ -6,6 +6,7 @@ import {
     Modal,
     ScrollView,
     StyleSheet,
+    Switch,
     Text,
     TouchableOpacity,
     View,
@@ -95,21 +96,35 @@ const [selectedCardIndex, setSelectedCardIndex] = useState<number | null>(null);
   const [hand, setHand] = useState([]);
   const [folded, setFolded] = useState(false);
   const [turnEnded, setTurnEnded] = useState(false);
-const [deck, setDeck] = useState([...sabaccDeck]);
+const [startModalVisible, setStartModalVisible] = useState(true);
+const [deck, setDeck] = useState([...sabaccDeck]); // mutable deck
 
-  const drawCard = () => {
+ const drawCard = () => {
   if (folded || turnEnded || deck.length === 0) return;
 
-  const randomIndex = Math.floor(Math.random() * deck.length);
-  const drawn = deck[randomIndex];
-
-  // Remove that card from the deck
   const newDeck = [...deck];
-  newDeck.splice(randomIndex, 1);
-  setDeck(newDeck);
+  const randomIndex = Math.floor(Math.random() * newDeck.length);
+  const card = newDeck.splice(randomIndex, 1)[0];
 
-  // Add card to hand
-  setHand(prev => [...(prev || []), drawn]);
+  setDeck(newDeck);
+  setHand(prev => [...prev, card]);
+};
+
+    const startGame = () => {
+  const initialDeck = [...sabaccDeck];
+  const playerStartingHand = [];
+
+  for (let i = 0; i < 2; i++) {
+    const randomIndex = Math.floor(Math.random() * initialDeck.length);
+    const card = initialDeck.splice(randomIndex, 1)[0];
+    playerStartingHand.push(card);
+  }
+
+  setHand(playerStartingHand);
+  setDeck(initialDeck);
+  setFolded(false);
+  setTurnEnded(false);
+  setStartModalVisible(false);
 };
 
   const discardCard = (index) => {
@@ -146,6 +161,10 @@ const [deck, setDeck] = useState([...sabaccDeck]);
   const angleStep = total > 1 ? (endAngle - startAngle) / (total - 1) : 0;
   const startX = (Dimensions.get('window').width - (cardWidth + horizontalSpacing * (total - 1))) / 2;
 
+  // switch options and stuff
+  const [allowNegative, setAllowNegative] = useState(true);
+const [enableFanning, setEnableFanning] = useState(false);
+
   return (
     <>
       <Stack.Screen options={{ headerShown: false }} />
@@ -172,18 +191,63 @@ const [deck, setDeck] = useState([...sabaccDeck]);
           </TouchableOpacity>
         </View>
 
+            {/* start game menue modal here */}
+        <Modal
+  visible={startModalVisible}
+  transparent
+  animationType="slide"
+>
+  <View style={localStyles.modalOverlay}>
+    <View style={localStyles.modalContent}>
+      <Text style={localStyles.modalTextHeader}>Ready to play Sabacc?</Text>
+
+      {/* You can add future options here */}
+
+       <View style={localStyles.toggleRow}>
+  <Text style={localStyles.toggleLabel}>Allow Negative Cards</Text>
+  <Switch
+    value={allowNegative}
+    onValueChange={setAllowNegative}
+    thumbColor={allowNegative ? '#33dd33' : '#888'}
+    trackColor={{ false: '#444', true: '#77cc77' }}
+  />
+</View>
+
+<View style={localStyles.toggleRow}>
+  <Text style={localStyles.toggleLabel}>Enable Card Fanning</Text>
+  <Switch
+    value={enableFanning}
+    onValueChange={setEnableFanning}
+    thumbColor={enableFanning ? '#33ddff' : '#888'}
+    trackColor={{ false: '#444', true: '#33ccff' }}
+  />
+</View>
+
+
+
+      <TouchableOpacity
+  style={ [localStyles.modalButton2, {backgroundColor: 'green', padding: 20}    ]}
+  onPress={startGame}
+>
+  <Text style={localStyles.modalButtonText}>Start Game</Text>
+</TouchableOpacity>
+
+    </View>
+  </View>
+</Modal>
+
         {/* Main */}
         <View style={localStyles.main}>
 
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 10 }}>
   {hand.map((card, index) => (
-    <TouchableOpacity key={card.id} onPress={() => {
+    <TouchableOpacity key={card.id} onLongPress={() => {
   setSelectedCardIndex(index);
   setModalVisible(true);
 }} style={{ alignItems: 'center' }}>
       <Image source={card.image} style={[localStyles.cardImage, { width: 120, height: 180 }]} />
       <Text style={localStyles.cardName}>{card.name}</Text>
-      <Text style={{ color: 'red', fontSize: 14 }}>Tap to Discard</Text>
+      
     </TouchableOpacity>
   ))}
 </View>
@@ -291,8 +355,16 @@ modalContent: {
   padding: 20,
   borderRadius: 10,
   width: '80%',
-  alignItems: 'center',
+   alignItems: 'center',
 },
+
+    modalTextHeader: {
+  color: 'white',
+  fontSize: 25,
+  marginBottom: 100,
+  textAlign: 'center',
+},
+
 modalText: {
   color: 'white',
   fontSize: 16,
@@ -311,8 +383,29 @@ modalButton: {
   borderRadius: 6,
   alignItems: 'center',
 },
+modalButton2: {
+  padding: 10,
+  marginHorizontal: 5,
+  borderRadius: 6,
+  alignItems: 'center',
+},
 modalButtonText: {
   color: 'white',
   fontWeight: 'bold',
+  textAlign: 'center',
+  fontSize: 20,        
+},
+
+// toggle stuff
+toggleRow: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  marginBottom: 20,
+  width: '100%',
+},
+toggleLabel: {
+  color: 'white',
+  fontSize: 16,
 },
 });
