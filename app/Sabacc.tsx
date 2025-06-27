@@ -84,6 +84,15 @@ const sabaccDeck = [
   { id: 'red_sylop', name: 'Red Sylop', value: 0, image: require('../assets/Cards/Sylop/sylop_red.png') },
   { id: 'card_back', name: 'Card Back', value: 0, image: require('../assets/Cards/card_back.png') },
 ];
+const dieSides = [
+      require('../assets/dice/Sabacc/dice_core.jpg'),
+require('../assets/dice/Sabacc/dice_core.jpg'),
+require('../assets/dice/Sabacc/dice_rim.jpg'),
+require('../assets/dice/Sabacc/dice_rim.jpg'),
+require('../assets/dice/Sabacc/dice_wild.jpg'),
+require('../assets/dice/Sabacc/dice_wild.jpg'),
+
+]
 
  
 
@@ -101,6 +110,16 @@ const [deck, setDeck] = useState([...sabaccDeck]); // mutable deck
 
 const [flippedCards, setFlippedCards] = useState<Set<string>>(new Set())
 const anyCardFaceDown = hand.some(card => !flippedCards.has(card.id));
+
+const [dice, setDice] = useState([null, null]);
+
+  const rollDice = () => {
+    const newDice = [
+      dieSides[Math.floor(Math.random() * 6)],
+      dieSides[Math.floor(Math.random() * 6)],
+    ];
+    setDice(newDice);
+  };
 
 const toggleFlipCard = (cardId: string) => {
   setFlippedCards(prev => {
@@ -275,13 +294,13 @@ const [enableFanning, setEnableFanning] = useState(false);
                   {/* Put your long info text here */}
                   the goal of sabacc is to get zero, or as close as you can. there are 3 suits of cards, with 20 cards each. 1 through 10, -1 through -10, and 2 sylop cards worth 0
                   {"\n\n"} a turn has 4 stages. a betting stage, a rolling stage, a calling stage, and a drawing stage. these stages loop until a player calls the game. once the game is called, each player shows their cards, and the closest to zero wins. (tiebreaker info further down)
-                  {"\n\n"}betting procceeds clockwise, with actions like betting, raising, calling, and junking/folding. all players must match the bet, or junk
-                  {"\n\n"}the Roll: after betting ends, the last player to act rolls the dice for a Sabacc Shift. if doubles roll, a Sabacc Shift occurs. 
-                  {"\n\n"}Calling: after the roll, but before drawing, if more than 2 rounds have passed, any player may call the game. you cannot call the game on your own turn.
+                  {"\n\n"}you may bet, rais, call, and junk/fold. on a players turn, they must match the bet or fold.
+                  {"\n\n"}the Roll: after betting the dice are rolled for a Sabacc Shift. if doubles roll, a Sabacc Shift occurs. 
+                  {"\n\n"}Calling: after the roll, but before drawing, if more than 2 rounds have passed, any player may call the game. you cannot call the game on your own turn. if it is your turn and the calling stage, you must ask if anybody wants to call the hand.
                   {"\n\n"}
                   {"\n\n"}
                   {"\n\n"}                 
-                  {"\n\n"}players go in turns, and can do 1 of 4 actions.
+                  {"\n\n"}the fourth part of a players turn can be used in any one of these actions
                   {"\n"} Action 1: 
                   {"\n"}    - Draw one card from the deck. may choose to also discard one card after drawing.  
                   {"\n\n"} Action 2:
@@ -292,7 +311,7 @@ const [enableFanning, setEnableFanning] = useState(false);
                   {'\n'}    - Junk. junk or fold your cards. you are out for this round, and cant win, and don't need to match any more bets
                   
                   
-                  {"\n\n"} - Sabacc Shift: once, after each betting stage, the last caller rolls the dice. if the dice roll doubles, a Sabacc Shift happens. each player discards all their cards, and gets new a new card for each discarded card. 
+                  {"\n\n"} - Sabacc Shift: once, after each betting stage, the dice are rolled. if they land on doubles, a Sabacc Shift happens. each player discards all their cards, and gets new a new card for each discarded card. 
                   {"\n\n"} - Static Field: anytime during a players turn, they may place a card into the Static Field to prevent them from being discarded during a Sabacc Shift. to do, place your card face up. once done, it cant be taken back.
 
                 </Text>
@@ -317,36 +336,36 @@ const [enableFanning, setEnableFanning] = useState(false);
         </Modal>
 
         {/* Main */}
-        <View style={localStyles.main}>
+ <View style={localStyles.main}>
 
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 10 }}>
-  {hand.map((card, index) => (
-    <TouchableOpacity key={card.id} 
-    onPress={() => toggleFlipCard(card.id)}
-    onLongPress={() => {setSelectedCardIndex(index);setModalVisible(true); }} 
-    style={{ alignItems: 'center' }}>
+            {hand.map((card, index) => (
+                <TouchableOpacity key={card.id} 
+                onPress={() => toggleFlipCard(card.id)}
+                onLongPress={() => {setSelectedCardIndex(index);setModalVisible(true); }} 
+                style={{ alignItems: 'center' }}>
 
-      <Image  source={flippedCards.has(card.id) ? card.image : require('../assets/Cards/card_back.png') } 
-      style={[localStyles.cardImage, { width: 120, height: 180 }]} />
+                <Image  source={flippedCards.has(card.id) ? card.image : require('../assets/Cards/card_back.png') } 
+                style={[localStyles.cardImage, { width: 120, height: 180 }]} />
 
-<View style={{ height: 30, justifyContent: 'center' }}>
-      {flippedCards.has(card.id) && (
-  <Text
-  style={[
-    localStyles.cardName,
-    { color: flippedCards.has(card.id) ? 'white' : 'transparent' }
-  ]}
->
-  {card.name}
-</Text>
+            <View style={{ height: 30, justifyContent: 'center' }}>
+                {flippedCards.has(card.id) && (
+            <Text
+            style={[
+                localStyles.cardName,
+                { color: flippedCards.has(card.id) ? 'white' : 'transparent' }
+            ]}
+            >
+            {card.name}
+            </Text>
 
-)}
-</View>
-      
-    </TouchableOpacity>
-    
-  ))}
-</View>
+            )}
+            </View>
+                
+                </TouchableOpacity>
+                
+            ))}
+    </View>
 
 
 
@@ -366,7 +385,22 @@ const [enableFanning, setEnableFanning] = useState(false);
             </TouchableOpacity>
           </View>
 
-                 
+                 <View style={localStyles.absoluteDiceWrapper}>
+                        <View style={localStyles.diceContainer}>
+                            {dice.map((img, idx) => (
+                            <Image
+                                key={idx}
+                                source={img || require('../assets/dice/Sabacc/dice_blank.jpg')}
+                                style={localStyles.die}
+                            />
+                            ))}
+                        </View>
+
+                        <TouchableOpacity style={localStyles.rollButton} onPress={rollDice}>
+                            <Text style={localStyles.buttonText}>Roll Dice</Text>
+                        </TouchableOpacity>
+                </View>
+
              <TouchableOpacity style={[ localStyles.resetButton,{height: 50, position: 'absolute', bottom: 80, justifyContent: 'center'} ]} onPress={resetDeck}>
               <Text style={localStyles.resetButtonText}>Reset</Text>
             </TouchableOpacity>
@@ -597,5 +631,38 @@ scrollViewContent: {
     borderRadius: 18, // makes it circular
     borderWidth: 1,
     borderColor: '#fff',
+  },
+
+  absoluteDiceWrapper: {
+    position: 'absolute',
+    right: 10,
+    top: '55%',
+    alignItems: 'center',
+    zIndex: 10,
+    backgroundColor: 'rgba(0,0,0,0.3)', // Temporary for visibility
+    padding: 10,
+    borderRadius: 10,
+  },
+  diceContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  die: {
+    width: 60,
+    height: 60,
+    marginVertical: 5,
+    resizeMode: 'contain',
+    backgroundColor: '#111', // Helps visually spot missing images
+  },
+  rollButton: {
+    backgroundColor: '#228822',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
   },
 });
