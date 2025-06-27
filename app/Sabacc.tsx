@@ -227,7 +227,7 @@ const [enableFanning, setEnableFanning] = useState(false);
       {/* You can add future options here */}
 
        <View style={localStyles.toggleRow}>
-  <Text style={localStyles.toggleLabel}>Use as Game Deck</Text>
+  <Text style={localStyles.toggleLabel}>Special Sabacc Shift Rules/dice</Text>
   <Switch
     value={publicDeck}
     onValueChange={setpublicDeck}
@@ -273,12 +273,28 @@ const [enableFanning, setEnableFanning] = useState(false);
                 <Text style={localStyles.modalHeaderMedium}>Basic Sabacc</Text>
                 <Text style={localStyles.modalDescriptionBig}>
                   {/* Put your long info text here */}
-                  🎰 Corellian Roulette is a game of chance. Spin the wheel and see how your bet multiplies — or vanishes.
-                  {"\n\n"}- "Zap" inflicts damage.
-                  {"\n"}- "DRAIN" wipes your credits.
-                  {"\n"}- "Mystery DRAIN" applies a surprise penalty.
-                  {"\n\n"}General Rules: you can stop spinning at any time, and lock in your credits
-                  {'\n'}No Healing while spinning. all wounds and strain are applied directly to threasholds, no soak is applyed
+                  the goal of sabacc is to get zero, or as close as you can. there are 3 suits of cards, with 20 cards each. 1 through 10, -1 through -10, and 2 sylop cards worth 0
+                  {"\n\n"} a turn has 4 stages. a betting stage, a rolling stage, a calling stage, and a drawing stage. these stages loop until a player calls the game. once the game is called, each player shows their cards, and the closest to zero wins. (tiebreaker info further down)
+                  {"\n\n"}betting procceeds clockwise, with actions like betting, raising, calling, and junking/folding. all players must match the bet, or junk
+                  {"\n\n"}the Roll: after betting ends, the last player to act rolls the dice for a Sabacc Shift. if doubles roll, a Sabacc Shift occurs. 
+                  {"\n\n"}Calling: after the roll, but before drawing, if more than 2 rounds have passed, any player may call the game. you cannot call the game on your own turn.
+                  {"\n\n"}
+                  {"\n\n"}
+                  {"\n\n"}                 
+                  {"\n\n"}players go in turns, and can do 1 of 4 actions.
+                  {"\n"} Action 1: 
+                  {"\n"}    - Draw one card from the deck. may choose to also discard one card after drawing.  
+                  {"\n\n"} Action 2:
+                  {'\n'}    - Swap one of your cards with the top card of the cycle or discard pile 
+                  {"\n\n"} Action 3:
+                  {'\n'}    - Stand. pass your turn without taking any action
+                  {"\n\n"} Action 4:
+                  {'\n'}    - Junk. junk or fold your cards. you are out for this round, and cant win, and don't need to match any more bets
+                  
+                  
+                  {"\n\n"} - Sabacc Shift: once, after each betting stage, the last caller rolls the dice. if the dice roll doubles, a Sabacc Shift happens. each player discards all their cards, and gets new a new card for each discarded card. 
+                  {"\n\n"} - Static Field: anytime during a players turn, they may place a card into the Static Field to prevent them from being discarded during a Sabacc Shift. to do, place your card face up. once done, it cant be taken back.
+
                 </Text>
                 <View style={[localStyles.divider,{marginBottom: 20}]}></View>
                 
