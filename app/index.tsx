@@ -97,7 +97,7 @@ export default function HomeScreen() {
               <TouchableOpacity style={styles.button} onPress={() => router.push('/Sounds')}>
                 <Text style={styles.buttonTextCentered}>Sounds of the Galaxy</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button} onPress={() => router.push('/Info')}>
+              <TouchableOpacity style={styles.button} onPress={() => router.push('/DataPad')}>
                 <Text style={styles.buttonText}>Combat Info</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.button} onPress={() => router.push('/GameList')}>
