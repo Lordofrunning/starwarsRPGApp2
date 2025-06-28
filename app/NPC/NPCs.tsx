@@ -3,7 +3,7 @@ import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 
 
-import { styles } from '.././index.styles';
+import { styles } from '../index.styles';
 
 
 export default function NPCButtonsPage() {

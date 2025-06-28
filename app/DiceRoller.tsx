@@ -270,9 +270,6 @@ const diceGridOrder: DieType[] = [
   'force',
 ];
 
-export const unstable_settings = {
-  unmountOnBlur: false,
-};
 export default function DiceRoller() {
   const { diceOption1, diceOption2, diceOption3 } = useDiceSettings();
   const router = useRouter();
@@ -305,7 +302,7 @@ if(diceOption1){
   setDicePool(prev => prev.filter((_, index) => index !== indexToRemove));
 };
 
-// Load dice pool on mount
+/*/ Load dice pool on mount
 useEffect(() => {
   const loadPool = async () => {
     const json = await AsyncStorage.getItem('currentDicePool');
@@ -317,7 +314,7 @@ useEffect(() => {
 // Save dice pool on change
 useEffect(() => {
   AsyncStorage.setItem('currentDicePool', JSON.stringify(dicePool));
-}, [dicePool]);
+}, [dicePool]);*/
 
 // stuff for saving dice pools
 const [isModalVisible, setIsModalVisible] = useState(false);
