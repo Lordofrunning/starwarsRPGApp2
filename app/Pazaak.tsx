@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Stack, useRouter, } from 'expo-router';
+import React, { useEffect, useState, } from 'react';
+import { Alert, Image, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 type SideCard = {
   value: number;         // The numeric value (positive or negative)
@@ -27,6 +28,8 @@ export default function PazaakScreen() {
   const [npcRoundWins, setNpcRoundWins] = useState(0);
   const [matchOver, setMatchOver] = useState(false);
 
+  const [infoModalVisible, setInfoModalVisible] = useState(false);
+    const router = useRouter();
   // Round state
   const [playerScore, setPlayerScore] = useState(0);
   const [npcScore, setNpcScore] = useState(0);
@@ -138,8 +141,32 @@ export default function PazaakScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>🃏 Pazaak - Best of 5</Text>
+    <View style={[styles.container, {width: '100%'}]}>
+      <Stack.Screen options={{ headerShown: false }} />
+       {/* Header */}
+          <View style={[styles.headerSmall, {width: "100%"}]}>
+            <TouchableOpacity onPress={() => router.back()} style={styles.sideButton}>
+              <Text style={styles.smallMenuArrow}>←</Text>
+            </TouchableOpacity>
+    
+            <View style={styles.logoContainer}>
+              <Image
+                source={require('../assets/images/logos/rpg_main_logo.png')}
+                style={styles.smallImage}
+                resizeMode="contain"
+              />
+            </View>
+    
+           <TouchableOpacity onPress={() => setInfoModalVisible(true)} style={styles.sideButton}>
+                                         <Image
+                                             source={require('../assets/images/Icons/informationIcon1.png')}
+                                             style={[styles.profileImage, { backgroundColor: 'white' }]}
+                                         />
+                                     </TouchableOpacity>
+            
+          </View>
+
+      <Text style={[styles.title, {paddingTop: 30}]}>🃏 Pazaak - Best of 5</Text>
 
       <Text style={styles.score}>
         Round: {roundNumber > 5 || matchOver ? 'Match Over' : roundNumber} {'\n'}
@@ -200,7 +227,38 @@ export default function PazaakScreen() {
           )}
         </>
       )}
+      {/* // modal for info button */}
+      
+              <Modal
+                visible={infoModalVisible}
+                animationType="slide"
+                transparent={true}
+                onRequestClose={() => setInfoModalVisible(false)}
+              >
+                <View style={styles.modalOverlayBig}>
+                  <View style={styles.modalContentBig}>
+                    <Text style={styles.modalHeaderBig}>Game Info {"\n"}</Text>
+                    <ScrollView contentContainerStyle={styles.scrollViewContent}>
+                      <Text style={styles.modalHeaderMedium}>Pazaak</Text>
+                      <Text style={styles.modalDescriptionBig}>
+                        {/* Put your long info text here */}
+                        
+                        {"\n\n"} draw cards to reach 20 or less. if you go over, you bust. use the side deck to change your score. 
+                        {"\n\n"} best of 5, winner takes the bet.
+                     
+                      </Text>
+                      <View style={[styles.divider,{marginBottom: 20}]}></View>
+                      
+                
+                    </ScrollView>
+                    <TouchableOpacity style={styles.closeButtonBig} onPress={() => setInfoModalVisible(false)}>
+                      <Text style={styles.closeButtonTextBig}>Got it</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </Modal>
     </View>
+    
   );
 }
 
@@ -208,7 +266,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#0d0d0d',
-    padding: 20,
+    
     alignItems: 'center',
   },
   title: {
@@ -303,5 +361,134 @@ const styles = StyleSheet.create({
   resetButtonText: {
     fontWeight: 'bold',
     fontSize: 18,
+  },
+  headerSmall: {
+    height: 80,
+    backgroundColor: '#444',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 15,
+    paddingTop: 30,
+    
+  
+  },
+  menuText: {
+    fontSize: 24,
+    color: '#fff',
+  },
+  menuArrow: {
+    fontSize: 60,
+    color: '#fff'
+  },
+  smallMenuArrow: {
+    fontSize: 30,
+    color: '#fff'
+  },
+  menuArrowTrent: {
+    fontSize: 60,
+    alignItems: 'center',
+    color: '#fff'
+  },
+  headerTitle: {
+    fontSize: 20,
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  headerTitleCenter: {
+    fontSize: 20,
+    color: '#fff',
+    alignContent: 'center',
+  },
+  profileImage: {
+    width: 36,
+    height: 36,
+    borderRadius: 18, // makes it circular
+    borderWidth: 1,
+    borderColor: '#fff',
+  },
+  sideButton: {
+  width: 50,
+  alignItems: 'center',
+},
+sideButton2: {
+  width: 50,
+  alignItems: 'center',
+    color: '#DDDDDD',
+},
+logoContainer: {
+  position: 'absolute',
+  left: 0,
+  right: 0,
+  top: 0,
+  bottom: 0,
+  paddingTop: 20,
+  justifyContent: 'center',
+  alignItems: 'center',
+  
+},
+smallImage: {
+    width: '50%',
+    height: '100%',
+
+  },
+  // big modal stuff here 
+  modalOverlayBig: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.7)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContentBig: {
+    backgroundColor: "#222",
+    borderRadius: 12,
+    width: '90%',  // almost full width
+    height: '85%', // limit max height so it doesn't cover entire screen
+    padding: 20,
+  },
+  imageBackground: {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%',
+  height: '100%',
+},
+ modalHeaderBig: {
+    fontSize: 30,
+    fontWeight: "bold",
+    color: "#0ff",
+    marginBottom: 12,
+  },
+  scrollViewContent: {
+    paddingBottom: 20,  // add space below scroll content for comfortable scrolling
+  },
+   modalHeaderMedium: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "yellow",
+    marginBottom: 12,
+  },
+   modalDescriptionBig: {
+    fontSize: 16,
+    color: "#fff",
+    lineHeight: 22,
+  },
+   closeButtonBig: {
+    backgroundColor: "#0f0",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 8,
+    marginTop: 15,
+    alignSelf: "center",
+  },
+    divider: {
+  height: 4,
+  backgroundColor: "#0ff", // or white, gray, etc.
+   marginVertical: 5, // spacing above and below the line
+  width: '100%',
+},
+  closeButtonTextBig: {
+    color: "#000",
+    fontWeight: "bold",
   },
 });
