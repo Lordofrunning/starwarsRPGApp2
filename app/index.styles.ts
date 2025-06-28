@@ -536,7 +536,23 @@ popupcontainerInfoPage: {
       justifyContent: 'space-between',
       alignItems: 'center',
       marginBottom: 20
-    }
+    },
+
+    // big modal stuff here 
+  modalOverlayBig: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.7)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContentBig: {
+    backgroundColor: "#222",
+    borderRadius: 12,
+    width: '90%',  // almost full width
+    height: '85%', // limit max height so it doesn't cover entire screen
+    padding: 20,
+  },
+   
 });
 
 
