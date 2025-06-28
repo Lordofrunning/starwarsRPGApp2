@@ -66,6 +66,50 @@ export const sectionStyles = StyleSheet.create({
   },
 });
 
+export const tableStyles = StyleSheet.create({
+  container: {
+    padding: 10,
+    backgroundColor: 'transparent',
+  },
+  headerRow: {
+    flexDirection: 'row',
+    borderBottomWidth: 2,
+    borderBottomColor: '#333',
+    marginBottom: 10,
+  },
+  headerCell: {
+    flex: 1,
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: '#fff',
+  },
+  row: {
+    flexDirection: 'row',
+    marginBottom: 12,
+    color: '#fff',
+  },
+  costCell: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    color: '#fff',
+  },
+  resultCell: {
+    flex: 3,
+    paddingLeft: 8,
+    color: '#fff',
+  },
+  iconStyles: {
+    width: 18,           // small enough to fit within a line of text
+    height: 18,
+    marginHorizontal: 3, // space around the icon so it doesn’t crowd the text
+    resizeMode: 'contain',
+    tintColor: undefined // optional: set to a color if your icon is a tintable vector
+  },
+  blue: { color: 'blue', fontWeight: 'bold' },
+  black: { color: 'black', fontWeight: 'bold' },
+});
+
 export const symbolImages = {
   success: require('../assets/dice/symbols/Success.png'),
   advantage: require('../assets/dice/symbols/Advantage.png'),
@@ -84,7 +128,92 @@ const popupWidth = screenWidth * 0.75;
 const { width } = Dimensions.get('window');
 const router = useRouter();
 
-const Section4Content = () => (
+const StarshipCombatTable = () => {
+  return (
+    <ScrollView style={tableStyles.container}>
+      <View style={tableStyles.headerRow}>
+        <Text style={tableStyles.headerCell}>Cost</Text>
+        <Text style={tableStyles.headerCell}>Result Options</Text>
+      </View>
+
+      {/* Row 1 */}
+      <View style={tableStyles.row}>
+        <Text style={tableStyles.costCell}>
+          {/* Replace with your actual icon or emoji if desired */}
+          <Image source={symbolImages.advantage} style={tableStyles.iconStyles} />
+          {' or '}
+          <Image source={symbolImages.triumph} style={tableStyles.iconStyles} />
+        </Text>
+        <View style={tableStyles.resultCell}>
+          <Text style={sectionStyles.text}>• Add <Text style={tableStyles.blue}>🟦</Text> to the next allied character’s check.</Text>
+          <Text style={sectionStyles.text}>• Notice a flaw in the enemy's course or a vital weakness.</Text>
+          <Text style={sectionStyles.text}>• Inflict a Critical Hit (⚡ cost may vary).</Text>
+          <Text style={sectionStyles.text}>• Activate a weapon quality (⚡ cost may vary).</Text>
+        </View>
+      </View>
+
+      {/* Row 2 */}
+      <View style={tableStyles.row}>
+        <Text style={tableStyles.costCell}>
+          <Image source={symbolImages.advantage} style={tableStyles.iconStyles} />
+          <Image source={symbolImages.advantage} style={tableStyles.iconStyles} />
+          {' or '}
+          <Image source={symbolImages.triumph} style={tableStyles.iconStyles} />
+        </Text>
+        <View style={tableStyles.resultCell}>
+          <Text style={sectionStyles.text}>• Perform a free maneuver (if within 2-maneuver limit).</Text>
+          <Text style={sectionStyles.text}>• Add <Text style={tableStyles.black}>⬛</Text> to target’s next Piloting or Gunnery check.</Text>
+          <Text style={sectionStyles.text}>• Add <Text style={tableStyles.blue}>🟦</Text> to any allied Piloting, Gunnery, Computers, or Mechanics check.</Text>
+        </View>
+      </View>
+
+      {/* Row 3 */}
+      <View style={tableStyles.row}>
+        <Text style={tableStyles.costCell}>
+          <Image source={symbolImages.advantage} style={tableStyles.iconStyles} />
+          <Image source={symbolImages.advantage} style={tableStyles.iconStyles} />
+          <Image source={symbolImages.advantage} style={tableStyles.iconStyles} />
+          {' or '}
+          <Image source={symbolImages.triumph} style={tableStyles.iconStyles} />
+        </Text>
+        <View style={tableStyles.resultCell}>
+          <Text style={sectionStyles.text}>• Ignore terrain or stellar effects until end of next turn.</Text>
+          <Text style={sectionStyles.text}>• Disable a specific ship component instead of causing damage.</Text>
+          <Text style={sectionStyles.text}>• Gain a free Pilot Only maneuver.</Text>
+          <Text style={sectionStyles.text}>• Force target ship to veer off/stay off target.</Text>
+        </View>
+      </View>
+
+      {/* Row 4 */}
+      <View style={tableStyles.row}>
+        <Text style={tableStyles.costCell}>
+          <Image source={symbolImages.triumph} style={tableStyles.iconStyles} />
+        </Text>
+        <View style={tableStyles.resultCell}>
+          <Text style={sectionStyles.text}>• Upgrade difficulty of target’s next check.</Text>
+          <Text style={sectionStyles.text}>• Upgrade any allied Piloting, Gunnery, or Mechanics check.</Text>
+          <Text style={sectionStyles.text}>• Do something vital to the tide of battle (e.g., destroy shield generator).</Text>
+        </View>
+      </View>
+
+      {/* Row 5 */}
+      <View style={tableStyles.row}>
+        <Text style={tableStyles.costCell}>
+          <Image source={symbolImages.triumph} style={tableStyles.iconStyles} />
+          <Image source={symbolImages.triumph} style={tableStyles.iconStyles} />
+        </Text>
+        <View style={tableStyles.resultCell}>
+          <Text style={sectionStyles.text}>• Disable or destroy a component of attacker’s ship.</Text>
+          <Text style={sectionStyles.text}>• Effects should be meaningful but not devastating.</Text>
+        </View>
+      </View>
+    </ScrollView>
+  );
+};
+
+const Section4Content = () => {
+  const [showExtra, setShowExtra] = useState(false);
+  return(
   <View style={{ backgroundColor: 'transparent', width: popupWidth }}>
     <Text style={sectionStyles.headingMain}>
       Starship Actions
@@ -97,8 +226,11 @@ const Section4Content = () => (
     <Text style={sectionStyles.heading}>
       Pilot (Pilot)
     </Text>
+    <Text style={sectionStyles.textDiff}>
+      Piloting check
+    </Text>
     <Text style={sectionStyles.text}>
-      Piloting check: Make a check to navigate a hazard.
+      Make a check to navigate a hazard.
     </Text>
 
     {/* Plot Course */}
@@ -124,10 +256,12 @@ const Section4Content = () => (
     <Text style={sectionStyles.heading}>
       Copilot
     </Text>
-    <Text style={sectionStyles.text}>
+    <Text style={sectionStyles.textDiff}>
       Average (
       <Image source={symbolImages.purple} style={sectionStyles.symbol} />
-      ) Piloting check.{"\n"}
+      ) Piloting check
+    </Text>
+    <Text style={sectionStyles.text}>
       Each{" "}
       <Image source={symbolImages.success} style={sectionStyles.symbol} />
       downgrades the difficulty of the pilot’s next piloting check by 1.
@@ -137,14 +271,16 @@ const Section4Content = () => (
     <Text style={sectionStyles.heading}>
       Jamming
     </Text>
-    <Text style={sectionStyles.text}>
+    <Text style={sectionStyles.textDiff}>
       Average (
       <Image source={symbolImages.purple} style={sectionStyles.symbol} />
-      ) Computers check.{"\n"}
+      ) Computers check
+    </Text>
+    <Text style={sectionStyles.text}>
       The enemy must make an Average (
       <Image source={symbolImages.purple} style={sectionStyles.symbol} />
       ) Computers check to use their coms. The difficulty increases by 1 for each additional{" "}
-      <Image source={symbolImages.threat} style={{ width: 18, height: 18 }} />
+      <Image source={symbolImages.threat} style={sectionStyles.symbol} />
       , and the jamming affects an additional target for each advantage.
     </Text>
 
@@ -152,10 +288,12 @@ const Section4Content = () => (
     <Text style={sectionStyles.heading}>
       Boost Shields
     </Text>
-    <Text style={sectionStyles.text}>
+    <Text style={sectionStyles.textDiff}>
       Hard (
       <Image source={symbolImages.purple} style={sectionStyles.symbol} />
-      ) Computers.{"\n"}
+      ) Computers
+    </Text>
+    <Text style={sectionStyles.text}>
       The vehicle suffers 1 system strain, and increases the defense of 1 defense zone by 1 until the beginning of his next turn. Additional{" "}
       <Image source={symbolImages.success} style={sectionStyles.symbol} />
       increase the duration by 1 round per{" "}
@@ -163,12 +301,79 @@ const Section4Content = () => (
       .
     </Text>
 
+    {/* Attack */}
+    <Text style={sectionStyles.heading}>
+      Combat Check
+    </Text>
+    <Text style={sectionStyles.textDiff}>
+      Gunnery Check
+    </Text>
+    <Text style={sectionStyles.text}>
+      Attack with starship weapons the same as other ranged attacks with difficulty determined by relative ship silhouette.
+    </Text>
+    <Text style={sectionStyles.textDiff}>
+      Attacker Silhouette is..{'\n'}
+      2 or more smaller than target: (<Image source={symbolImages.purple} style={sectionStyles.symbol} />){'\n'}
+      Equal or within 1 of target: (
+        <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+        <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+      ){'\n'}
+      2 larger than target: (
+        <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+        <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+        <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+      ){'\n'}
+      3 larger than target: (
+        <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+        <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+        <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+        <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+      ){'\n'}
+      4 or more larger than target: (
+        <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+        <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+        <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+        <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+      )
+    </Text>
+    {/* Expandable/Dropdown Section */}
+      <TouchableOpacity onPress={() => setShowExtra(!showExtra)}>
+        <Text style={[sectionStyles.text, { color: '#39d', textDecorationLine: 'underline' }]}>
+          {showExtra ? 'Hide Advantage Options Table ▲' : 'Spending Advantage Options ▼'}
+        </Text>
+      </TouchableOpacity>
+      {showExtra && <StarshipCombatTable />}
+    
+
     {/* Damage Control */}
     <Text style={sectionStyles.heading}>
       Damage Control
     </Text>
+    <Text style={sectionStyles.textDiff}>
+      Mechanics Check Based on current vehicle hull trauma or system strain
+    </Text>
+    <Text style={sectionStyles.textDiff}>
+      HT/SS {"<"} half of threshold: Easy (
+      <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+      )
+    </Text>
+    <Text style={sectionStyles.textDiff}>
+      HT/SS {">"} half of threshold: Average (
+      <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+      <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+      )
+    </Text>
+    <Text style={sectionStyles.textDiff}>
+      HT/SS {">"} threshold: Hard (
+      <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+      <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+      <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+      )
+    </Text>
+    <Text style={sectionStyles.textDiff}>
+      Critical Injury: Critical Injury severity
+    </Text>
     <Text style={sectionStyles.text}>
-      Mechanics Check.{"\n"}
       Can be performed repeatedly to repair system strain, but can only be performed to repair hull trauma once per encounter. On success, the vehicle recovers 1 system strain or hull trauma per{" "}
       <Image source={symbolImages.success} style={sectionStyles.symbol} />
       . Can also be used to repair Critical Hits.
@@ -178,10 +383,12 @@ const Section4Content = () => (
     <Text style={sectionStyles.heading}>
       Fire Discipline
     </Text>
-    <Text style={sectionStyles.text}>
+    <Text style={sectionStyles.textDiff}>
       Hard (
       <Image source={symbolImages.purple} style={sectionStyles.symbol} />
-      ) Leadership or Discipline check.{"\n"}
+      ) Leadership or Discipline check
+    </Text>
+    <Text style={sectionStyles.text}>
       The next crewmember firing a weapon aboard the ship can add{" "}
       <Image source={symbolImages.success} style={sectionStyles.symbol} />
       to his check. Each additional{" "}
@@ -195,10 +402,12 @@ const Section4Content = () => (
     <Text style={sectionStyles.heading}>
       Scan the Enemy
     </Text>
-    <Text style={sectionStyles.text}>
+    <Text style={sectionStyles.textDiff}>
       Hard (
       <Image source={symbolImages.purple} style={sectionStyles.symbol} />
-      ) Perception.{"\n"}
+      ) Perception
+    </Text>
+    <Text style={sectionStyles.text}>
       Learn what weapons the ship has, any modifications, and their system strain and hull trauma thresholds.{" "}
       <Image source={symbolImages.advantage} style={sectionStyles.symbol} />
       can be spent to also learn their current system strain and hull trauma levels.
@@ -208,10 +417,12 @@ const Section4Content = () => (
     <Text style={sectionStyles.heading}>
       Slice Enemy’s Systems
     </Text>
-    <Text style={sectionStyles.text}>
+    <Text style={sectionStyles.textDiff}>
       Hard (
       <Image source={symbolImages.purple} style={sectionStyles.symbol} />
-      ) Computers check.{"\n"}
+      ) Computers check
+    </Text>
+    <Text style={sectionStyles.text}>
       Reduce the defense of 1 zone on the target vehicle for 1 round per{" "}
       <Image source={symbolImages.success} style={sectionStyles.symbol} />
       . A{" "}
@@ -225,12 +436,14 @@ const Section4Content = () => (
     <Text style={sectionStyles.heading}>
       Spoofing Missiles
     </Text>
-    <Text style={sectionStyles.text}>
+    <Text style={sectionStyles.textDiff}>
       Average (
       <Image source={symbolImages.purple} style={sectionStyles.symbol} />
       ) Computers or Hard (
       <Image source={symbolImages.purple} style={sectionStyles.symbol} />
-      ) Vigilance check.{"\n"}
+      ) Vigilance check
+    </Text>
+    <Text style={sectionStyles.text}>
       Any attacks against the crewmember’s ship or vehicle using weapons with the Guided quality upgrade their difficulty by 1 (plus 1 upgrade for every additional) until the start of the crewmember’s next turn.
     </Text>
 
@@ -238,8 +451,81 @@ const Section4Content = () => (
     <Text style={sectionStyles.heading}>
       Gain the Advantage (Pilot)
     </Text>
+    <Text style={sectionStyles.textDiff}>
+      Piloting check (difficulty based on the speed advantage)
+    </Text>
     <Text style={sectionStyles.text}>
-      Perform Piloting check, difficulty based on the speed advantage. On success, the pilot ignores all penalties imposed by his own and his opponent's use of Evasive Maneuvers until the end of the following round. On the following turn the opponent may attempt to cancel out the advantage by using Gain the Advantage as well. If so, the difficulty is increased by one for each time the two pilots have successfully Gained the Advantage against the other.
+      On success, the pilot ignores all penalties imposed by his own and his opponent's use of Evasive Maneuvers until the end of the following round. On the following turn the opponent may attempt to cancel out the advantage by using Gain the Advantage as well. If so, the difficulty is increased by one for each time the two pilots have successfully Gained the Advantage against the other.
+    </Text>
+  </View>
+  );
+};
+
+const Section5Content = () => (
+  <View style={{ backgroundColor: 'transparent', width: popupWidth }}>
+    <Text style={sectionStyles.headingMain}>
+      Starship Maneuvers
+    </Text>
+    <Text style={sectionStyles.headingSub}>
+      (Silhouette 1-4)
+    </Text>
+
+    {/* Accelerate/Decelerate */}
+    <Text style={sectionStyles.heading}>
+      Accelerate/Decelerate (Pilot)
+    </Text>
+    <Text style={sectionStyles.text}>
+      Increase or decrease vehicle’s speed by 1 (to minimum or maximum speed).
+    </Text>
+
+    {/* Aim */}
+    <Text style={sectionStyles.heading}>
+      Aim Weapons
+    </Text>
+    <Text style={sectionStyles.text}>
+      Anyone using a ships weapon may aim and add 1 boost die to their attack.
+    </Text>
+
+    {/* Angle Deflector Shields */}
+    <Text style={sectionStyles.heading}>
+      Angle Deflector Shields
+    </Text>
+    <Text style={sectionStyles.text}>
+      Reassign 1 point of Defense from one defense zone to another.
+    </Text>
+
+    {/* Evasive Maneuvers */}
+    <Text style={sectionStyles.heading}>
+      Evasive Maneuvers (Pilot) (Speed: 3+)
+    </Text>
+    <Text style={sectionStyles.text}>
+      Upgrade the difficulty of any incoming and outgoing attacks once until the pilot’s next turn.
+    </Text>
+
+    {/* Fly/Drive */}
+    <Text style={sectionStyles.heading}>
+      Fly/Drive (Pilot)
+    </Text>
+    <Text style={sectionStyles.text}>
+      Change range bands based on speed of vehicle. (See Planetary Range Bands Table next page).
+    </Text>
+
+    {/* Punch It */}
+    <Text style={sectionStyles.heading}>
+      Punch It (Pilot)
+    </Text>
+    <Text style={sectionStyles.text}>
+      Immediately accelerate to maximum speed, suffering 1 point of system strain per each point increased.
+    </Text>
+
+    {/* Stay on Target */}
+    <Text style={sectionStyles.heading}>
+      Stay on Target (Pilot) (Speed: 3+)
+    </Text>
+    <Text style={sectionStyles.text}>
+      Upgrade the ability of any incoming and outgoing attacks once until the pilot’s next turn.
+    </Text>
+    <Text style={sectionStyles.text}>
     </Text>
   </View>
 );
@@ -369,7 +655,7 @@ export default function InfoPage() {
               {/* Your custom text for section 4 or 5 here */}
               {visibleSection === 'section4'
                 ? <Section4Content />
-                : `Maneuvers`}
+                : <Section5Content />}
             </Text>
             {/* You can add more <Text> or other components here */}
           </View>
