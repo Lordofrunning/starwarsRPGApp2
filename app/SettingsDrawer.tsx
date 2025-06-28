@@ -69,7 +69,7 @@ const SettingsDrawer: React.FC<SettingsDrawerProps> = ({ visible, onClose }) => 
             <Text style={setstyles.optionSubText}>Stops subtracting advantage and threat results from each other</Text>
           </View>
           <View style={setstyles.optionRow}>
-            <Text style={setstyles.optionSubText}>During crafting or other situations, threat and advantage can each be used seperately</Text>
+            <Text style={setstyles.optionSubText}>During crafting, threat and advantage can each be used seperately</Text>
           </View>
           <View style={setstyles.optionRow}>
             <Text style={setstyles.optionText}></Text>

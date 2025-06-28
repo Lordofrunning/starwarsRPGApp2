@@ -100,6 +100,20 @@ fixedToggle: {
     borderWidth: 1,
     borderColor: '#fff',
   },
+  profileImageB: {
+    width: 34,
+    height: 34,
+    borderRadius: 40, // makes it circular
+    borderWidth: 1,
+    borderColor: '#FFF017',
+  },
+  profileImageNC: {
+    width: 34,
+    height: 34,
+    //borderRadius: 18, // makes it circular
+    //borderWidth: 1,
+    //borderColor: '#fff',
+  },
   sideButton: {
   width: 50,
   alignItems: 'center',

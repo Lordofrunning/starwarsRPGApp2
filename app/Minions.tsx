@@ -27,11 +27,10 @@ export default function MinionGalleryPage() {
             resizeMode="contain"
           />
         </View>
-
-        <TouchableOpacity onPress={() => console.log('Profile pressed')} style={styles.sideButton}>
+        <TouchableOpacity onPress={() => router.push('/DiceRoller')} style={styles.sideButton}>
           <Image
-            source={require('../assets/images/empty_profile_pic.png')}
-            style={styles.profileImage}
+            source={require('../assets/dice/TransparentDice/YellowDie.png')}
+            style={styles.profileImageNC}
           />
         </TouchableOpacity>
       </View>

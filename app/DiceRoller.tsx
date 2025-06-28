@@ -270,7 +270,9 @@ const diceGridOrder: DieType[] = [
   'force',
 ];
 
-
+export const unstable_settings = {
+  unmountOnBlur: false,
+};
 export default function DiceRoller() {
   const { diceOption1, diceOption2, diceOption3 } = useDiceSettings();
   const router = useRouter();
@@ -302,6 +304,20 @@ if(diceOption1){
   const removeDieFromPool = (indexToRemove: number) => {
   setDicePool(prev => prev.filter((_, index) => index !== indexToRemove));
 };
+
+// Load dice pool on mount
+useEffect(() => {
+  const loadPool = async () => {
+    const json = await AsyncStorage.getItem('currentDicePool');
+    if (json) setDicePool(JSON.parse(json));
+  };
+  loadPool();
+}, []);
+
+// Save dice pool on change
+useEffect(() => {
+  AsyncStorage.setItem('currentDicePool', JSON.stringify(dicePool));
+}, [dicePool]);
 
 // stuff for saving dice pools
 const [isModalVisible, setIsModalVisible] = useState(false);
@@ -445,7 +461,7 @@ const loadPool = (name: string) => {
   return (
        <View style={{ flex: 1, position: 'relative', backgroundColor: '#D3D3D3' }}>
       <View style={styles.container}>
-        <Stack.Screen options={{ headerShown: false }} />
+        <Stack.Screen options={{ headerShown: false}} />
     {/* Header */}
           <View style={styles.headerSmall}>
             <TouchableOpacity onPress={() => router.back()} style={styles.sideButton}>
@@ -518,7 +534,6 @@ const loadPool = (name: string) => {
                 <Button title="Clear" onPress={clearPool} color="gray" />
                 </View>
             </View>
-
 
     </View>
         <View style={diceStyles.divider}>

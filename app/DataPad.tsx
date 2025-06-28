@@ -211,7 +211,7 @@ const StarshipCombatTable = () => {
   );
 };
 
-const Section4Content = () => {
+const StarshipActions = () => {
   const [showExtra, setShowExtra] = useState(false);
   return(
   <View style={{ backgroundColor: 'transparent', width: popupWidth }}>
@@ -461,7 +461,7 @@ const Section4Content = () => {
   );
 };
 
-const Section5Content = () => (
+const StarshipManeuvers = () => (
   <View style={{ backgroundColor: 'transparent', width: popupWidth }}>
     <Text style={sectionStyles.headingMain}>
       Starship Maneuvers
@@ -546,6 +546,12 @@ export default function InfoPage() {
       <TouchableOpacity onPress={() => router.back()} style={{ position: 'absolute', top: 80, left: 30, zIndex: 1 }}>
         <Text style={styles.menuArrow}>←</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+            onPress={() => router.push('/DiceRoller')}
+            style={{ position: 'absolute', top: 120, left: 320, zIndex: 1 }}
+          >
+            <Image source={require('../assets/dice/TransparentDice/YellowDie.png')} style={{width: 22, height: 22,}}></Image>
+          </TouchableOpacity>
       {visibleSection === null && (
       <View style={styles.overlayContainerInfoPage}>
         {/* Buttons was modalbackgroundInfoPageTrent*/}
@@ -623,6 +629,12 @@ export default function InfoPage() {
           >
             <Text style={styles.menuArrow}>←</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => router.push('/DiceRoller')}
+            style={{ position: 'absolute', top: 88, left: 320, zIndex: 1 }}
+          >
+            <Image source={require('../assets/dice/TransparentDice/YellowDie.png')} style={{width: 22, height: 22,}}></Image>
+          </TouchableOpacity>
           <View style={[styles.popupcontainerInfoPageTrent, { width: popupWidth, paddingTop: 0, height: 800, paddingBottom: 0 }]}>
             <View style={{ maxHeight: 540, overflow: 'hidden', paddingTop: 0, paddingBottom: 0 }}>
             <ScrollView contentContainerStyle={{
@@ -654,8 +666,8 @@ export default function InfoPage() {
             <Text style={{ color: '#fff', fontSize: 18, marginBottom: 12 }}>
               {/* Your custom text for section 4 or 5 here */}
               {visibleSection === 'section4'
-                ? <Section4Content />
-                : <Section5Content />}
+                ? <StarshipActions />
+                : <StarshipManeuvers />}
             </Text>
             {/* You can add more <Text> or other components here */}
           </View>
