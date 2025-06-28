@@ -97,7 +97,8 @@ export default function SoundboardPage() {
               </View>
             
             </View>
-            <ScrollView contentContainerStyle={styles.scrollContainerInfoPage}>
+
+            <ScrollView contentContainerStyle={[{alignItems: 'center', maxHeight: 2000}]}>
       <Text style={styles.title}>Sound Board</Text>
       {/* Top Big Button */}
       <TouchableOpacity onPress={() => playSound(0)} style={styles.bigButton}>

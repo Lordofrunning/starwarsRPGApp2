@@ -4,7 +4,7 @@
     "slug": "starwarsRPGApp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/logos/YellowDiceAppIcon1.png",
     "scheme": "starwarsrpgapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
