@@ -8,6 +8,7 @@
     "scheme": "starwarsrpgapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
