@@ -72,3 +72,4 @@ export const DiceSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ 
 export const useDiceSettings = () => {
   return useContext(DiceSettingsContext);
 };
+export default DiceSettingsProvider;
