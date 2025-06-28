@@ -552,6 +552,13 @@ popupcontainerInfoPage: {
     height: '85%', // limit max height so it doesn't cover entire screen
     padding: 20,
   },
+  imageBackground: {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%',
+  height: '100%',
+},
    
 });
 

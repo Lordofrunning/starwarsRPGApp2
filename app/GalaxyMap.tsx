@@ -67,12 +67,7 @@ const GalaxyMap = () => {
           />
         </View>
 
-        <TouchableOpacity onPress={() => console.log('Profile pressed')} style={styles.sideButton}>
-          <Image
-            source={require('../assets/images/empty_profile_pic.png')}
-            style={styles.profileImage}
-          />
-        </TouchableOpacity>
+       
       </View>
 
        {/* Zoomable Galaxy Map */}

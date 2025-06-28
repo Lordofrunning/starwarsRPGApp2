@@ -1,7 +1,7 @@
 import { Audio } from 'expo-av';
 import { Stack, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ImageBackground, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { styles } from './index.styles';
 const soundData = [
   { label: 'Star Wars', image: null, file: require('../assets/sounds/StarWars.mp3') },
@@ -100,16 +100,19 @@ export default function SoundboardPage() {
             <ScrollView contentContainerStyle={styles.scrollContainerInfoPage}>
       <Text style={styles.title}>Sound Board</Text>
       {/* Top Big Button */}
-      <TouchableOpacity
-        onPress={() => playSound(0)}
-        style={styles.bigButton}
-      >
-        {soundData[0].image ? (
-          <Image source={soundData[0].image} style={styles.image} />
-        ) : (
-          <Text style={styles.buttonText}>{soundData[0].label}</Text>
-        )}
-      </TouchableOpacity>
+      <TouchableOpacity onPress={() => playSound(0)} style={styles.bigButton}>
+  <ImageBackground
+    source={require('../assets/images/starwars_opening_crawl.png')} // your background image path
+    style={styles.imageBackground}
+    imageStyle={{ borderRadius: 10 }} // optional: rounded corners
+  >
+    {soundData[0].image ? (
+      <Image source={soundData[0].image} style={[{width: "100%"}]} />
+    ) : (
+      <Text style={styles.buttonText}></Text>
+    )}
+  </ImageBackground>
+</TouchableOpacity>
 
       {/* Grid Buttons */}
       <View style={styles.gridSoundsPage}>
