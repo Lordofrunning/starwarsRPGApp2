@@ -111,15 +111,15 @@ export const tableStyles = StyleSheet.create({
 });
 
 export const symbolImages = {
-  success: require('../assets/dice/symbols/Success.png'),
-  advantage: require('../assets/dice/symbols/Advantage.png'),
-  threat: require('../assets/dice/symbols/Threat.png'),
-  triumph: require('../assets/dice/symbols/Triumph.png'),
-  failure: require('../assets/dice/symbols/Failure.png'),
-  despair: require('../assets/dice/symbols/Despair.png'),
-  purple: require('../assets/dice/PurpleDiceFull.jpg'),
-  blue: require('../assets/dice/PurpleDiceFull.jpg'),
-  black: require('../assets/dice/PurpleDiceFull.jpg'),
+  success: require('../assets/dice/DiceSymbolsWhite/Success.png'),
+  advantage: require('../assets/dice/DiceSymbolsWhite/Advantage.png'),
+  threat: require('../assets/dice/DiceSymbolsWhite/Threat.png'),
+  triumph: require('../assets/dice/DiceSymbolsWhite/Triumph.png'),
+  failure: require('../assets/dice/DiceSymbolsWhite/Failure.png'),
+  despair: require('../assets/dice/DiceSymbolsWhite/Despair.png'),
+  purple: require('../assets/dice/TransparentDice/PurpleDie.png'),
+  blue: require('../assets/dice/TransparentDice/BlueDie.jpg'),
+  black: require('../assets/dice/TransparentDice/BlackDie.jpg'),
   // ...add others as needed
 };
 
