@@ -37,9 +37,7 @@ export default function NPCButtonsPage() {
       </View>
         {/* Button stack */}
                     <View style={styles.buttonStack}>
-                      <TouchableOpacity style={styles.buttonBig} onPress={() => router.push('/SpinWheel')}>
-                        <Text style={styles.buttonTextCentered}>Wheel Spinner</Text>
-                      </TouchableOpacity>
+                     
                       <TouchableOpacity style={styles.buttonBig} onPress={() => router.push('/Sabacc')}>
                         <Text style={styles.buttonText}>Sabacc</Text>
                       </TouchableOpacity>
@@ -51,6 +49,9 @@ export default function NPCButtonsPage() {
                       </TouchableOpacity>
                       <TouchableOpacity style={styles.buttonBig}>
                         <Text style={styles.buttonText}>Droid Duel {"\n"}(comming soon)</Text>
+                      </TouchableOpacity>
+                       <TouchableOpacity style={styles.buttonBig} >
+                        <Text style={styles.buttonTextCentered}>Wheel Spinner (comming soon)</Text>
                       </TouchableOpacity>
                     </View>
     </View>
