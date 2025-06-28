@@ -3,7 +3,7 @@ import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 
 
-import { styles } from './index.styles';
+import { styles } from '.././index.styles';
 
 
 export default function NPCButtonsPage() {
@@ -22,7 +22,7 @@ export default function NPCButtonsPage() {
 
         <View style={styles.logoContainer}>
           <Image
-            source={require('../assets/images/logos/rpg_main_logo.png')}
+            source={require('../../assets/images/logos/rpg_main_logo.png')}
             style={styles.smallImage}
             resizeMode="contain"
           />
@@ -30,28 +30,28 @@ export default function NPCButtonsPage() {
 
         <TouchableOpacity onPress={() => console.log('Profile pressed')} style={styles.sideButton}>
           <Image
-            source={require('../assets/images/empty_profile_pic.png')}
+            source={require('../../assets/images/empty_profile_pic.png')}
             style={styles.profileImage}
           />
         </TouchableOpacity>
       </View>
         {/* Button stack */}
                     <View style={styles.buttonStack}>
-                      <TouchableOpacity style={styles.buttonBig} onPress={() => router.push('/Minions')}>
+                      <TouchableOpacity style={styles.buttonBig} onPress={() => router.push('/NPC/Minions')}>
                         <Text style={styles.buttonTextCentered}>Minion Group Stats</Text>
                       </TouchableOpacity>
-                      <TouchableOpacity style={styles.buttonBig} onPress={() => router.push('/Monsters')}>
+                      <TouchableOpacity style={styles.buttonBig} onPress={() => router.push('/NPC/Monsters')}>
                         <Text style={styles.buttonText}>Monsters</Text>
                       </TouchableOpacity>
-                      <TouchableOpacity style={styles.buttonBig} onPress={() => router.push('/Rivals')}>
+                      <TouchableOpacity style={styles.buttonBig} onPress={() => router.push('/NPC/Rivals')}>
                         <Text style={styles.buttonText}>Rivals</Text>
                       </TouchableOpacity>
-                      <TouchableOpacity style={styles.buttonBig} onPress={() => router.push('/Nemeses')}>
+                      <TouchableOpacity style={styles.buttonBig} onPress={() => router.push('/NPC/Nemeses')}>
                         <Text style={styles.buttonText}>Nemesis</Text>
                       </TouchableOpacity>
-                      <TouchableOpacity style={styles.buttonBig} onPress={() => router.push('/NPCs')}>
+                      {/*<TouchableOpacity style={styles.buttonBig} onPress={() => router.push('/NPC/NPCs')}>
                         <Text style={styles.buttonText}>Enemies / NPCs</Text>
-                      </TouchableOpacity>
+                      </TouchableOpacity>*/}
                     </View>
     </View>
   </View>

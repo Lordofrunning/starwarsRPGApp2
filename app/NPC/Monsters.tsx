@@ -3,34 +3,34 @@ import React from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
 
-import { styles } from './index.styles';
+import { styles } from '../index.styles';
 
 
 export default function MinionGalleryPage() {
   const router = useRouter();
   const imageData = [
   {
-    src: require('../assets/images/Monsters/JungleRancor.png'),
+    src: require('../../assets/images/Monsters/JungleRancor.png'),
     style: { width: 350, height: 300 },
     boxStyle: { width: 380, height: 240 },
   },
   {
-    src: require('../assets/images/Monsters/Gundark.png'),
+    src: require('../../assets/images/Monsters/Gundark.png'),
     style: { width: 350, height: 480 }, // Taller image
     boxStyle: { width: 380, height: 500 },
   },
   {
-    src: require('../assets/images/Monsters/SandGundark.png'),
+    src: require('../../assets/images/Monsters/SandGundark.png'),
     style: { width: 350, height: 480 }, // Taller image
     boxStyle: { width: 380, height: 480 },
   },
   {
-    src: require('../assets/images/Monsters/Acklay.png'),
+    src: require('../../assets/images/Monsters/Acklay.png'),
     style: { width: 350, height: 480 }, // Taller image
     boxStyle: { width: 380, height: 480 },
   },
   {
-    src: require('../assets/images/Monsters/KraytDragon.png'),
+    src: require('../../assets/images/Monsters/KraytDragon.png'),
     style: { width: 350, height: 480 }, // Taller image
     boxStyle: { width: 380, height: 290 },
   },
@@ -50,14 +50,14 @@ export default function MinionGalleryPage() {
 
         <View style={styles.logoContainer}>
           <Image
-            source={require('../assets/images/logos/rpg_main_logo.png')}
+            source={require('../../assets/images/logos/rpg_main_logo.png')}
             style={styles.smallImage}
             resizeMode="contain"
           />
         </View>
         <TouchableOpacity onPress={() => router.push('/DiceRoller')} style={styles.sideButton}>
           <Image
-            source={require('../assets/dice/TransparentDice/YellowDie.png')}
+            source={require('../../assets/dice/TransparentDice/YellowDie.png')}
             style={styles.profileImageNC}
           />
         </TouchableOpacity>

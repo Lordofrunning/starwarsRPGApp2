@@ -587,7 +587,7 @@ export default function InfoPage() {
         >
           <Text style={styles.buttonText}>Starship Maneuvers</Text>
         </TouchableOpacity>
-        <TouchableOpacity
+        {/*<TouchableOpacity
           style={styles.button}
           onPress={() => setVisibleSection('section6')}
         >
@@ -610,7 +610,7 @@ export default function InfoPage() {
           onPress={() => setVisibleSection('section4')}
         >
           <Text style={styles.buttonText}>Landspeader Chase?</Text>
-        </TouchableOpacity>
+        </TouchableOpacity>*/}
       </View>
       )}
 

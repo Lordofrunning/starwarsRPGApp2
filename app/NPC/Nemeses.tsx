@@ -3,24 +3,24 @@ import React from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
 
-import { styles } from './index.styles';
+import { styles } from '../index.styles';
 
 
 export default function MinionGalleryPage() {
   const router = useRouter();
   const imageData = [
   {
-    src: require('../assets/images/RivalsNemesis/Bargos.png'),
+    src: require('../../assets/images/RivalsNemesis/Bargos.png'),
     style: { width: 360, height: 300 },
     boxStyle: { width: 380, height: 300 },
   },
   {
-    src: require('../assets/images/RivalsNemesis/IG89.png'),
+    src: require('../../assets/images/RivalsNemesis/IG89.png'),
     style: { width: 360, height: 480 }, // Taller image
     boxStyle: { width: 380, height: 480 },
   },
   {
-    src: require('../assets/images/RivalsNemesis/Hunter.png'),
+    src: require('../../assets/images/RivalsNemesis/Hunter.png'),
     style: { width: 360, height: 480 }, // Taller image
     boxStyle: { width: 380, height: 500 },
   },
@@ -40,14 +40,14 @@ export default function MinionGalleryPage() {
 
         <View style={styles.logoContainer}>
           <Image
-            source={require('../assets/images/logos/rpg_main_logo.png')}
+            source={require('../../assets/images/logos/rpg_main_logo.png')}
             style={styles.smallImage}
             resizeMode="contain"
           />
         </View>
         <TouchableOpacity onPress={() => router.push('/DiceRoller')} style={styles.sideButton}>
           <Image
-            source={require('../assets/dice/TransparentDice/YellowDie.png')}
+            source={require('../../assets/dice/TransparentDice/YellowDie.png')}
             style={styles.profileImageNC}
           />
         </TouchableOpacity>

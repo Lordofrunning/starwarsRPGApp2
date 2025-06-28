@@ -106,7 +106,7 @@ export default function HomeScreen() {
               <TouchableOpacity style={styles.button} onPress={() => router.push('/Shop')}>
                 <Text style={styles.buttonText}>Generate Shop</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button} onPress={() => router.push('/NPCs')}>
+              <TouchableOpacity style={styles.button} onPress={() => router.push('/NPC/NPCs')}>
                 <Text style={styles.buttonText}>Enemies / NPCs</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.button} onPress={() => router.push('/GalaxyMap')}>
