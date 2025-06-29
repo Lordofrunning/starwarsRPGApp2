@@ -1,15 +1,15 @@
 import { Stack, useRouter } from 'expo-router';
 import React, { useState } from "react";
 import {
-    Dimensions,
-    Image,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Switch,
-    Text,
-    TouchableOpacity,
-    View,
+  Dimensions,
+  Image,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Switch,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { styles as sharedStyles } from './index.styles';
 
@@ -94,7 +94,12 @@ require('../assets/dice/Sabacc/dice_wild.jpg'),
 
 ]
 
- 
+type Card = {
+  id: string;
+  name: string;
+  value: number;
+  image: any;
+};
 
 export default function GenerateCard() {
     const [modalVisible, setModalVisible] = useState(false);
@@ -102,7 +107,7 @@ const [selectedCardIndex, setSelectedCardIndex] = useState<number | null>(null);
 const [infoModalVisible, setInfoModalVisible] = useState(false);
   const router = useRouter();
 
-  const [hand, setHand] = useState([]);
+  const [hand, setHand] = useState<Card[]>([]);
   const [folded, setFolded] = useState(false);
   const [turnEnded, setTurnEnded] = useState(false);
 const [startModalVisible, setStartModalVisible] = useState(true);
@@ -161,7 +166,7 @@ const toggleFlipCard = (cardId: string) => {
   setStartModalVisible(false);
 };
 
-  const discardCard = (index) => {
+  const discardCard = (index: number) => {
     const newHand = [...hand];
     newHand.splice(index, 1);
     setHand(newHand);

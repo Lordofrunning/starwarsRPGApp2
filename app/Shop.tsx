@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, Switch, Text, TouchableOpacity, View } from 'react-native';
 
 
-import { allArmor, allBlackMarketItems, allItems, allWeapons, armor, blackMarketItem, Item, shopNames, weapon } from './data/shopData';
+import { allArmor, allBlackMarketItems, allItems, allWeapons, armor, blackMarketItem, Item, shopNames, weapon } from '../data/shopData';
 import { styles } from './index.styles';
 
 
@@ -75,7 +75,7 @@ useEffect(() => {
 
   
 
-    const getRandomSubset = (arr, count) => {
+    const getRandomSubset = <T,>(arr: T[], count: number): T[] => {
   const copy = [...arr];
   const result = [];
 
