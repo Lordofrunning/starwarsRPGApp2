@@ -158,6 +158,13 @@ const yellowDie = [
   { src: require('../assets/dice/yellow/side12_1suc.jpg'), characters: { success: 1 } },
 ];
 
+
+const yellowSideBlank = require('../assets/dice/yellow/side7_blank.jpg');
+const yellowSideCombo = require('../assets/dice/yellow/side6_1ad_1suc.jpg');
+const redSideBlank = require('../assets/dice/red/side7_blank.jpg');
+const redSideCombo = require('../assets/dice/red/side5_1thr_1fail.jpg');
+
+
 const purpleDie = [
   { src: require('../assets/dice/purple/side1_blank.jpg'), characters: {} },
   { src: require('../assets/dice/purple/side2_1thr_1fail.jpg'), characters: { threat: 1, failure: 1 } },
@@ -287,12 +294,13 @@ const [narrative, setNarrative] = useState({
   advantage: 0,
   threat: 0,
 });
-if(diceOption1){
-  yellowDie[0] = { src: require('../assets/dice/yellow/side6_1ad_1suc.jpg'), characters: { success: 1, advantage: 1 } }
-  redDie[0] = { src: require('../assets/dice/red/side5_1thr_1fail.jpg'), characters: { failure: 1, threat: 1 } }
+
+if (diceOption1) {
+  yellowDie[0] = { src: yellowSideCombo, characters: { success: 1, advantage: 1 } };
+  redDie[0] = { src: redSideCombo, characters: { failure: 1, threat: 1 } };
 } else {
-  yellowDie[0] = { src: require('../assets/dice/yellow/side7_blank.jpg'), characters: {}}
-  redDie[0] = { src: require('../assets/dice/red/side7_blank.jpg'), characters:{} }
+  yellowDie[0] = { src: yellowSideBlank, characters: {} };
+  redDie[0] = { src: redSideBlank, characters: {} };
 }
 
   const addDieToPool = (type: DieType) => {

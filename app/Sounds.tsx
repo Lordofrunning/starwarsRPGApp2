@@ -3,6 +3,7 @@ import { Stack, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { Image, ImageBackground, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { styles } from './index.styles';
+
 const soundData = [
   { label: 'Star Wars', image: null, file: require('../assets/sounds/StarWars.mp3') },
   { label: 'Duel Of Fates', image: null, file: require('../assets/sounds/DuelOfFates.mp3') },
@@ -50,88 +51,93 @@ export default function SoundboardPage() {
   const [playingIndex, setPlayingIndex] = useState<number | null>(null);
   const router = useRouter();
 
+  // Cleanup on unmount
   useEffect(() => {
     return () => {
       if (sound) {
-        sound.unloadAsync();
+        sound.unloadAsync().catch(() => {}); // catch to avoid unhandled rejections
       }
     };
   }, [sound]);
 
   const playSound = async (index: number) => {
-    if (playingIndex === index) {
-      // Stop if same button pressed again
-      await sound?.stopAsync();
-      setPlayingIndex(null);
-      return;
-    }
+    try {
+      if (playingIndex === index) {
+        // Stop if same button pressed again
+        await sound?.stopAsync();
+        setPlayingIndex(null);
+        return;
+      }
 
-    // Stop previous
-    if (sound) {
-      await sound.unloadAsync();
-    }
+      // Stop and unload previous sound
+      if (sound) {
+        try {
+          await sound.stopAsync();
+          await sound.unloadAsync();
+        } catch (e) {
+          // Ignore unload errors here, might be already unloaded or stopped
+        }
+      }
 
-    // Load and play new
-    const { sound: newSound } = await Audio.Sound.createAsync(soundData[index].file);
-    setSound(newSound);
-    setPlayingIndex(index);
-    await newSound.playAsync();
+      // Load and play new sound
+      const { sound: newSound } = await Audio.Sound.createAsync(soundData[index].file);
+      setSound(newSound);
+      setPlayingIndex(index);
+      await newSound.playAsync();
+    } catch (error) {
+      console.error('Error playing sound:', error);
+    }
   };
-//<Stack.Screen options={{ headerShown: false }} />
+
   return (
     <View style={{ flex: 1, position: 'relative', backgroundColor: '#D3D3D3' }}>
       <Stack.Screen options={{ headerShown: false }} />
-      
+
       {/* Header */}
-            <View style={styles.headerTitleCenter}>
-              <TouchableOpacity onPress={() => router.back()} style={styles.sideButton}>
-                <Text style={styles.menuArrow}>←</Text>
-              </TouchableOpacity>
-      
-              <View style={styles.logoContainer}>
-                <Image
-                  source={require('../assets/images/logos/rpg_main_logo.png')}
-                  style={styles.smallImage}
-                  resizeMode="contain"
-                />
-              </View>
-            
-            </View>
+      <View style={styles.headerTitleCenter}>
+        <TouchableOpacity onPress={() => router.back()} style={styles.sideButton}>
+          <Text style={styles.menuArrow}>←</Text>
+        </TouchableOpacity>
 
-            <ScrollView contentContainerStyle={[{alignItems: 'center', maxHeight: 2000}]}>
-      <Text style={styles.title}>Sound Board</Text>
-      {/* Top Big Button */}
-      <TouchableOpacity onPress={() => playSound(0)} style={styles.bigButton}>
-  <ImageBackground
-    source={require('../assets/images/starwars_opening_crawl.png')} // your background image path
-    style={styles.imageBackground}
-    imageStyle={{ borderRadius: 10 }} // optional: rounded corners
-  >
-    {soundData[0].image ? (
-      <Image source={soundData[0].image} style={[{width: "100%"}]} />
-    ) : (
-      <Text style={styles.buttonText}></Text>
-    )}
-  </ImageBackground>
-</TouchableOpacity>
-
-      {/* Grid Buttons */}
-      <View style={styles.gridSoundsPage}>
-        {soundData.slice(1).map((item, i) => (
-          <TouchableOpacity
-            key={i + 1}
-            onPress={() => playSound(i + 1)}
-            style={styles.gridButton}
-          >
-            {item.image ? (
-              <Image source={item.image} style={styles.image} />
-            ) : (
-              <Text style={styles.buttonText}>{item.label}</Text>
-            )}
-          </TouchableOpacity>
-        ))}
+        <View style={styles.logoContainer}>
+          <Image
+            source={require('../assets/images/logos/rpg_main_logo.png')}
+            style={styles.smallImage}
+            resizeMode="contain"
+          />
+        </View>
       </View>
-    </ScrollView>
+
+      <ScrollView contentContainerStyle={[{ alignItems: 'center', maxHeight: 2000 }]}>
+        <Text style={styles.title}>Sound Board</Text>
+        {/* Top Big Button */}
+        <TouchableOpacity onPress={() => playSound(0)} style={styles.bigButton}>
+          <ImageBackground
+            source={require('../assets/images/starwars_opening_crawl.png')}
+            style={styles.imageBackground}
+            imageStyle={{ borderRadius: 10 }}
+          >
+            {soundData[0].image ? (
+              <Image source={soundData[0].image} style={[{ width: '100%' }]} />
+            ) : (
+              <Text style={styles.buttonText}>{soundData[0].label}</Text>
+            )}
+          </ImageBackground>
+        </TouchableOpacity>
+
+        {/* Grid Buttons */}
+        <View style={styles.gridSoundsPage}>
+          {soundData.slice(1).map((item, i) => (
+            <TouchableOpacity key={i + 1} onPress={() => playSound(i + 1)} style={styles.gridButton}>
+              {item.image ? (
+                <Image source={item.image} style={styles.image} />
+              ) : (
+                <Text style={styles.buttonText}>{item.label}</Text>
+              )}
+            </TouchableOpacity>
+          ))}
+        </View>
+      </ScrollView>
     </View>
   );
 }

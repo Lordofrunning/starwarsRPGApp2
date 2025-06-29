@@ -30,31 +30,51 @@ export const DiceSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
   // Load stored values on mount
   useEffect(() => {
-    const loadSettings = async () => {
-      const option1 = await AsyncStorage.getItem('diceOption1');
+  const loadSettings = async () => {
+    try {
+      
+  const option1 = await AsyncStorage.getItem('diceOption1');
       const option2 = await AsyncStorage.getItem('diceOption2');
       const option3 = await AsyncStorage.getItem('diceOption3');
       if (option1 !== null) setDiceOption1State(option1 === 'true');
       if (option2 !== null) setDiceOption2State(option2 === 'true');
       if (option3 !== null) setDiceOption3State(option3 === 'true');
-    };
-    loadSettings();
-  }, []);
+    } catch (error) {
+      console.error('Failed to load dice settings:', error);
+    }
+  };
+  loadSettings();
+}, []);
+
+
 
   // Save to AsyncStorage when values change
-  const setDiceOption1 = (value: boolean) => {
-    setDiceOption1State(value);
-    AsyncStorage.setItem('diceOption1', value.toString());
-  };
+  const setDiceOption1 = async (value: boolean) => {
+  setDiceOption1State(value);
+  try {
+    await AsyncStorage.setItem('diceOption1', value.toString());
+  } catch (error) {
+    console.error('Failed to save diceOption1:', error);
+  }
+};
 
   const setDiceOption2 = (value: boolean) => {
     setDiceOption2State(value);
-    AsyncStorage.setItem('diceOption2', value.toString());
+    try {
+      AsyncStorage.setItem('diceOption2', value.toString());
+    } catch (error) {
+      console.error('Failed to save diceOption2:', error);
+    }
+    
   };
 
   const setDiceOption3 = (value: boolean) => {
     setDiceOption3State(value);
+    try {
     AsyncStorage.setItem('diceOption3', value.toString());
+    } catch (error) {
+      console.error('failed to get dice option 3')
+    }
   };
 
   return (
