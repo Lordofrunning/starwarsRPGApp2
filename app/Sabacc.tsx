@@ -1,15 +1,15 @@
 import { Stack, useRouter } from 'expo-router';
 import React, { useState } from "react";
 import {
-  Dimensions,
-  Image,
-  Modal,
-  ScrollView,
-  StyleSheet,
-  Switch,
-  Text,
-  TouchableOpacity,
-  View,
+    Dimensions,
+    Image,
+    Modal,
+    ScrollView,
+    StyleSheet,
+    Switch,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
 import { styles as sharedStyles } from './index.styles';
 
