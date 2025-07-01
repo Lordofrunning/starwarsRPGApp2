@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import { Animated, Modal, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
 import { useDiceSettings } from './DiceSettingsContext';
 const translateX = React.useRef(new Animated.Value(300)).current; // Start off-screen to the right (adjust 300 as needed)
@@ -171,4 +171,4 @@ const SettingsDrawer: React.FC<SettingsDrawerProps> = ({ visible, onClose }) => 
   );
 };
 
-export default SettingsDrawer;
+export default SettingsDrawer;*/

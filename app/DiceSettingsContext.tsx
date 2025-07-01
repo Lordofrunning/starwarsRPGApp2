@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+/*import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 // Define the type for your context
@@ -101,4 +101,4 @@ export const useDiceSettings = () => {
   }
   return context;
 };
-export default DiceSettingsProvider;
+export default DiceSettingsProvider;*/
