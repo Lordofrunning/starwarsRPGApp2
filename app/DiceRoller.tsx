@@ -1,12 +1,18 @@
+console.log('DiceRoller.tsx file loaded');
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect } from 'react';
 
 import { Stack, useRouter } from 'expo-router';
 import { default as React, useState } from 'react';
 import { Button, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { useDiceSettings } from './DiceSettingsContext';
+//import { useDiceSettings } from './DiceSettingsContext';
 import { styles } from './index.styles';
-import SettingsDrawer from './SettingsDrawer'; // Adjust path if needed
+//import SettingsDrawer from './SettingsDrawer'; // Adjust path if needed
+
+//const diceSettings = useDiceSettings();
+//console.log('DiceRoller: useDiceSettings loaded', diceSettings);
+//console.log('DiceRoller: SettingsDrawer type', typeof SettingsDrawer);
+
 const diceStyles = StyleSheet.create({
   container: {
     flex: 1,
@@ -223,7 +229,7 @@ const forceDie = [
   { src: require('../assets/dice/force/side12_1ds.jpg'), characters: { dark: 1 } },
 ];
 
-
+console.log('DiceRoller loaded all the dice assets');
 // Assuming you've already imported diceTypes and declared the types
 type DieType = 'Ability' | 
 'Proficiency' | 
@@ -276,9 +282,12 @@ const diceGridOrder: DieType[] = [
   'AdvantageSymbol',
   'force',
 ];
-
+console.log('DiceRoller set a bunch of constants and types');
 export default function DiceRoller() {
-  const { diceOption1, diceOption2, diceOption3 } = useDiceSettings();
+  useEffect(() => {
+    console.log('DiceRoller mounting page');
+  }, []);
+  const { diceOption1, diceOption2, diceOption3 } = { diceOption1: false, diceOption2: false, diceOption3: false };//useDiceSettings();
   const router = useRouter();
   const [dicePool, setDicePool] = useState<DicePoolItem[]>([]);
   const [results, setResults] = useState<any[]>([]);
@@ -295,6 +304,15 @@ const [narrative, setNarrative] = useState({
   threat: 0,
 });
 
+  const addDieToPool = (type: DieType) => {
+    console.log('DiceRoller: addDieToPool', type);
+    setDicePool([...dicePool, { type }]);
+  };
+  const removeDieFromPool = (indexToRemove: number) => {
+    console.log('DiceRoller: removeDieFromPool', indexToRemove);
+    setDicePool(prev => prev.filter((_, index) => index !== indexToRemove));
+  };
+
 if (diceOption1) {
   yellowDie[0] = { src: yellowSideCombo, characters: { success: 1, advantage: 1 } };
   redDie[0] = { src: redSideCombo, characters: { failure: 1, threat: 1 } };
@@ -302,15 +320,7 @@ if (diceOption1) {
   yellowDie[0] = { src: yellowSideBlank, characters: {} };
   redDie[0] = { src: redSideBlank, characters: {} };
 }
-
-  const addDieToPool = (type: DieType) => {
-    setDicePool([...dicePool, { type }]);
-  };
-  const removeDieFromPool = (indexToRemove: number) => {
-  setDicePool(prev => prev.filter((_, index) => index !== indexToRemove));
-};
-
-/*/ Load dice pool on mount
+// Load dice pool on mount
 useEffect(() => {
   const loadPool = async () => {
     const json = await AsyncStorage.getItem('currentDicePool');
@@ -322,7 +332,11 @@ useEffect(() => {
 // Save dice pool on change
 useEffect(() => {
   AsyncStorage.setItem('currentDicePool', JSON.stringify(dicePool));
-}, [dicePool]);*/
+}, [dicePool]);
+
+useEffect(() => {
+    console.log('DiceRoller more consts and types loading');
+  }, []);
 
 // stuff for saving dice pools
 const [isModalVisible, setIsModalVisible] = useState(false);
@@ -335,23 +349,38 @@ const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
 const [hasLoadedPools, setHasLoadedPools] = useState(false);
 
 useEffect(() => {
+    console.log('DiceRoller page mounted');
+  }, []);
+
+useEffect(() => {
   const loadPoolsFromStorage = async () => {
     try {
       const json = await AsyncStorage.getItem('savedDicePools');
       if (json) {
-        const parsed = JSON.parse(json);
-        setSavedPools(parsed);
+        let parsed;
+        try {
+          parsed = JSON.parse(json);
+        } catch (e) {
+          console.error('JSON.parse error for savedDicePools:', e, json);
+          return;
+        }
+        if (parsed && typeof parsed === 'object') {
+          setSavedPools(parsed);
+        } else {
+          console.error('Parsed savedPools is not an object:', parsed);
+        }
       }
     } catch (error) {
       console.error('Failed to load saved pools:', error);
     } finally {
-      setHasLoadedPools(true); // ✅ Mark as loaded
+      setHasLoadedPools(true);
     }
   };
-
   loadPoolsFromStorage();
 }, []);
-
+useEffect(() => {
+    console.log('DiceRoller loaded async storage');
+  }, []);
 useEffect(() => {
   if (!hasLoadedPools) return; // ⛔ Don't save yet
   const savePoolsToStorage = async () => {
@@ -370,22 +399,25 @@ const saveCurrentPool = () => {
   setIsModalVisible(true);
 };
 const loadPool = (name: string) => {
+  console.log('DiceRoller: loadPool', name);
   const pool = savedPools[name];
   if (pool) {
     setDicePool([...pool]);
     setResults([]); // optionally clear previous results
   }
 };
-
+useEffect(() => {
+    console.log('DiceRoller loaded pools, rolling dice');
+  }, []);
 
   const rollDice = () => {
-  const newPool = dicePool.map(die => {
+    console.log('DiceRoller: rollDice called');
+    const newPool = dicePool.map(die => {
     const sides = diceTypes[die.type];
     const randomIndex = Math.floor(Math.random() * sides.length);
     const result = sides[randomIndex];
     return { ...die, result };  // Attach result to die
   });
-
   setDicePool(newPool);  // Update pool with results
 
   // Also update the separate results array if you want to keep it (optional)
@@ -423,11 +455,15 @@ const loadPool = (name: string) => {
     threat,
   });
 };
+useEffect(() => {
+    console.log('DiceRoller rolled dice');
+  }, []);
 
   const clearPool = () => {
-  setDicePool([]);
-  setResults([]);
-  setTally({
+    console.log('DiceRoller: clearPool');
+    setDicePool([]);
+    setResults([]);
+    setTally({
     netSuccess: 0,
     netAdvantage: 0,
     triumph: 0,
@@ -439,13 +475,6 @@ const loadPool = (name: string) => {
   });
 };
 
-
-
-  //const clearPool = () => {
-    //setDicePool([]);
-    //setResults([]);
-  //};
-
   const getDiceGridOrder = () => {
     const baseOrder: DieType[] = [
       'Ability',
@@ -455,6 +484,7 @@ const loadPool = (name: string) => {
       'Advantage',
       'Setback',
     ];
+    
     if (diceOption3) {
       baseOrder.push('SuccessSymbol', 'AdvantageSymbol');
     }else{
@@ -462,7 +492,9 @@ const loadPool = (name: string) => {
     }
     return baseOrder;
   };
-
+  useEffect(() => {
+    console.log('DiceRoller creating views');
+  }, []);
   return (
        <View style={{ flex: 1, position: 'relative', backgroundColor: '#D3D3D3' }}>
       <View style={styles.container}>
@@ -485,7 +517,7 @@ const loadPool = (name: string) => {
               <Image source={require('../assets/images/blackSettingsIcon.png')} style={styles.profileImage} />
             </TouchableOpacity>
             {/* Settings drawer */}
-            <SettingsDrawer visible={drawerVisible} onClose={() => setDrawerVisible(false)} />
+            {/*<SettingsDrawer visible={drawerVisible} onClose={() => setDrawerVisible(false)} />*/}
           </View>
 {/* // all the code for the top dice, roll buttons, clear, ect */}
          <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
@@ -513,8 +545,8 @@ const loadPool = (name: string) => {
                         <Image
                             source={diceIcons[type]}
                             style={{
-          width: type === 'SuccessSymbol' || type === 'AdvantageSymbol' ? 40 : 50,
-          height: type === 'SuccessSymbol' || type === 'AdvantageSymbol' ? 40 : 50,
+          width: (type === 'SuccessSymbol' || type === 'AdvantageSymbol') ? 40 : 50,
+          height: (type === 'SuccessSymbol' || type === 'AdvantageSymbol') ? 40 : 50,
           marginBottom: 4,
         }}
         />
@@ -539,7 +571,6 @@ const loadPool = (name: string) => {
                 <Button title="Clear" onPress={clearPool} color="gray" />
                 </View>
             </View>
-
     </View>
         <View style={diceStyles.divider}>
 

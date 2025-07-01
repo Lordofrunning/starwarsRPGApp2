@@ -16,7 +16,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/logos/YellowDiceAppIcon1.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,

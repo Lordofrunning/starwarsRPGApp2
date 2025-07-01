@@ -7,15 +7,88 @@ type SettingsDrawerProps = {
   onClose: () => void;
 };
 
+const setstyles = StyleSheet.create({
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',  // Dim the background
+    //justifyContent: 'center',
+    //alignItems: 'center',
+    width: '100%',
+    height: '100%',
+    padding: 1,
+  },
+    drawer: {
+    position: 'absolute',
+    top: 50,
+    //left: 30,
+    right: 0,
+    width: '90%',
+    height: '95%',
+    backgroundColor: '#fff',
+    padding: 2,
+    borderRadius: 8,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 2 },
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  title: {
+    left: 50,
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  closeText: {
+    fontSize: 20,
+    color: 'blue',
+  },
+  optionRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginVertical: 2,
+    //right: 30,
+  },
+  optionRowSmall: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginVertical: 0,
+    //right: 30,
+  },
+  optionText: {
+    fontSize: 16,
+  },
+  optionSubText: {
+    fontSize: 10,
+    alignItems: 'center',
+  },
+});
 
 const SettingsDrawer: React.FC<SettingsDrawerProps> = ({ visible, onClose }) => {
+  let diceSettings;
+  try {
+    diceSettings = useDiceSettings();
+    console.log('SettingsDrawer: diceSettings loaded', diceSettings);
+  } catch (e) {
+    console.error('SettingsDrawer: useDiceSettings error', e);
+    // Optionally render a fallback UI or return null
+    return <Text style={{ color: 'red' }}>Settings context error</Text>;
+  }
+
   const {
     diceOption1, setDiceOption1,
     diceOption2, setDiceOption2,
     diceOption3, setDiceOption3
-  } = useDiceSettings();
+  } = diceSettings;
 
   React.useEffect(() => {
+    try{
     if (visible) {
       Animated.timing(translateX, {
         toValue: 0,               // Slide into view
@@ -28,6 +101,9 @@ const SettingsDrawer: React.FC<SettingsDrawerProps> = ({ visible, onClose }) => 
         duration: 300,
         useNativeDriver: true,
       }).start();
+    }
+  } catch (e) {
+      console.error('SettingsDrawer: Animated.timing error', e);
     }
   }, [visible, translateX]);
   return (
@@ -94,68 +170,5 @@ const SettingsDrawer: React.FC<SettingsDrawerProps> = ({ visible, onClose }) => 
     </Modal>
   );
 };
-
-const setstyles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)',  // Dim the background
-    //justifyContent: 'center',
-    //alignItems: 'center',
-    width: '100%',
-    height: '100%',
-    padding: 1,
-  },
-    drawer: {
-    position: 'absolute',
-    top: 50,
-    //left: 30,
-    right: 0,
-    width: '90%',
-    height: '95%',
-    backgroundColor: '#fff',
-    padding: 2,
-    borderRadius: 8,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 2 },
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  title: {
-    left: 50,
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  closeText: {
-    fontSize: 20,
-    color: 'blue',
-  },
-  optionRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    marginVertical: 2,
-    //right: 30,
-  },
-  optionRowSmall: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    marginVertical: 0,
-    //right: 30,
-  },
-  optionText: {
-    fontSize: 16,
-  },
-  optionSubText: {
-    fontSize: 10,
-    alignItems: 'center',
-  },
-});
 
 export default SettingsDrawer;
