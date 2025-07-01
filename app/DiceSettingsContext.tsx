@@ -24,6 +24,7 @@ const defaultValue: DiceSettingsContextType = {
 export const DiceSettingsContext = createContext<DiceSettingsContextType>(defaultValue);
 
 export const DiceSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  console.log('DiceSettingsProvider mounted');
   const [diceOption1, setDiceOption1State] = useState(false);
   const [diceOption2, setDiceOption2State] = useState(false);
   const [diceOption3, setDiceOption3State] = useState(false);
@@ -32,10 +33,11 @@ export const DiceSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ 
   useEffect(() => {
   const loadSettings = async () => {
     try {
-      
-  const option1 = await AsyncStorage.getItem('diceOption1');
+      console.log('Loading dice settings from AsyncStorage...');
+      const option1 = await AsyncStorage.getItem('diceOption1');
       const option2 = await AsyncStorage.getItem('diceOption2');
       const option3 = await AsyncStorage.getItem('diceOption3');
+      console.log('Loaded:', { option1, option2, option3 });
       if (option1 !== null) setDiceOption1State(option1 === 'true');
       if (option2 !== null) setDiceOption2State(option2 === 'true');
       if (option3 !== null) setDiceOption3State(option3 === 'true');
@@ -53,6 +55,7 @@ export const DiceSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ 
   setDiceOption1State(value);
   try {
     await AsyncStorage.setItem('diceOption1', value.toString());
+    console.log('Saved diceOption1:', value);
   } catch (error) {
     console.error('Failed to save diceOption1:', error);
   }
@@ -62,6 +65,7 @@ export const DiceSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ 
     setDiceOption2State(value);
     try {
       AsyncStorage.setItem('diceOption2', value.toString());
+      console.log('Saved diceOption2:', value);
     } catch (error) {
       console.error('Failed to save diceOption2:', error);
     }
@@ -72,8 +76,9 @@ export const DiceSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ 
     setDiceOption3State(value);
     try {
     AsyncStorage.setItem('diceOption3', value.toString());
+    console.log('Saved diceOption3:', value);
     } catch (error) {
-      console.error('failed to get dice option 3')
+      console.error('failed to get dice option 3', error);
     }
   };
 
@@ -90,6 +95,10 @@ export const DiceSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
 // Helper hook
 export const useDiceSettings = () => {
-  return useContext(DiceSettingsContext);
+  const context = useContext(DiceSettingsContext);
+  if (!context) {
+    throw new Error('useDiceSettings must be used within a DiceSettingsProvider');
+  }
+  return context;
 };
 export default DiceSettingsProvider;

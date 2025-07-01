@@ -72,18 +72,28 @@ const GalaxyMap = () => {
 
        {/* Zoomable Galaxy Map */}
        {/* Zoomable Map */}
-      <ImageZoom
-        cropWidth={screenWidth}
-        cropHeight={screenHeight - HEADER_HEIGHT}
-        imageWidth={IMAGE_WIDTH}
-        imageHeight={IMAGE_HEIGHT}
-        minScale={fitScale}
-        maxScale={3}
-        enableCenterFocus={false}
-        useNativeDriver={true}
-        panToMove={true}
-        pinchToZoom={true}
-      >
+       {/*
+        @ts-expect-error: Suppress children type error for ImageZoom
+      */}
+      {React.createElement(
+        ImageZoom as any,
+        {
+          cropWidth: screenWidth,
+          cropHeight: screenHeight - HEADER_HEIGHT,
+          imageWidth: IMAGE_WIDTH,
+          imageHeight: IMAGE_HEIGHT,
+          minScale: fitScale,
+          maxScale: 3,
+          enableCenterFocus: false,
+          useNativeDriver: true,
+          panToMove: true,
+          pinchToZoom: true,
+          style: {
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'black',
+          },
+        },
         <View style={{
           width: IMAGE_WIDTH,
           height: IMAGE_HEIGHT,
@@ -97,7 +107,7 @@ const GalaxyMap = () => {
             resizeMode="contain"
           />
         </View>
-      </ImageZoom>
+      )}
     </View>
   );
 };
