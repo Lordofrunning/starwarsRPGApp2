@@ -141,7 +141,7 @@ poolDiceWrapper: {
   flexDirection: 'row',
   flexWrap: 'wrap',
   justifyContent: 'center',
-  backgroundColor: '#FBFBFB',//The same off-white as the dice pics
+  backgroundColor: '#888888',//'#FBFBFB'Off-white
 },
 
 resultsContainer: {
@@ -298,14 +298,14 @@ const symbolImages: Record<string, any> = {
     };
 
 const greenDie = [
-  { src: require('../assets/dice/green/side1_blank.jpg'), characters: {} },
-  { src: require('../assets/dice/green/side2_1advantage.jpg'), characters: { advantage: 1 } },
-  { src: require('../assets/dice/green/side3_2suc.jpg'), characters: { success: 2 } },
-  { src: require('../assets/dice/green/side4_1suc.jpg'), characters: { success: 1 } },
-  { src: require('../assets/dice/green/side5_2advantage.jpg'), characters: { advantage: 2 } },
-  { src: require('../assets/dice/green/side6_1advantage.jpg'), characters: { advantage: 1 } },
-  { src: require('../assets/dice/green/side7_1ad_1suc.jpg'), characters: { success: 1, advantage: 1 } },
-  { src: require('../assets/dice/green/side8_1suc.jpg'), characters: { success: 1 } },
+  { src: require('../assets/dice/green/side1_blank.png'), characters: {} },
+  { src: require('../assets/dice/green/side2_1advantage.png'), characters: { advantage: 1 } },
+  { src: require('../assets/dice/green/side3_2suc.png'), characters: { success: 2 } },
+  { src: require('../assets/dice/green/side4_1suc.png'), characters: { success: 1 } },
+  { src: require('../assets/dice/green/side5_2advantage.png'), characters: { advantage: 2 } },
+  { src: require('../assets/dice/green/side6_1advantage.png'), characters: { advantage: 1 } },
+  { src: require('../assets/dice/green/side7_1ad_1suc.png'), characters: { success: 1, advantage: 1 } },
+  { src: require('../assets/dice/green/side8_1suc.png'), characters: { success: 1 } },
 ];
 
 const advantageDie = [
@@ -318,36 +318,36 @@ const advantageDie = [
 ];
 
 const yellowDie = [
-  { src: require('../assets/dice/yellow/side7_blank.jpg'), characters: {}},
-  { src: require('../assets/dice/yellow/side2_1advantage.jpg'), characters: { advantage: 1 } },
-  { src: require('../assets/dice/yellow/side3_2suc.jpg'), characters: { success: 2 } },
-  { src: require('../assets/dice/yellow/side4_1suc.jpg'), characters: { success: 1 } },
-  { src: require('../assets/dice/yellow/side5_2advantage.jpg'), characters: { advantage: 2 } },
-  { src: require('../assets/dice/yellow/side6_1ad_1suc.jpg'), characters: { success: 1, advantage: 1 } },
-  { src: require('../assets/dice/yellow/side1_triumph.jpg'), characters: { success: 1, triumph: 1 } },  // Triumph assumed
-  { src: require('../assets/dice/yellow/side8_2suc.jpg'), characters: { success: 2 } },
-  { src: require('../assets/dice/yellow/side9_1ad_1suc.jpg'), characters: { success: 1, advantage: 1 } },
-  { src: require('../assets/dice/yellow/side10_1ad_1suc.jpg'), characters: { success: 1, advantage: 1 } },
-  { src: require('../assets/dice/yellow/side11_2ad.jpg'), characters: { advantage: 2 } },
-  { src: require('../assets/dice/yellow/side12_1suc.jpg'), characters: { success: 1 } },
+  { src: require('../assets/dice/yellow/side7_blank.png'), characters: {}},
+  { src: require('../assets/dice/yellow/side2_1advantage.png'), characters: { advantage: 1 } },
+  { src: require('../assets/dice/yellow/side3_2suc.png'), characters: { success: 2 } },
+  { src: require('../assets/dice/yellow/side4_1suc.png'), characters: { success: 1 } },
+  { src: require('../assets/dice/yellow/side5_2advantage.png'), characters: { advantage: 2 } },
+  { src: require('../assets/dice/yellow/side6_1ad_1suc.png'), characters: { success: 1, advantage: 1 } },
+  { src: require('../assets/dice/yellow/side1_triumph.png'), characters: { success: 1, triumph: 1 } },  // Triumph assumed
+  { src: require('../assets/dice/yellow/side8_2suc.png'), characters: { success: 2 } },
+  { src: require('../assets/dice/yellow/side9_1ad_1suc.png'), characters: { success: 1, advantage: 1 } },
+  { src: require('../assets/dice/yellow/side10_1ad_1suc.png'), characters: { success: 1, advantage: 1 } },
+  { src: require('../assets/dice/yellow/side11_2ad.png'), characters: { advantage: 2 } },
+  { src: require('../assets/dice/yellow/side12_1suc.png'), characters: { success: 1 } },
 ];
 
 
-const yellowSideBlank = require('../assets/dice/yellow/side7_blank.jpg');
-const yellowSideCombo = require('../assets/dice/yellow/side6_1ad_1suc.jpg');
-const redSideBlank = require('../assets/dice/red/side7_blank.jpg');
-const redSideCombo = require('../assets/dice/red/side5_1thr_1fail.jpg');
+const yellowSideBlank = require('../assets/dice/yellow/side7_blank.png');
+const yellowSideCombo = require('../assets/dice/yellow/side6_1ad_1suc.png');
+const redSideBlank = require('../assets/dice/red/side7_blank.png');
+const redSideCombo = require('../assets/dice/red/side5_1thr_1fail.png');
 
 
 const purpleDie = [
-  { src: require('../assets/dice/purple/side1_blank.jpg'), characters: {} },
-  { src: require('../assets/dice/purple/side2_1thr_1fail.jpg'), characters: { threat: 1, failure: 1 } },
-  { src: require('../assets/dice/purple/side3_1thr.jpg'), characters: { threat: 1 } },
-  { src: require('../assets/dice/purple/side4_2fail.jpg'), characters: { failure: 2 } },
-  { src: require('../assets/dice/purple/side5_2thr.jpg'), characters: { threat: 2 } },
-  { src: require('../assets/dice/purple/side6_1thr.jpg'), characters: { threat: 1 } },
-  { src: require('../assets/dice/purple/side7_1fail.jpg'), characters: { failure: 1 } },
-  { src: require('../assets/dice/purple/side8_1thr.jpg'), characters: { threat: 1 } },
+  { src: require('../assets/dice/purple/side1_blank.png'), characters: {} },
+  { src: require('../assets/dice/purple/side2_1thr_1fail.png'), characters: { threat: 1, failure: 1 } },
+  { src: require('../assets/dice/purple/side3_1thr.png'), characters: { threat: 1 } },
+  { src: require('../assets/dice/purple/side4_2fail.png'), characters: { failure: 2 } },
+  { src: require('../assets/dice/purple/side5_2thr.png'), characters: { threat: 2 } },
+  { src: require('../assets/dice/purple/side6_1thr.png'), characters: { threat: 1 } },
+  { src: require('../assets/dice/purple/side7_1fail.png'), characters: { failure: 1 } },
+  { src: require('../assets/dice/purple/side8_1thr.png'), characters: { threat: 1 } },
 ];
 
 const setbackDie = [
@@ -360,18 +360,18 @@ const setbackDie = [
 ];
 
 const redDie = [
-  { src: require('../assets/dice/red/side7_blank.jpg'), characters:{} }, 
-  { src: require('../assets/dice/red/side2_1thr.jpg'), characters: { threat: 1 } },
-  { src: require('../assets/dice/red/side3_1fail.jpg'), characters: { failure: 1 } },
-  { src: require('../assets/dice/red/side4_2thr.jpg'), characters: { threat: 2 } },
-  { src: require('../assets/dice/red/side5_1thr_1fail.jpg'), characters: { failure: 1, threat: 1 } },
-  { src: require('../assets/dice/red/side6_2fail.jpg'), characters: { failure: 2 } },
-  { src: require('../assets/dice/red/side1_despair.jpg'), characters: { failure: 1, despair: 1 } },  // Despair assumed
-  { src: require('../assets/dice/red/side8_2fail.jpg'), characters: { failure: 2 } },
-  { src: require('../assets/dice/red/side9_1thr_1fail.jpg'), characters: { failure: 1, threat: 1 } },
-  { src: require('../assets/dice/red/side10_2thr.jpg'), characters: { threat: 2 } },
-  { src: require('../assets/dice/red/side11_1fail.jpg'), characters: { failure: 1 } },
-  { src: require('../assets/dice/red/side12_1thr.jpg'), characters: { threat: 1 } },
+  { src: require('../assets/dice/red/side7_blank.png'), characters:{} }, 
+  { src: require('../assets/dice/red/side2_1thr.png'), characters: { threat: 1 } },
+  { src: require('../assets/dice/red/side3_1fail.png'), characters: { failure: 1 } },
+  { src: require('../assets/dice/red/side4_2thr.png'), characters: { threat: 2 } },
+  { src: require('../assets/dice/red/side5_1thr_1fail.png'), characters: { failure: 1, threat: 1 } },
+  { src: require('../assets/dice/red/side6_2fail.png'), characters: { failure: 2 } },
+  { src: require('../assets/dice/red/side1_despair.png'), characters: { failure: 1, despair: 1 } },  // Despair assumed
+  { src: require('../assets/dice/red/side8_2fail.png'), characters: { failure: 2 } },
+  { src: require('../assets/dice/red/side9_1thr_1fail.png'), characters: { failure: 1, threat: 1 } },
+  { src: require('../assets/dice/red/side10_2thr.png'), characters: { threat: 2 } },
+  { src: require('../assets/dice/red/side11_1fail.png'), characters: { failure: 1 } },
+  { src: require('../assets/dice/red/side12_1thr.png'), characters: { threat: 1 } },
 ];
 
 const successDie = [
@@ -383,18 +383,18 @@ const advantageDieSymbol = [
 ];
 
 const forceDie = [
-  { src: require('../assets/dice/force/side1_1ds.jpg'), characters: { dark: 1 } },
-  { src: require('../assets/dice/force/side2_2ls.jpg'), characters: { light: 2 } },
-  { src: require('../assets/dice/force/side3_1ls.jpg'), characters: { light: 1 } },
-  { src: require('../assets/dice/force/side4_2ds.jpg'), characters: { dark: 2 } },
-  { src: require('../assets/dice/force/side5_1ds.jpg'), characters: { dark: 1 } },
-  { src: require('../assets/dice/force/side6_1ds.jpg'), characters: { dark: 1 } },
-  { src: require('../assets/dice/force/side7_1ds.jpg'), characters: { dark: 1 } },
-  { src: require('../assets/dice/force/side8_2ls.jpg'), characters: { light: 2 } },
-  { src: require('../assets/dice/force/side9_1ls.jpg'), characters: { light: 1 } },
-  { src: require('../assets/dice/force/side10_2ls.jpg'), characters: { light: 2 } },
-  { src: require('../assets/dice/force/side11_1ds.jpg'), characters: { dark: 1 } },
-  { src: require('../assets/dice/force/side12_1ds.jpg'), characters: { dark: 1 } },
+  { src: require('../assets/dice/force/side1_1ds.png'), characters: { dark: 1 } },
+  { src: require('../assets/dice/force/side2_2ls.png'), characters: { light: 2 } },
+  { src: require('../assets/dice/force/side3_1ls.png'), characters: { light: 1 } },
+  { src: require('../assets/dice/force/side4_2ds.png'), characters: { dark: 2 } },
+  { src: require('../assets/dice/force/side5_1ds.png'), characters: { dark: 1 } },
+  { src: require('../assets/dice/force/side6_1ds.png'), characters: { dark: 1 } },
+  { src: require('../assets/dice/force/side7_1ds.png'), characters: { dark: 1 } },
+  { src: require('../assets/dice/force/side8_2ls.png'), characters: { light: 2 } },
+  { src: require('../assets/dice/force/side9_1ls.png'), characters: { light: 1 } },
+  { src: require('../assets/dice/force/side10_2ls.png'), characters: { light: 2 } },
+  { src: require('../assets/dice/force/side11_1ds.png'), characters: { dark: 1 } },
+  { src: require('../assets/dice/force/side12_1ds.png'), characters: { dark: 1 } },
 ];
 
 console.log('DiceRoller loaded all the dice assets');
