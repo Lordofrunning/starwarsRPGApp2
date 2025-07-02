@@ -8,10 +8,10 @@ const soundData = [
   { label: 'Star Wars', image: null, file: require('../assets/sounds/StarWars.mp3') },
   { label: 'Duel Of Fates', image: require("../assets/images/SoundImages/DuelOfFatesImage.png"), file: require('../assets/sounds/DuelOfFates.mp3') },
   { label: 'Cantina Band', image: require("../assets/images/SoundImages/cantinaBandImage.png"), file: require('../assets/sounds/CantinaBand.mp3') },
-  { label: 'Asteroid Chase', image: null, file: require('../assets/sounds/AsteroidChase.mp3') },
-  { label: 'Tie Chase', image: null, file: require('../assets/sounds/TieChase.mp3') },
+  { label: 'Asteroid Chase', image: require("../assets/images/SoundImages/AsteroidChaseImage.png"), file: require('../assets/sounds/AsteroidChase.mp3') },
+  { label: 'Tie Chase', image: require("../assets/images/SoundImages/TieChaseImage.png"), file: require('../assets/sounds/TieChase.mp3') },
 
-  { label: 'DL44 Blaster Pistol', image: null, file: require('../assets/sounds/DL44BlasterPistol.mp3') },
+  { label: 'DL44 Blaster Pistol', image: require("../assets/images/SoundImages//DL44BlasterImage.png"), file: require('../assets/sounds/DL44BlasterPistol.mp3') },
   { label: 'Stun Blaster', image: null, file: require('../assets/sounds/StunBlaster.mp3') },
   { label: 'Blaster Fight', image: null, file: require('../assets/sounds/BlasterFight.mp3') },
   { label: 'Wilhelm Scream', image: null, file: require('../assets/sounds/WilhelmScream.mp3') },
