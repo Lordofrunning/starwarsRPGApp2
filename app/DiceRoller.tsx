@@ -1,10 +1,9 @@
 console.log('DiceRoller.tsx file loaded');
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect } from 'react';
-
 import { Stack, useRouter } from 'expo-router';
-import { default as React, useState } from 'react';
-import { Button, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+//import { default as React} from 'react';
+import { Animated, Button, Image, Modal, ScrollView, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View } from 'react-native';
 //import { useDiceSettings } from './DiceSettingsContext';
 import { styles } from './index.styles';
 //import SettingsDrawer from './SettingsDrawer'; // Adjust path if needed
@@ -12,6 +11,74 @@ import { styles } from './index.styles';
 //const diceSettings = useDiceSettings();
 //console.log('DiceRoller: useDiceSettings loaded', diceSettings);
 //console.log('DiceRoller: SettingsDrawer type', typeof SettingsDrawer);
+const translateX = React.useRef(new Animated.Value(300)).current; // Start off-screen to the right (adjust 300 as needed)
+type SettingsDrawerProps = {
+  visible: boolean;
+  onClose: () => void;
+};
+
+const setstyles = StyleSheet.create({
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',  // Dim the background
+    //justifyContent: 'center',
+    //alignItems: 'center',
+    width: '100%',
+    height: '100%',
+    padding: 1,
+  },
+    drawer: {
+    position: 'absolute',
+    top: 50,
+    //left: 30,
+    right: 0,
+    width: '90%',
+    height: '95%',
+    backgroundColor: '#fff',
+    padding: 2,
+    borderRadius: 8,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 2 },
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  title: {
+    left: 50,
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  closeText: {
+    fontSize: 20,
+    color: 'blue',
+  },
+  optionRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginVertical: 2,
+    //right: 30,
+  },
+  optionRowSmall: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginVertical: 0,
+    //right: 30,
+  },
+  optionText: {
+    fontSize: 16,
+  },
+  optionSubText: {
+    fontSize: 10,
+    alignItems: 'center',
+  },
+});
 
 const diceStyles = StyleSheet.create({
   container: {
@@ -117,6 +184,107 @@ whiteBorder: {
 }
 
 });
+
+const SettingsDrawer: React.FC<SettingsDrawerProps> = ({ visible, onClose }) => {
+  let diceSettings;
+  try {
+    diceSettings = useDiceSettings();
+    console.log('SettingsDrawer: diceSettings loaded', diceSettings);
+  } catch (e) {
+    console.error('SettingsDrawer: useDiceSettings error', e);
+    // Optionally render a fallback UI or return null
+    return <Text style={{ color: 'red' }}>Settings context error</Text>;
+  }
+
+  const {
+    diceOption1, setDiceOption1,
+    diceOption2, setDiceOption2,
+    diceOption3, setDiceOption3
+  } = diceSettings;
+
+  React.useEffect(() => {
+    try{
+    if (visible) {
+      Animated.timing(translateX, {
+        toValue: 0,               // Slide into view
+        duration: 300,            // Duration in ms
+        useNativeDriver: true,
+      }).start();
+    } else {
+      Animated.timing(translateX, {
+        toValue: 300,             // Slide out to the right
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    }
+  } catch (e) {
+      console.error('SettingsDrawer: Animated.timing error', e);
+    }
+  }, [visible, translateX]);
+  return (
+    <Modal
+      visible={visible}
+      animationType="none"  // You can use "fade", "slide", or "none"
+      transparent={true}
+      onRequestClose={onClose}  // Handles hardware back button on Android
+    >
+      <View style={setstyles.overlay}>
+        <Animated.View style={[setstyles.drawer, { transform: [{ translateX }] }]}>
+        
+          <View style={setstyles.header}>
+            <Text style={setstyles.title}>Dice Options</Text>
+            <TouchableOpacity onPress={onClose}>
+              <Text style={setstyles.closeText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={setstyles.optionRow}>
+            <Text style={setstyles.optionText}>Buff Upgraded Dice</Text>
+            <Switch value={diceOption1} onValueChange={setDiceOption1} />
+          </View>
+          <View style={setstyles.optionRowSmall}>
+            <Text style={setstyles.optionSubText}>Proficiency and Challenge dice are a tiny bit better</Text>
+          </View>
+          <View style={setstyles.optionRow}>
+            <Text style={setstyles.optionSubText}>Replaces blank space with the two normal symbols for that die</Text>
+          </View>
+          <View style={setstyles.optionRow}>
+            <Text></Text>
+          </View>
+
+          <View style={setstyles.optionRow}>
+            <Text style={setstyles.optionText}>Seperate Narrative Results</Text>
+            <Switch value={diceOption2} onValueChange={setDiceOption2} />
+          </View>
+          <View style={setstyles.optionRow}>
+            <Text style={setstyles.optionSubText}>Stops subtracting advantage and threat results from each other</Text>
+          </View>
+          <View style={setstyles.optionRow}>
+            <Text style={setstyles.optionSubText}>During crafting, threat and advantage can each be used seperately</Text>
+          </View>
+          <View style={setstyles.optionRow}>
+            <Text style={setstyles.optionText}></Text>
+          </View>
+
+          <View style={setstyles.optionRow}>
+            <Text style={setstyles.optionText}>Add Symbols As Dice</Text>
+            <Switch value={diceOption3} onValueChange={setDiceOption3} />
+          </View>
+          <View style={setstyles.optionRow}>
+            <Text style={setstyles.optionSubText}>Can add success and advantage as automatic results to the pool</Text>
+          </View>
+          <View style={setstyles.optionRow}>
+            <Text style={setstyles.optionSubText}>Some talents, tools, or mods add these to your results</Text>
+          </View>
+          <View style={setstyles.optionRow}>
+            <Text style={setstyles.optionText}></Text>
+          </View>
+        
+      </Animated.View>
+      </View>
+    </Modal>
+  );
+};
 
 const symbolImages: Record<string, any> = {
       success: require('../assets/dice/symbols/Success.png'),
@@ -283,11 +451,111 @@ const diceGridOrder: DieType[] = [
   'force',
 ];
 console.log('DiceRoller set a bunch of constants and types');
+// Define the type for your context
+export type DiceSettingsContextType = {
+  diceOption1: boolean;
+  setDiceOption1: (value: boolean) => void;
+  diceOption2: boolean;
+  setDiceOption2: (value: boolean) => void;
+  diceOption3: boolean;
+  setDiceOption3: (value: boolean) => void;
+};
+
+// Provide default values so TypeScript doesn't complain
+const defaultValue: DiceSettingsContextType = {
+  diceOption1: false,
+  setDiceOption1: () => {},
+  diceOption2: false,
+  setDiceOption2: () => {},
+  diceOption3: false,
+  setDiceOption3: () => {},
+};
+
+export const DiceSettingsContext = createContext<DiceSettingsContextType>(defaultValue);
+
+export const DiceSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  console.log('DiceSettingsProvider mounted');
+  const [diceOption1, setDiceOption1State] = useState(false);
+  const [diceOption2, setDiceOption2State] = useState(false);
+  const [diceOption3, setDiceOption3State] = useState(false);
+
+  // Load stored values on mount
+  useEffect(() => {
+  const loadSettings = async () => {
+    try {
+      console.log('Loading dice settings from AsyncStorage...');
+      const option1 = await AsyncStorage.getItem('diceOption1');
+      const option2 = await AsyncStorage.getItem('diceOption2');
+      const option3 = await AsyncStorage.getItem('diceOption3');
+      console.log('Loaded:', { option1, option2, option3 });
+      if (option1 !== null) setDiceOption1State(option1 === 'true');
+      if (option2 !== null) setDiceOption2State(option2 === 'true');
+      if (option3 !== null) setDiceOption3State(option3 === 'true');
+    } catch (error) {
+      console.error('Failed to load dice settings:', error);
+    }
+  };
+  loadSettings();
+}, []);
+
+
+
+  // Save to AsyncStorage when values change
+  const setDiceOption1 = async (value: boolean) => {
+  setDiceOption1State(value);
+  try {
+    await AsyncStorage.setItem('diceOption1', value.toString());
+    console.log('Saved diceOption1:', value);
+  } catch (error) {
+    console.error('Failed to save diceOption1:', error);
+  }
+};
+
+  const setDiceOption2 = (value: boolean) => {
+    setDiceOption2State(value);
+    try {
+      AsyncStorage.setItem('diceOption2', value.toString());
+      console.log('Saved diceOption2:', value);
+    } catch (error) {
+      console.error('Failed to save diceOption2:', error);
+    }
+    
+  };
+
+  const setDiceOption3 = (value: boolean) => {
+    setDiceOption3State(value);
+    try {
+    AsyncStorage.setItem('diceOption3', value.toString());
+    console.log('Saved diceOption3:', value);
+    } catch (error) {
+      console.error('failed to get dice option 3', error);
+    }
+  };
+
+  return (
+    <DiceSettingsContext.Provider value={{
+      diceOption1, setDiceOption1,
+      diceOption2, setDiceOption2,
+      diceOption3, setDiceOption3
+    }}>
+      {children}
+    </DiceSettingsContext.Provider>
+  );
+};
+// Helper hook
+export const useDiceSettings = () => {
+  const context = useContext(DiceSettingsContext);
+  if (!context) {
+    throw new Error('useDiceSettings must be used within a DiceSettingsProvider');
+  }
+  return context;
+};
+
 export default function DiceRoller() {
   useEffect(() => {
     console.log('DiceRoller mounting page');
   }, []);
-  const { diceOption1, diceOption2, diceOption3 } = { diceOption1: false, diceOption2: false, diceOption3: false };//useDiceSettings();
+  const { diceOption1, diceOption2, diceOption3 } = useDiceSettings();//{ diceOption1: false, diceOption2: false, diceOption3: false };//
   const router = useRouter();
   const [dicePool, setDicePool] = useState<DicePoolItem[]>([]);
   const [results, setResults] = useState<any[]>([]);
@@ -517,7 +785,7 @@ useEffect(() => {
               <Image source={require('../assets/images/blackSettingsIcon.png')} style={styles.profileImage} />
             </TouchableOpacity>
             {/* Settings drawer */}
-            {/*<SettingsDrawer visible={drawerVisible} onClose={() => setDrawerVisible(false)} />*/}
+            <SettingsDrawer visible={drawerVisible} onClose={() => setDrawerVisible(false)} />
           </View>
 {/* // all the code for the top dice, roll buttons, clear, ect */}
          <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
