@@ -259,6 +259,10 @@ imageWrapperMinionBig: {
     //borderWidth: 1,
     //backgroundColor: '#ccc'
   },
+  flexImage: {
+    width: '100%',
+    height: '100%',
+  },
   imageMinionCards: {
     width: 360,   // adjust based on your layout
     height: 300,  // or use 'aspectRatio' instead
@@ -515,9 +519,14 @@ popupcontainerInfoPage: {
     aspectRatio: 1,
     marginBottom: 15,
     borderRadius: 8,
+    // borderColor: 'grey',
+    // borderWidth: 8,
+    overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
   },
+  
+
   drawer: {
       position: 'absolute',
       top: 0,
