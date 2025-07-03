@@ -78,6 +78,22 @@ const setstyles = StyleSheet.create({
     fontSize: 10,
     alignItems: 'center',
   },
+  dieBox: {
+    width: 60,
+    height: 60,
+    backgroundColor: '#222',
+    borderColor: 'white',
+    borderWidth: 2,
+    borderRadius: 6,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 10,
+  },
+  dieText: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
 });
 
 const diceStyles = StyleSheet.create({
@@ -755,6 +771,13 @@ useEffect(() => {
   });
 };
 
+    const [d100Result, setD100Result] = useState<number | null>(null);
+
+const rollD100 = () => {
+  const result = Math.floor(Math.random() * 100) + 1;
+  setD100Result(result);
+};
+
   const getDiceGridOrder = () => {
     const baseOrder: DieType[] = [
       'Ability',
@@ -839,19 +862,54 @@ useEffect(() => {
             </View>
 
             {/* Buttons section - takes 1/3 of width */}
-            <View style={{
-                flex: 1,
-                justifyContent: 'center',
-                marginLeft: 10,
-                height: 120,
-            }}>
-                <View style={{ marginBottom: 10 }}>
-                <Button title="Roll Dice" onPress={rollDice} disabled={dicePool.length === 0} />
-                </View>
-                <View>
-                <Button title="Clear" onPress={clearPool} color="gray" />
-                </View>
-            </View>
+            <View
+  style={{
+    flex: 1,
+    justifyContent: 'center',
+    marginLeft: 10,
+    height: 160, // Increased slightly to fit 3 rows
+  }}
+>
+   {/* D100 Roller Row */}
+  <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
+    {/* D100 Display */}
+    <View
+      style={{
+        flex: 1,
+        aspectRatio: 1,
+        backgroundColor: '#222',
+        borderColor: 'white',
+        borderWidth: 2,
+        borderRadius: 6,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 5,
+      }}
+    >
+      <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>
+        {d100Result !== null ? d100Result : 'D100'}
+      </Text>
+    </View>
+
+    {/* Roll D100 Button */}
+    <View style={{ flex: 1 }}>
+      <Button title="Roll D100" onPress={rollD100} color="skyblue" />
+    </View>
+  </View>
+
+  {/* Roll Dice Button */}
+  <View style={{ marginBottom: 10 }}>
+    <Button title="Roll Dice" onPress={rollDice} disabled={dicePool.length === 0} />
+  </View>
+
+  {/* Clear Button */}
+  <View style={{ marginBottom: 10 }}>
+    <Button title="Clear" onPress={clearPool} color="gray" />
+  </View>
+
+ 
+
+</View>
     </View>
         <View style={diceStyles.divider}>
 
