@@ -141,7 +141,7 @@ poolDiceWrapper: {
   flexDirection: 'row',
   flexWrap: 'wrap',
   justifyContent: 'center',
-  backgroundColor: '#888888',//'#FBFBFB'Off-white
+  backgroundColor: '#DDDDDD',//'#FBFBFB'Off-white
 },
 
 resultsContainer: {
@@ -426,6 +426,18 @@ const diceTypes: Record<DieType, any[]> = {
   SuccessSymbol: successDie,
   AdvantageSymbol: advantageDieSymbol,
   force: forceDie,
+};
+
+const diceBlankTypes: Record<DieType, any[]> = {
+  Ability: [greenDie[0].src],
+  Proficiency: [yellowSideBlank],
+  Difficulty: [purpleDie[0].src],
+  Challenge: [redSideBlank],
+  Advantage: [advantageDie[0].src],
+  Setback: [setbackDie[0].src],
+  SuccessSymbol: [successDie[0].src],
+  AdvantageSymbol: [advantageDieSymbol[0].src],
+  force: [forceDie[0].src],
 };
 
 const diceIcons: Record<DieType, any> = {
@@ -769,8 +781,9 @@ useEffect(() => {
         <Stack.Screen options={{ headerShown: false}} />
     {/* Header */}
           <View style={styles.headerSmall}>
-            <TouchableOpacity onPress={() => router.back()} style={styles.sideButton}>
-              <Text style={styles.smallMenuArrow}>←</Text>
+            <TouchableOpacity onPress={() => router.back()} 
+            style={styles.sideButton2}>{/*style={{ height: '100%', justifyContent: 'center', alignItems: 'center' }}*/}
+              <Text style={styles.menuArrowMed}>←</Text>
             </TouchableOpacity>
     
             <View style={styles.logoContainer}>
@@ -853,7 +866,7 @@ useEffect(() => {
       {dicePool.map((die, index) => (
   <TouchableOpacity key={index} onPress={() => removeDieFromPool(index)}>
     <Image
-      source={die.result ? die.result.src : diceTypes[die.type][0].src}
+      source={die.result ? die.result.src : diceBlankTypes[die.type][0]}
       style={diceStyles.poolIcon}
     />
   </TouchableOpacity>

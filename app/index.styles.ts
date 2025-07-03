@@ -74,6 +74,18 @@ fixedToggle: {
     fontSize: 60,
     color: '#fff'
   },
+  menuArrowMed: {
+    fontSize: 55,
+    color: '#fff',
+    marginTop: -30,
+    //justifyContent: 'center', 
+    //alignItems: 'center'
+  },
+  menuArrowUp: {
+    alignContent: 'center',
+    fontSize: 60,
+    color: '#fff'
+  },
   smallMenuArrow: {
     fontSize: 30,
     color: '#fff'
