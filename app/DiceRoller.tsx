@@ -157,7 +157,7 @@ poolDiceWrapper: {
   flexDirection: 'row',
   flexWrap: 'wrap',
   justifyContent: 'center',
-  backgroundColor: '#DDDDDD',//'#FBFBFB'Off-white
+  backgroundColor: '#D3D3D3',//'#FBFBFB'Off-white
 },
 
 resultsContainer: {
@@ -809,16 +809,18 @@ const rollD100 = () => {
               <Text style={styles.menuArrowMed}>←</Text>
             </TouchableOpacity>
     
-            <View style={styles.logoContainer}>
+            {/*<View style={styles.logoContainer}>
               <Image
                 source={require('../assets/images/logos/rpg_main_logo.png')}
                 style={styles.smallImage}
                 resizeMode="contain"
               />
-            </View>
+            </View>//Just put this textvv here instead of the image ^^*/}
+            <Text style={styles.redHeader}>EOTE DICE</Text>
+            {/* Settings button */}
     
             <TouchableOpacity onPress={() => setDrawerVisible(true)} style={styles.sideButton2}>
-              <Image source={require('../assets/images/blackSettingsIcon.png')} style={styles.profileImage} />
+              <Image source={require('../assets/images/TransparentWhiteSettingsIcon.png')} style={styles.profileImageNC} />
             </TouchableOpacity>
             {/* Settings drawer */}
             <SettingsDrawer visible={drawerVisible} onClose={() => setDrawerVisible(false)} />

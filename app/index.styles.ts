@@ -46,6 +46,11 @@ fixedToggle: {
     paddingHorizontal: 15,
     paddingTop: 30,
   },
+  redHeader: {
+    fontSize: 32,
+    fontWeight: '900',
+    color: '#602814',//'#603030',
+  },
   headerLeft: {
   height: 120,
   backgroundColor: '#444',
