@@ -8,18 +8,22 @@ const themes = {
   imperial: {
     background: '#1A1A1A',
     border: '#FF3C3C',
+    darkerborder: '#5A1E1E',
     text: '#FFFFFF',
     icon: '#FF3C3C',
   },
-    rebel: {
-  background: '#1C2238',   // Deep starship navy
-  border: '#FFCB05',       // Warm tactical yellow
-  text: '#FFFFFF',         // Clean readable white
-  icon: '#FFCB05',         // Same accent yellow
+ rebel: {
+  background: '#3C3B37',    // Desaturated warm gray-brown (like worn metal)
+  border: '#D6B400',        // Desaturated golden yellow (tactical, not neon)
+  text: '#F0E6D2',          // Pale warm parchment (for contrast)
+  icon: '#D6B400',          // Same golden yellow for icon consistency
+  darkerborder: '#455649'
 },
+    
    jedi: {
     background: '#2E3A46',
     border: '#5CADAA',
+    darkerborder: '#E8F9FF',
     text: '#D4E6E1',
     icon: '#81B7B1',
   },

@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { Image, ImageBackground, Modal, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { styles } from './index.styles';
 
-import { ThemeProvider, useTheme } from './ThemeContext';
+import { ThemeName, ThemeProvider, useTheme } from './ThemeContext';
 const holoStyles = StyleSheet.create({
   holoBorder: {
     borderRadius: 14,
@@ -167,6 +167,15 @@ const impStyles = StyleSheet.create({
   const router = useRouter();
     const { theme, themeName, setThemeName } = useTheme();
 
+      const buttonGradients: Record<ThemeName, string[]> = {
+  imperial: ['rgba(255, 60, 60, 0.05)', 'rgba(255, 60, 60, 0.2)', 'rgba(255, 60, 60, 0.4)'],
+  rebel: [
+    'rgba(214,180,0,0.05)',  // light golden glow
+    'rgba(214,180,0,0.2)',   // faded tactical yellow
+    'rgba(155,120,0,0.35)',  // gritty golden brown
+  ],
+  jedi:     ['rgba(92, 173, 170, 0.05)', 'rgba(92, 173, 170, 0.2)', 'rgba(92, 173, 170, 0.4)'],
+};
     useEffect(() => {
   Audio.setAudioModeAsync({
     allowsRecordingIOS: false,
@@ -290,10 +299,15 @@ const impStyles = StyleSheet.create({
          {/* Button stack */}
             <View style={styles.buttonStack}>
 
-              <TouchableOpacity style={holoStyles.holoWrapper} onPress={() => router.push('/Sounds')}>
+              <TouchableOpacity style={[holoStyles.holoWrapper,{ borderColor: theme.darkerborder}]} onPress={() => router.push('/Sounds')}>
                  <Pressable onPress={() => router.push('/Sounds')}style={({ pressed }) => [holoStyles.buttonInner,pressed && holoStyles.buttonPressed,]}>
                     <BlurView intensity={10} tint="light" style={holoStyles.blurContainer}>
-                      <LinearGradient colors={['rgba(0, 255, 255, 0.05)', 'rgba(0, 170, 255, 0.2)', 'rgba(49, 154, 240, 0.4)' ]}start={{ x: 0.5, y: 0 }}end={{ x: 0.5, y: 1 }} style={holoStyles.holoGradient} >
+                  <LinearGradient
+  colors={buttonGradients[themeName] as [string, string, string]}
+  start={{ x: 0.5, y: 0 }}
+  end={{ x: 0.5, y: 1 }}
+  style={holoStyles.holoGradient}
+>
                     <Text style={holoStyles.buttonText}>Sounds of the Galaxy</Text>
                      </LinearGradient>
                   </BlurView>
@@ -301,62 +315,86 @@ const impStyles = StyleSheet.create({
               </TouchableOpacity>
 
           
-              <TouchableOpacity style={holoStyles.holoWrapper} onPress={() => router.push('/DataPad')}>
+              <TouchableOpacity style={[holoStyles.holoWrapper,{ borderColor: theme.darkerborder}]} onPress={() => router.push('/DataPad')}>
                  <Pressable onPress={() => router.push('/DataPad')}style={({ pressed }) => [holoStyles.buttonInner,pressed && holoStyles.buttonPressed,]}>
                     <BlurView intensity={10} tint="light" style={holoStyles.blurContainer}>
-                      <LinearGradient colors={['rgba(0, 255, 255, 0.05)', 'rgba(0, 170, 255, 0.2)', 'rgba(49, 154, 240, 0.4)' ]}start={{ x: 0.5, y: 0 }}end={{ x: 0.5, y: 1 }} style={holoStyles.holoGradient} >
-                    <Text style={holoStyles.buttonText}>Combat Info</Text>
+                      <LinearGradient
+  colors={buttonGradients[themeName] as [string, string, string]}
+  start={{ x: 0.5, y: 0 }}
+  end={{ x: 0.5, y: 1 }}
+  style={holoStyles.holoGradient}
+> <Text style={holoStyles.buttonText}>Combat Info</Text>
                      </LinearGradient>
                   </BlurView>
                 </Pressable>
               </TouchableOpacity>
 
-               <TouchableOpacity style={holoStyles.holoWrapper} onPress={() => router.push('/GameList')}>
+               <TouchableOpacity style={[holoStyles.holoWrapper,{ borderColor: theme.darkerborder}]} onPress={() => router.push('/GameList')}>
                  <Pressable onPress={() => router.push('/GameList')}style={({ pressed }) => [holoStyles.buttonInner,pressed && holoStyles.buttonPressed,]}>
                     <BlurView intensity={10} tint="light" style={holoStyles.blurContainer}>
-                      <LinearGradient colors={['rgba(0, 255, 255, 0.05)', 'rgba(0, 170, 255, 0.2)', 'rgba(49, 154, 240, 0.4)' ]}start={{ x: 0.5, y: 0 }}end={{ x: 0.5, y: 1 }} style={holoStyles.holoGradient} >
-                    <Text style={holoStyles.buttonText}>Gambling Games</Text>
+                     <LinearGradient
+  colors={buttonGradients[themeName] as [string, string, string]}
+  start={{ x: 0.5, y: 0 }}
+  end={{ x: 0.5, y: 1 }}
+  style={holoStyles.holoGradient}
+>  <Text style={holoStyles.buttonText}>Gambling Games</Text>
                      </LinearGradient>
                   </BlurView>
                 </Pressable>
               </TouchableOpacity>
 
 
-               <TouchableOpacity style={holoStyles.holoWrapper} onPress={() => router.push('/Shop')}>
+               <TouchableOpacity style={[holoStyles.holoWrapper,{ borderColor: theme.darkerborder}]} onPress={() => router.push('/Shop')}>
                  <Pressable onPress={() => router.push('/Shop')}style={({ pressed }) => [holoStyles.buttonInner,pressed && holoStyles.buttonPressed,]}>
                     <BlurView intensity={10} tint="light" style={holoStyles.blurContainer}>
-                      <LinearGradient colors={['rgba(0, 255, 255, 0.05)', 'rgba(0, 170, 255, 0.2)', 'rgba(49, 154, 240, 0.4)' ]}start={{ x: 0.5, y: 0 }}end={{ x: 0.5, y: 1 }} style={holoStyles.holoGradient} >
-                    <Text style={holoStyles.buttonText}>Generate Random Shop</Text>
+                     <LinearGradient
+  colors={buttonGradients[themeName] as [string, string, string]}
+  start={{ x: 0.5, y: 0 }}
+  end={{ x: 0.5, y: 1 }}
+  style={holoStyles.holoGradient}
+>  <Text style={holoStyles.buttonText}>Generate Random Shop</Text>
                      </LinearGradient>
                   </BlurView>
                 </Pressable>
               </TouchableOpacity>
 
-               <TouchableOpacity style={holoStyles.holoWrapper} onPress={() => router.push('/NPC/NPCs')}>
+               <TouchableOpacity style={[holoStyles.holoWrapper,{ borderColor: theme.darkerborder}]} onPress={() => router.push('/NPC/NPCs')}>
                  <Pressable onPress={() => router.push('/NPC/NPCs')}style={({ pressed }) => [holoStyles.buttonInner,pressed && holoStyles.buttonPressed,]}>
                     <BlurView intensity={10} tint="light" style={holoStyles.blurContainer}>
-                      <LinearGradient colors={['rgba(0, 255, 255, 0.05)', 'rgba(0, 170, 255, 0.2)', 'rgba(49, 154, 240, 0.4)' ]}start={{ x: 0.5, y: 0 }}end={{ x: 0.5, y: 1 }} style={holoStyles.holoGradient} >
-                    <Text style={holoStyles.buttonText}>Enemies / NPCs</Text>
+                    <LinearGradient
+  colors={buttonGradients[themeName] as [string, string, string]}
+  start={{ x: 0.5, y: 0 }}
+  end={{ x: 0.5, y: 1 }}
+  style={holoStyles.holoGradient}
+> <Text style={holoStyles.buttonText}>Enemies / NPCs</Text>
                      </LinearGradient>
                   </BlurView>
                 </Pressable>
               </TouchableOpacity>
 
-             <TouchableOpacity style={holoStyles.holoWrapper} onPress={() => router.push('/GalaxyMap')}>
+             <TouchableOpacity style={[holoStyles.holoWrapper,{ borderColor: theme.darkerborder}]} onPress={() => router.push('/GalaxyMap')}>
                  <Pressable onPress={() => router.push('/GalaxyMap')}style={({ pressed }) => [holoStyles.buttonInner,pressed && holoStyles.buttonPressed,]}>
                     <BlurView intensity={10} tint="light" style={holoStyles.blurContainer}>
-                      <LinearGradient colors={['rgba(0, 255, 255, 0.05)', 'rgba(0, 170, 255, 0.2)', 'rgba(49, 154, 240, 0.4)' ]}start={{ x: 0.5, y: 0 }}end={{ x: 0.5, y: 1 }} style={holoStyles.holoGradient} >
-                    <Text style={holoStyles.buttonText}>Galaxy Map</Text>
+                    <LinearGradient
+  colors={buttonGradients[themeName] as [string, string, string]}
+  start={{ x: 0.5, y: 0 }}
+  end={{ x: 0.5, y: 1 }}
+  style={holoStyles.holoGradient}
+> <Text style={holoStyles.buttonText}>Galaxy Map</Text>
                      </LinearGradient>
                   </BlurView>
                 </Pressable>
               </TouchableOpacity>
 
-              <TouchableOpacity style={holoStyles.holoWrapper} onPress={() => router.push('/DiceRoller')}>
+              <TouchableOpacity style={[holoStyles.holoWrapper,{ borderColor: theme.darkerborder}]} onPress={() => router.push('/DiceRoller')}>
                  <Pressable onPress={() => router.push('/DiceRoller')}style={({ pressed }) => [holoStyles.buttonInner,pressed && holoStyles.buttonPressed,]}>
                     <BlurView intensity={10} tint="light" style={holoStyles.blurContainer}>
-                      <LinearGradient colors={['rgba(0, 255, 255, 0.05)', 'rgba(0, 170, 255, 0.2)', 'rgba(49, 154, 240, 0.4)' ]}start={{ x: 0.5, y: 0 }}end={{ x: 0.5, y: 1 }} style={holoStyles.holoGradient} >
-                    <Text style={holoStyles.buttonText}>Dice Roller</Text>
+                     <LinearGradient
+  colors={buttonGradients[themeName] as [string, string, string]}
+  start={{ x: 0.5, y: 0 }}
+  end={{ x: 0.5, y: 1 }}
+  style={holoStyles.holoGradient}
+> <Text style={holoStyles.buttonText}>Dice Roller</Text>
                      </LinearGradient>
                   </BlurView>
                 </Pressable>
