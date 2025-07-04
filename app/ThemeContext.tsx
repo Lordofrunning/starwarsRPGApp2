@@ -24,7 +24,7 @@ const themes = {
     background: '#2E3A46',
     border: '#5CADAA',
     darkerborder: '#E8F9FF',
-    text: '#D4E6E1',
+    text: '#9DDBDA',
     icon: '#81B7B1',
   },
  

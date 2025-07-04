@@ -308,7 +308,7 @@ const impStyles = StyleSheet.create({
   end={{ x: 0.5, y: 1 }}
   style={holoStyles.holoGradient}
 >
-                    <Text style={holoStyles.buttonText}>Sounds of the Galaxy</Text>
+                    <Text style={[holoStyles.buttonText, {color: theme.text}]}>Sounds of the Galaxy</Text>
                      </LinearGradient>
                   </BlurView>
                 </Pressable>
@@ -323,7 +323,7 @@ const impStyles = StyleSheet.create({
   start={{ x: 0.5, y: 0 }}
   end={{ x: 0.5, y: 1 }}
   style={holoStyles.holoGradient}
-> <Text style={holoStyles.buttonText}>Combat Info</Text>
+> <Text style={[holoStyles.buttonText, {color: theme.text}]}>Combat Info</Text>
                      </LinearGradient>
                   </BlurView>
                 </Pressable>
@@ -337,7 +337,7 @@ const impStyles = StyleSheet.create({
   start={{ x: 0.5, y: 0 }}
   end={{ x: 0.5, y: 1 }}
   style={holoStyles.holoGradient}
->  <Text style={holoStyles.buttonText}>Gambling Games</Text>
+>  <Text style={[holoStyles.buttonText, {color: theme.text}]}>Gambling Games</Text>
                      </LinearGradient>
                   </BlurView>
                 </Pressable>
@@ -352,7 +352,7 @@ const impStyles = StyleSheet.create({
   start={{ x: 0.5, y: 0 }}
   end={{ x: 0.5, y: 1 }}
   style={holoStyles.holoGradient}
->  <Text style={holoStyles.buttonText}>Generate Random Shop</Text>
+>  <Text style={[holoStyles.buttonText, {color: theme.text}]}>Generate Random Shop</Text>
                      </LinearGradient>
                   </BlurView>
                 </Pressable>
@@ -366,7 +366,7 @@ const impStyles = StyleSheet.create({
   start={{ x: 0.5, y: 0 }}
   end={{ x: 0.5, y: 1 }}
   style={holoStyles.holoGradient}
-> <Text style={holoStyles.buttonText}>Enemies / NPCs</Text>
+> <Text style={[holoStyles.buttonText, {color: theme.text}]}>Enemies / NPCs</Text>
                      </LinearGradient>
                   </BlurView>
                 </Pressable>
@@ -380,7 +380,7 @@ const impStyles = StyleSheet.create({
   start={{ x: 0.5, y: 0 }}
   end={{ x: 0.5, y: 1 }}
   style={holoStyles.holoGradient}
-> <Text style={holoStyles.buttonText}>Galaxy Map</Text>
+> <Text style={[holoStyles.buttonText, {color: theme.text}]}>Galaxy Map</Text>
                      </LinearGradient>
                   </BlurView>
                 </Pressable>
@@ -394,7 +394,7 @@ const impStyles = StyleSheet.create({
   start={{ x: 0.5, y: 0 }}
   end={{ x: 0.5, y: 1 }}
   style={holoStyles.holoGradient}
-> <Text style={holoStyles.buttonText}>Dice Roller</Text>
+> <Text style={[holoStyles.buttonText, {color: theme.text}]}>Dice Roller</Text>
                      </LinearGradient>
                   </BlurView>
                 </Pressable>
