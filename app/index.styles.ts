@@ -191,6 +191,12 @@ logoContainer: {
     bottom: -60
 
   },
+    menuTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 16,
+    textAlign: 'center',
+  },
 
   menuDivider: {
   borderTopWidth: 1,
@@ -293,6 +299,10 @@ imageWrapperMinionBig: {
     height: '100%',
 
   },
+   iconImage: {
+    width: 26,
+    height: 26,
+  },
 
 
 
@@ -306,13 +316,18 @@ imageWrapperMinionBig: {
 },
 
 button: {
-  backgroundColor: '#555',
-  paddingVertical: 12,
-  paddingHorizontal: 30,
-  marginVertical: 8,
-  borderRadius: 8,
-  width: '60%',
+  backgroundColor: '#1C1C1E', // deep grey/black for that Star Wars "tech" vibe
+  paddingVertical: 14,
+  paddingHorizontal: 24,
+  marginVertical: 10,
+  borderRadius: 12,
+  width: '70%',
   alignItems: 'center',
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.3,
+  shadowRadius: 4,
+  elevation: 5, // Android shadow
 },
 buttonBig: {
   backgroundColor: '#555',
