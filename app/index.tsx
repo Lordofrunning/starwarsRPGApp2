@@ -1,17 +1,181 @@
 import { Audio } from 'expo-av';
+import { BlurView } from 'expo-blur';
+import { LinearGradient } from 'expo-linear-gradient';
 import { Stack, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { Image, ImageBackground, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
+import { Image, ImageBackground, Modal, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { styles } from './index.styles';
 
+import { ThemeName, ThemeProvider, useTheme } from './ThemeContext';
+const holoStyles = StyleSheet.create({
+  holoBorder: {
+    borderRadius: 14,
+    padding: 2,
+    width: '70%',
+    alignSelf: 'center',
+    marginVertical: 12,
+    shadowColor: '#0ff',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.8,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+  buttonInner: {
+    borderRadius: 12,
+    overflow: 'hidden',
+  },
+  buttonFill: {
+    paddingVertical: 14,
+    paddingHorizontal: 24,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: '600',
+    letterSpacing: 1,
+  },
+      blurContainer: {
+    borderRadius: 14,
+    overflow: 'hidden',
+  },
+  buttonPressed: {
+  backgroundColor: 'rgba(0, 255, 255, 0.4)', // bright lightning blue fill on press
+  borderColor: '#00FFFF', // optional border highlight if your button has a border
+},
+
+  // take 2
+   outerBorder: {
+    borderRadius: 16,
+    padding: 2,
+    width: '75%',
+    alignSelf: 'center',
+    marginVertical: 14,
+    backgroundColor: '#003B6F', // solid deep blue border
+    shadowColor: '#00FFFF',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.6,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+   holoWrapper: {
+    borderWidth: 2,
+    borderColor: '#003B6F', // Solid blue border
+    borderRadius: 16,
+    overflow: 'hidden',
+    width: '75%',
+    alignSelf: 'center',
+    marginVertical: 8,
+  },
+  holoGradient: {
+    paddingVertical: 16,
+    paddingHorizontal: 28,
+    borderRadius: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'transparent', // important
+  },
+   touchable: {
+    borderRadius: 16,
+    overflow: 'hidden',
+  },
+  
+});
+const impStyles = StyleSheet.create({
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#1A1A1A',
+    paddingVertical: 14,
+    paddingHorizontal: 20,
+    paddingTop: 30,
+    borderBottomWidth: 2,
+    borderBottomColor: '#FF3C3C',
+    shadowColor: '#FF3C3C',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 6,
+    elevation: 8,
+  },
+  menuTitle: {
+  fontSize: 18,
+  fontWeight: 'bold',
+  marginBottom: 8,
+  textAlign: 'center',
+  color: '#B0B0B0', // fallback if you want a default color
+},
+  headerTitle: {
+    fontSize: 22,
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    letterSpacing: 1,
+  },
+  menuText: {
+    fontSize: 24,
+    color: '#FF3C3C',
+    fontWeight: 'bold',
+  },
+  sideButton: {
+    padding: 6,
+    borderRadius: 8,
+    backgroundColor: '#000000',
+    borderWidth: 1,
+    borderColor: '#FF3C3C',
+  },
+  iconImage: {
+    width: 26,
+    height: 26,
+    tintColor: '#FF3C3C',
+  },
+  modalBackground: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  menuBox: {
+    backgroundColor: '#1A1A1A',
+    borderRadius: 12,
+    padding: 20,
+    width: '70%',
+    shadowColor: '#FF3C3C',
+    shadowOpacity: 0.6,
+    shadowRadius: 10,
+    elevation: 10,
+  },
+  menuItem: {
+    color: '#B0B0B0',
+    fontSize: 18,
+    marginVertical: 10,
+    textAlign: 'center',
+  },
+  menuDivider: {
+    height: 1,
+    backgroundColor: '#333',
+    marginVertical: 12,
+  },
+});
 
 
-export default function HomeScreen() {
+
+ function HomeScreen() {
   const [menuVisible, setMenuVisible] = useState(false);
   const [infoModalVisible, setInfoModalVisible] = useState(false);
   const router = useRouter();
+    const { theme, themeName, setThemeName } = useTheme();
 
+      const buttonGradients: Record<ThemeName, string[]> = {
+  imperial: ['rgba(255, 60, 60, 0.05)', 'rgba(255, 60, 60, 0.2)', 'rgba(255, 60, 60, 0.4)'],
+  rebel: [
+    'rgba(214,180,0,0.05)',  // light golden glow
+    'rgba(214,180,0,0.2)',   // faded tactical yellow
+    'rgba(155,120,0,0.35)',  // gritty golden brown
+  ],
+  jedi:     ['rgba(92, 173, 170, 0.05)', 'rgba(92, 173, 170, 0.2)', 'rgba(92, 173, 170, 0.4)'],
+};
     useEffect(() => {
   Audio.setAudioModeAsync({
     allowsRecordingIOS: false,
@@ -25,53 +189,93 @@ export default function HomeScreen() {
 }, []);
 
   return (
+    
     <View style={styles.container}>
-      {/* Custom Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => setMenuVisible(true)}>
-          <Text style={styles.menuText}>☰</Text>
+     
+      {/* Header */}
+      <View
+        style={[
+          styles.header,
+          { backgroundColor: theme.background, borderBottomColor: theme.border },
+        ]}
+      >
+        <TouchableOpacity onPress={() => setMenuVisible(true)} style={[styles.sideButton, { borderColor: theme.border }]}>
+          <Text style={[styles.menuText, { color: theme.icon }]}>☰</Text>
         </TouchableOpacity>
 
-         {/* Popup Menu */}
-      <Modal visible={menuVisible} transparent animationType="none">
-        <TouchableOpacity
-          style={styles.modalBackground}
-          onPress={() => setMenuVisible(false)}
-          activeOpacity={1}
-        >
-          <View style={styles.menuBox}>
-            <TouchableOpacity>
-              <Text style={styles.menuItem}>Settings</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Text style={styles.menuItem}>Profile</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Text style={styles.menuItem}>Logout</Text>
-            </TouchableOpacity>
-             {/* 🔻 Close button */}
-          <View style={styles.menuDivider} />
+        <Text style={[styles.headerTitle, { color: theme.text }]}>GM AID</Text>
 
-            <TouchableOpacity onPress={() => setMenuVisible(false)}>
-              <Text style={styles.menuItem}>Close</Text>
-            </TouchableOpacity>
-          </View>
-          
+        <TouchableOpacity style={[styles.sideButton, { borderColor: theme.border }]}>
+          <Image
+            source={require('../assets/images/Icons/informationIcon1.png')}
+            style={[styles.iconImage, { tintColor: theme.icon }]}
+          />
         </TouchableOpacity>
-      </Modal>
-
-
-
-        <Text style={styles.headerTitle}>GM AID</Text>
-
-                <TouchableOpacity onPress={() => setInfoModalVisible(true)} style={styles.sideButton}>
-                                      <Image
-                                          source={require('../assets/images/Icons/informationIcon1.png')}
-                                          style={[styles.profileImage, { backgroundColor: 'white' }]}
-                                      />
-                </TouchableOpacity>
-
       </View>
+
+      {/* Popup Menu */}
+      <Modal visible={menuVisible} transparent animationType="none">
+  <TouchableOpacity
+    style={impStyles.modalBackground}
+    onPress={() => setMenuVisible(false)}
+    activeOpacity={1}
+  >
+    <View style={[impStyles.menuBox, { backgroundColor: theme.background }]}>
+      {/* Existing Menu Options */}
+      <TouchableOpacity>
+        <Text style={[impStyles.menuItem, { color: theme.text }]}>Settings</Text>
+      </TouchableOpacity>
+      <TouchableOpacity>
+        <Text style={[impStyles.menuItem, { color: theme.text }]}>Profile</Text>
+      </TouchableOpacity>
+      <TouchableOpacity>
+        <Text style={[impStyles.menuItem, { color: theme.text }]}>Logout</Text>
+      </TouchableOpacity>
+
+      <View style={impStyles.menuDivider} />
+
+      {/* Theme Picker */}
+      <Text style={[impStyles.menuTitle, { color: theme.border }]}>Select Theme</Text>
+
+      <TouchableOpacity onPress={() => setThemeName('imperial')}>
+        <Text
+          style={[
+            impStyles.menuItem,
+            themeName === 'imperial' && { color: theme.border },
+          ]}
+        >
+          Imperial
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => setThemeName('rebel')}>
+        <Text
+          style={[
+            impStyles.menuItem,
+            themeName === 'rebel' && { color: theme.border },
+          ]}
+        >
+          Rebel
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => setThemeName('jedi')}>
+        <Text
+          style={[
+            impStyles.menuItem,
+            themeName === 'jedi' && { color: theme.border },
+          ]}
+        >
+          Jedi
+        </Text>
+      </TouchableOpacity>
+
+      <View style={impStyles.menuDivider} />
+
+      <TouchableOpacity onPress={() => setMenuVisible(false)}>
+        <Text style={[impStyles.menuItem, { color: theme.icon }]}>Close</Text>
+      </TouchableOpacity>
+    </View>
+  </TouchableOpacity>
+</Modal>
 
 
       {/* Main content below */}
@@ -86,7 +290,7 @@ export default function HomeScreen() {
          {/* <View style={[styles.imageWrapper, { backgroundColor: 'rgba(134, 134, 134, 0.4)'}]}> */}
         <Image
           source={require('../assets/images/logos/rpg_main_logo.png')}
-          style={styles.image }
+          style={[styles.image,{height: 100} ]}
           resizeMode="contain"
         />
         {/* </View> */}
@@ -94,27 +298,109 @@ export default function HomeScreen() {
 
          {/* Button stack */}
             <View style={styles.buttonStack}>
-              <TouchableOpacity style={styles.button} onPress={() => router.push('/Sounds')}>
-                <Text style={styles.buttonTextCentered}>Sounds of the Galaxy</Text>
+
+              <TouchableOpacity style={[holoStyles.holoWrapper,{ borderColor: theme.darkerborder}]} onPress={() => router.push('/Sounds')}>
+                 <Pressable onPress={() => router.push('/Sounds')}style={({ pressed }) => [holoStyles.buttonInner,pressed && holoStyles.buttonPressed,]}>
+                    <BlurView intensity={10} tint="light" style={holoStyles.blurContainer}>
+                  <LinearGradient
+  colors={buttonGradients[themeName] as [string, string, string]}
+  start={{ x: 0.5, y: 0 }}
+  end={{ x: 0.5, y: 1 }}
+  style={holoStyles.holoGradient}
+>
+                    <Text style={[holoStyles.buttonText, {color: theme.text}]}>Sounds of the Galaxy</Text>
+                     </LinearGradient>
+                  </BlurView>
+                </Pressable>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button} onPress={() => router.push('/DataPad')}>
-                <Text style={styles.buttonText}>Combat Info</Text>
+
+          
+              <TouchableOpacity style={[holoStyles.holoWrapper,{ borderColor: theme.darkerborder}]} onPress={() => router.push('/DataPad')}>
+                 <Pressable onPress={() => router.push('/DataPad')}style={({ pressed }) => [holoStyles.buttonInner,pressed && holoStyles.buttonPressed,]}>
+                    <BlurView intensity={10} tint="light" style={holoStyles.blurContainer}>
+                      <LinearGradient
+  colors={buttonGradients[themeName] as [string, string, string]}
+  start={{ x: 0.5, y: 0 }}
+  end={{ x: 0.5, y: 1 }}
+  style={holoStyles.holoGradient}
+> <Text style={[holoStyles.buttonText, {color: theme.text}]}>Combat Info</Text>
+                     </LinearGradient>
+                  </BlurView>
+                </Pressable>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button} onPress={() => router.push('/GameList')}>
-                <Text style={styles.buttonText}>Gambling Games</Text>
+
+               <TouchableOpacity style={[holoStyles.holoWrapper,{ borderColor: theme.darkerborder}]} onPress={() => router.push('/GameList')}>
+                 <Pressable onPress={() => router.push('/GameList')}style={({ pressed }) => [holoStyles.buttonInner,pressed && holoStyles.buttonPressed,]}>
+                    <BlurView intensity={10} tint="light" style={holoStyles.blurContainer}>
+                     <LinearGradient
+  colors={buttonGradients[themeName] as [string, string, string]}
+  start={{ x: 0.5, y: 0 }}
+  end={{ x: 0.5, y: 1 }}
+  style={holoStyles.holoGradient}
+>  <Text style={[holoStyles.buttonText, {color: theme.text}]}>Gambling Games</Text>
+                     </LinearGradient>
+                  </BlurView>
+                </Pressable>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button} onPress={() => router.push('/Shop')}>
-                <Text style={styles.buttonText}>Generate Shop</Text>
+
+
+               <TouchableOpacity style={[holoStyles.holoWrapper,{ borderColor: theme.darkerborder}]} onPress={() => router.push('/Shop')}>
+                 <Pressable onPress={() => router.push('/Shop')}style={({ pressed }) => [holoStyles.buttonInner,pressed && holoStyles.buttonPressed,]}>
+                    <BlurView intensity={10} tint="light" style={holoStyles.blurContainer}>
+                     <LinearGradient
+  colors={buttonGradients[themeName] as [string, string, string]}
+  start={{ x: 0.5, y: 0 }}
+  end={{ x: 0.5, y: 1 }}
+  style={holoStyles.holoGradient}
+>  <Text style={[holoStyles.buttonText, {color: theme.text}]}>Generate Random Shop</Text>
+                     </LinearGradient>
+                  </BlurView>
+                </Pressable>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button} onPress={() => router.push('/NPC/NPCs')}>
-                <Text style={styles.buttonText}>Enemies / NPCs</Text>
+
+               <TouchableOpacity style={[holoStyles.holoWrapper,{ borderColor: theme.darkerborder}]} onPress={() => router.push('/NPC/NPCs')}>
+                 <Pressable onPress={() => router.push('/NPC/NPCs')}style={({ pressed }) => [holoStyles.buttonInner,pressed && holoStyles.buttonPressed,]}>
+                    <BlurView intensity={10} tint="light" style={holoStyles.blurContainer}>
+                    <LinearGradient
+  colors={buttonGradients[themeName] as [string, string, string]}
+  start={{ x: 0.5, y: 0 }}
+  end={{ x: 0.5, y: 1 }}
+  style={holoStyles.holoGradient}
+> <Text style={[holoStyles.buttonText, {color: theme.text}]}>Enemies / NPCs</Text>
+                     </LinearGradient>
+                  </BlurView>
+                </Pressable>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button} onPress={() => router.push('/GalaxyMap')}>
-                <Text style={styles.buttonText}>Galaxy Map</Text>
-              </TouchableOpacity> 
-               <TouchableOpacity style={styles.button} onPress={() => router.push('/DiceRoller')}>
-                <Text style={styles.buttonText}>Dice Roller</Text>
-              </TouchableOpacity> 
+
+             <TouchableOpacity style={[holoStyles.holoWrapper,{ borderColor: theme.darkerborder}]} onPress={() => router.push('/GalaxyMap')}>
+                 <Pressable onPress={() => router.push('/GalaxyMap')}style={({ pressed }) => [holoStyles.buttonInner,pressed && holoStyles.buttonPressed,]}>
+                    <BlurView intensity={10} tint="light" style={holoStyles.blurContainer}>
+                    <LinearGradient
+  colors={buttonGradients[themeName] as [string, string, string]}
+  start={{ x: 0.5, y: 0 }}
+  end={{ x: 0.5, y: 1 }}
+  style={holoStyles.holoGradient}
+> <Text style={[holoStyles.buttonText, {color: theme.text}]}>Galaxy Map</Text>
+                     </LinearGradient>
+                  </BlurView>
+                </Pressable>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={[holoStyles.holoWrapper,{ borderColor: theme.darkerborder}]} onPress={() => router.push('/DiceRoller')}>
+                 <Pressable onPress={() => router.push('/DiceRoller')}style={({ pressed }) => [holoStyles.buttonInner,pressed && holoStyles.buttonPressed,]}>
+                    <BlurView intensity={10} tint="light" style={holoStyles.blurContainer}>
+                     <LinearGradient
+  colors={buttonGradients[themeName] as [string, string, string]}
+  start={{ x: 0.5, y: 0 }}
+  end={{ x: 0.5, y: 1 }}
+  style={holoStyles.holoGradient}
+> <Text style={[holoStyles.buttonText, {color: theme.text}]}>Dice Roller</Text>
+                     </LinearGradient>
+                  </BlurView>
+                </Pressable>
+              </TouchableOpacity>
+             
+              
             </View>
               {/* </View> */}
               
@@ -146,8 +432,20 @@ export default function HomeScreen() {
                         </Modal>
                 </ImageBackground>
               </View>
+              
   );
 }
+
+// The root component exports the ThemeProvider wrapped around HomeScreenContent
+export default function Index() {
+  return (
+    <ThemeProvider>
+      <HomeScreen />
+    </ThemeProvider>
+  );
+}
+
+
 
 const localStyles = StyleSheet.create({
   main: {
