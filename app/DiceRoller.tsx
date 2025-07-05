@@ -841,7 +841,7 @@ const rollD100 = () => {
                         key={type}
                         onPress={() => addDieToPool(type)}
                         style={{
-                        width: (type === 'SuccessSymbol' || type === 'AdvantageSymbol') ? '25%' : '25%',    // ~3 per row
+                        width: '25%', //(type === 'SuccessSymbol' || type === 'AdvantageSymbol') ? '25%' : '25%',    // ~3 per row
                         aspectRatio: 1,
                         marginBottom: 2,
                         justifyContent: 'center',
@@ -851,8 +851,8 @@ const rollD100 = () => {
                         <Image
                             source={diceIcons[type]}
                             style={{
-          width: (type === 'SuccessSymbol' || type === 'AdvantageSymbol') ? 40 : 50,
-          height: (type === 'SuccessSymbol' || type === 'AdvantageSymbol') ? 40 : 50,
+          width: (type === 'SuccessSymbol' || type === 'AdvantageSymbol') ? '70%' : '90%',
+          height: (type === 'SuccessSymbol' || type === 'AdvantageSymbol') ? '70%' : '90%',
           marginBottom: 4,
         }}
         />
