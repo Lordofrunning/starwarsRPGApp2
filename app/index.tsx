@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { Image, ImageBackground, Modal, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { styles } from './index.styles';
 
-import { ThemeName, ThemeProvider, useTheme } from './ThemeContext';
+import { ThemeName, useTheme } from './ThemeContext';
 const holoStyles = StyleSheet.create({
   holoBorder: {
     borderRadius: 14,
@@ -161,7 +161,7 @@ const impStyles = StyleSheet.create({
 
 
 
- function HomeScreen() {
+ export default function HomeScreen() {
   const [menuVisible, setMenuVisible] = useState(false);
   const [infoModalVisible, setInfoModalVisible] = useState(false);
   const router = useRouter();
@@ -436,14 +436,14 @@ const impStyles = StyleSheet.create({
   );
 }
 
-// The root component exports the ThemeProvider wrapped around HomeScreenContent
-export default function Index() {
-  return (
-    <ThemeProvider>
-      <HomeScreen />
-    </ThemeProvider>
-  );
-}
+// // The root component exports the ThemeProvider wrapped around HomeScreenContent
+// export default function Index() {
+//   return (
+//     <ThemeProvider>
+//       <HomeScreen />
+//     </ThemeProvider>
+//   );
+// }
 
 
 

@@ -2,6 +2,7 @@ import { Audio } from "expo-av";
 import { Stack } from "expo-router";
 import { useEffect } from "react";
 import { DiceSettingsProvider } from './DiceRoller'; //SettingsContext
+import { ThemeProvider } from './ThemeContext';
 
 export default function RootLayout() {
   useEffect(() => {
@@ -18,8 +19,10 @@ export default function RootLayout() {
   }, []);
   
   return (
-    <DiceSettingsProvider>
-      <Stack />
-    </DiceSettingsProvider>
+    <ThemeProvider>
+      <DiceSettingsProvider>
+        <Stack />
+      </DiceSettingsProvider>
+    </ThemeProvider>
   );
 }
