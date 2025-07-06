@@ -11,7 +11,7 @@ import {
   View
 } from 'react-native';
 import ImageZoom from 'react-native-image-pan-zoom';
-
+import { useTheme } from './ThemeContext';
 import { styles } from './index.styles';
 
 const styles2 = StyleSheet.create({
@@ -153,7 +153,7 @@ const fitScale = Math.min(widthScale, heightScale);
 const GalaxyMap = () => {
   const router = useRouter();
   const [menuVisible, setMenuVisible] = useState(false);
-
+const { theme } = useTheme();
   const [devMode, setDevMode] = useState(true);
 
   const [selectedPlanet, setSelectedPlanet] = useState<{name: string;x: number;y: number; info: string; imperialPrecence: number; rim: string; extra: string;
@@ -162,10 +162,18 @@ const GalaxyMap = () => {
     <View style={{ flex: 1, backgroundColor: 'black' }}>
       <Stack.Screen options={{ headerShown: false }} />
       {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.sideButton}>
-          <Text style={styles.menuArrow}>←</Text>
-        </TouchableOpacity>
+      <View
+                style={[
+                  styles.header,
+                  { backgroundColor: theme.background, borderBottomColor: theme.border },
+                ]}
+              >
+                <TouchableOpacity
+                  onPress={() => router.push('/')}
+                  style={[styles.sideButton, { borderColor: theme.border }]}
+                >
+                  <Text style={[styles.menuArrow, { color: theme.border }]}>←</Text>
+                </TouchableOpacity>
 
         <View style={styles.logoContainer}>
           <Image
@@ -174,6 +182,12 @@ const GalaxyMap = () => {
             resizeMode="contain"
           />
         </View>
+        <TouchableOpacity style={[styles.sideButton, { borderColor: theme.border }]}>
+                  <Image
+                    source={require('../assets/images/Icons/informationIcon1.png')}
+                    style={[styles.iconImage, { tintColor: theme.icon }]}
+                  />
+                </TouchableOpacity>
 
        
       </View>
@@ -266,25 +280,26 @@ const GalaxyMap = () => {
     >
       <View
         style={{
-          backgroundColor: 'black',
+          backgroundColor: theme.background,
           borderRadius: 10,
           padding: 20,
-          borderColor: 'white',
+          borderColor: theme.darkerborder,
           borderWidth: 1,
         }}
       >
-        <Text style={{ color: 'white', fontSize: 20, marginBottom: 10 }}>
+        <Text style={{ color: theme.border, fontSize: 20, marginBottom: 10 }}>
           {selectedPlanet?.name}
         </Text>
         <Text style={{ color: 'lightgray', marginBottom: 20 }}>
           {selectedPlanet?.info}
         </Text>
         <TouchableOpacity onPress={() => setSelectedPlanet(null)}>
-          <Text style={{ color: '#00ffff', fontSize: 16 }}>Close</Text>
+          <Text style={{ color: theme.border, fontSize: 16 }}>Close</Text>
         </TouchableOpacity>
       </View>
     </View>
   </Modal>
+  
 </View>
       )}
     </View>
