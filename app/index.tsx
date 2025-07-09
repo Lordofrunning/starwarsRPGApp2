@@ -277,7 +277,7 @@ const impStyles = StyleSheet.create({
   </TouchableOpacity>
 </Modal>
 
-
+            <Stack.Screen options={{ headerShown: false }} />
       {/* Main content below */}
          <ImageBackground 
         source={require('../assets/images/hyperdrive_image4.jpg')}
@@ -285,7 +285,7 @@ const impStyles = StyleSheet.create({
         resizeMode='cover'
         >
       
-        <Stack.Screen options={{ headerShown: false }} />
+        
     {/* <View style={styles.container}> */}
          {/* <View style={[styles.imageWrapper, { backgroundColor: 'rgba(134, 134, 134, 0.4)'}]}> */}
         <Image
@@ -300,7 +300,7 @@ const impStyles = StyleSheet.create({
             <View style={styles.buttonStack}>
 
               <TouchableOpacity style={[holoStyles.holoWrapper,{ borderColor: theme.darkerborder}]} onPress={() => router.push('/Sounds')}>
-                 <Pressable onPress={() => router.push('/Sounds')}style={({ pressed }) => [holoStyles.buttonInner,pressed && holoStyles.buttonPressed,]}>
+                 <Pressable onPress={() => router.push('/Sounds')}style={({ pressed }) => [holoStyles.buttonInner,pressed && { backgroundColor: theme.onPressed },]}>
                     <BlurView intensity={10} tint="light" style={holoStyles.blurContainer}>
                   <LinearGradient
   colors={buttonGradients[themeName] as [string, string, string]}
@@ -316,7 +316,7 @@ const impStyles = StyleSheet.create({
 
           
               <TouchableOpacity style={[holoStyles.holoWrapper,{ borderColor: theme.darkerborder}]} onPress={() => router.push('/DataPad')}>
-                 <Pressable onPress={() => router.push('/DataPad')}style={({ pressed }) => [holoStyles.buttonInner,pressed && holoStyles.buttonPressed,]}>
+                 <Pressable onPress={() => router.push('/DataPad')}style={({ pressed }) => [holoStyles.buttonInner,pressed && { backgroundColor: theme.onPressed },]}>
                     <BlurView intensity={10} tint="light" style={holoStyles.blurContainer}>
                       <LinearGradient
   colors={buttonGradients[themeName] as [string, string, string]}
@@ -330,7 +330,7 @@ const impStyles = StyleSheet.create({
               </TouchableOpacity>
 
                <TouchableOpacity style={[holoStyles.holoWrapper,{ borderColor: theme.darkerborder}]} onPress={() => router.push('/GameList')}>
-                 <Pressable onPress={() => router.push('/GameList')}style={({ pressed }) => [holoStyles.buttonInner,pressed && holoStyles.buttonPressed,]}>
+                 <Pressable onPress={() => router.push('/GameList')}style={({ pressed }) => [holoStyles.buttonInner,pressed && { backgroundColor: theme.onPressed },]}>
                     <BlurView intensity={10} tint="light" style={holoStyles.blurContainer}>
                      <LinearGradient
   colors={buttonGradients[themeName] as [string, string, string]}
@@ -345,7 +345,7 @@ const impStyles = StyleSheet.create({
 
 
                <TouchableOpacity style={[holoStyles.holoWrapper,{ borderColor: theme.darkerborder}]} onPress={() => router.push('/Shop')}>
-                 <Pressable onPress={() => router.push('/Shop')}style={({ pressed }) => [holoStyles.buttonInner,pressed && holoStyles.buttonPressed,]}>
+                 <Pressable onPress={() => router.push('/Shop')}style={({ pressed }) => [holoStyles.buttonInner,pressed && { backgroundColor: theme.onPressed },]}>
                     <BlurView intensity={10} tint="light" style={holoStyles.blurContainer}>
                      <LinearGradient
   colors={buttonGradients[themeName] as [string, string, string]}
@@ -359,7 +359,7 @@ const impStyles = StyleSheet.create({
               </TouchableOpacity>
 
                <TouchableOpacity style={[holoStyles.holoWrapper,{ borderColor: theme.darkerborder}]} onPress={() => router.push('/NPC/NPCs')}>
-                 <Pressable onPress={() => router.push('/NPC/NPCs')}style={({ pressed }) => [holoStyles.buttonInner,pressed && holoStyles.buttonPressed,]}>
+                 <Pressable onPress={() => router.push('/NPC/NPCs')}style={({ pressed }) => [holoStyles.buttonInner,pressed && { backgroundColor: theme.onPressed },]}>
                     <BlurView intensity={10} tint="light" style={holoStyles.blurContainer}>
                     <LinearGradient
   colors={buttonGradients[themeName] as [string, string, string]}
@@ -373,7 +373,7 @@ const impStyles = StyleSheet.create({
               </TouchableOpacity>
 
              <TouchableOpacity style={[holoStyles.holoWrapper,{ borderColor: theme.darkerborder}]} onPress={() => router.push('/GalaxyMap')}>
-                 <Pressable onPress={() => router.push('/GalaxyMap')}style={({ pressed }) => [holoStyles.buttonInner,pressed && holoStyles.buttonPressed,]}>
+                 <Pressable onPress={() => router.push('/GalaxyMap')}style={({ pressed }) => [holoStyles.buttonInner,pressed && { backgroundColor: theme.onPressed },]}>
                     <BlurView intensity={10} tint="light" style={holoStyles.blurContainer}>
                     <LinearGradient
   colors={buttonGradients[themeName] as [string, string, string]}
@@ -387,7 +387,7 @@ const impStyles = StyleSheet.create({
               </TouchableOpacity>
 
               <TouchableOpacity style={[holoStyles.holoWrapper,{ borderColor: theme.darkerborder}]} onPress={() => router.push('/DiceRoller')}>
-                 <Pressable onPress={() => router.push('/DiceRoller')}style={({ pressed }) => [holoStyles.buttonInner,pressed && holoStyles.buttonPressed,]}>
+                 <Pressable onPress={() => router.push('/DiceRoller')}style={({ pressed }) => [holoStyles.buttonInner,pressed && { backgroundColor: theme.onPressed },]}>
                     <BlurView intensity={10} tint="light" style={holoStyles.blurContainer}>
                      <LinearGradient
   colors={buttonGradients[themeName] as [string, string, string]}
