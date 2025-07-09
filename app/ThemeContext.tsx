@@ -12,6 +12,7 @@ const themes = {
     text: '#FFFFFF',
     icon: '#FF3C3C',
      onPressed: 'rgba(255, 60, 60, 0.3)',
+     
   },
  rebel: {
   background: '#3C3B37',    // Desaturated warm gray-brown (like worn metal)
@@ -20,6 +21,7 @@ const themes = {
   icon: '#D6B400',          // Same golden yellow for icon consistency
   darkerborder: '#455649',
   onPressed: 'rgba(214, 180, 0, 0.25)',
+ 
 },
     
    jedi: {
@@ -29,6 +31,7 @@ const themes = {
     text: '#9DDBDA',
     icon: '#81B7B1',
     onPressed: 'rgba(92, 173, 170, 0.25)',
+    
   },
  
 };
