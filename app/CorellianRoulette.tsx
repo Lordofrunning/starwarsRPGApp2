@@ -186,7 +186,7 @@ if (credits !== null) {
                     { backgroundColor: theme.background, borderBottomColor: theme.border },
                   ]}>
                 <TouchableOpacity
-                            onPress={() => router.push('/')}
+                            onPress={() => router.back()}
                             style={[styles.sideButton, { borderColor: theme.border }]}
                           >
                             <Text style={[styles.menuArrow, { color: theme.border }]}>←</Text>

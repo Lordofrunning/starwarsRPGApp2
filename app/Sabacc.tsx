@@ -1,15 +1,15 @@
 import { Stack, useRouter } from 'expo-router';
 import React, { useState } from "react";
 import {
-    Dimensions,
-    Image,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Switch,
-    Text,
-    TouchableOpacity,
-    View,
+  Dimensions,
+  Image,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Switch,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { styles as sharedStyles } from './index.styles';
 
@@ -215,8 +215,8 @@ const [enableFanning, setEnableFanning] = useState(false);
         <View style={sharedStyles.header}>
           <TouchableOpacity
                 onPress={() => {
-                    resetDeck();       // ← Call your function
-                    router.push('/');  // ← Then navigate
+                    resetDeck();      
+                    router.back(); 
                 }}
                 style={sharedStyles.sideButton}
                 >

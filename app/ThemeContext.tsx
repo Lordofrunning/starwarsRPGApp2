@@ -6,6 +6,7 @@ export type ThemeName = 'imperial' | 'rebel' | 'jedi' ;
 
 const themes = {
   imperial: {
+    name: 'imperial',
     background: '#1A1A1A',
     border: '#FF3C3C',
     darkerborder: '#5A1E1E',
@@ -15,6 +16,7 @@ const themes = {
      
   },
  rebel: {
+  name: 'rebel',
   background: '#3C3B37',    // Desaturated warm gray-brown (like worn metal)
   border: '#D6B400',        // Desaturated golden yellow (tactical, not neon)
   text: '#F0E6D2',          // Pale warm parchment (for contrast)
@@ -25,6 +27,7 @@ const themes = {
 },
     
    jedi: {
+    name: 'jedi',
     background: '#2E3A46',
     border: '#5CADAA',
     darkerborder: '#E8F9FF',

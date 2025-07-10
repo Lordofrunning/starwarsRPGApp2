@@ -926,10 +926,10 @@ const rollD100 = () => {
 
       <ScrollView style={diceStyles.middleScroll}>
         {/* Dice to be rolled */}
-  <View style={diceStyles.poolContainer}>
+  <View style={[diceStyles.poolContainer, ]}>
    
     <Text style={diceStyles.poolLabel}>Dice Pool:</Text>
-    <View style={diceStyles.poolDiceWrapper}>
+    <View style={[diceStyles.poolDiceWrapper]}>
       {dicePool.map((die, index) => (
   <TouchableOpacity key={index} onPress={() => removeDieFromPool(index)}>
     <Image
