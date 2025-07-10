@@ -366,21 +366,4 @@ scrollViewContent: {
 });
 
 
-        {/* Button stack
-        <View style={localStyles.buttonStack}>
-          <TouchableOpacity style={localStyles.buttonBig} onPress={() => router.push('/Sabacc')}>
-            <Text style={localStyles.buttonText}>Sabacc</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={localStyles.buttonBig} onPress={() => router.push('/Pazaak')}>
-            <Text style={localStyles.buttonText}>Pazaak</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={localStyles.buttonBig} onPress={() => router.push('/CorellianRoulette')}>
-            <Text style={localStyles.buttonText}>Corellian Roulette</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={localStyles.buttonBig}>
-            <Text style={localStyles.buttonText}>Droid Duel {"\n"}(comming soon)</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={localStyles.buttonBig}>
-            <Text style={localStyles.buttonTextCentered}>Wheel Spinner (comming soon)</Text>
-          </TouchableOpacity>
-        </View> */}
+     
