@@ -6,6 +6,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Animated, Button, Image, Modal, ScrollView, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View } from 'react-native';
 //import { useDiceSettings } from './DiceSettingsContext';
 import { styles } from './index.styles';
+import { useTheme } from './ThemeContext';
 //import SettingsDrawer from './SettingsDrawer'; // Adjust path if needed
 
 //const diceSettings = useDiceSettings();
@@ -589,6 +590,7 @@ export default function DiceRoller() {
   const [results, setResults] = useState<any[]>([]);
   const [settingsVisible, setSettingsVisible] = useState(false);
   const [drawerVisible, setDrawerVisible] = useState(false);
+  const { theme, themeName } = useTheme();
 const [tally, setTally] = useState({
   netSuccess: 0,
   netAdvantage: 0,
@@ -803,10 +805,13 @@ const rollD100 = () => {
       <View style={styles.container}>
         <Stack.Screen options={{ headerShown: false}} />
     {/* Header */}
-          <View style={styles.headerSmall}>
+          <View  style={[
+                              styles.headerSmall,
+                              { backgroundColor: theme.background, borderBottomColor: theme.border },
+                            ]}>
             <TouchableOpacity onPress={() => router.back()} 
-            style={styles.sideButton2}>{/*style={{ height: '100%', justifyContent: 'center', alignItems: 'center' }}*/}
-              <Text style={styles.menuArrowMed}>←</Text>
+            style={[styles.sideButton2, { borderColor: theme.border }]}>{/*style={{ height: '100%', justifyContent: 'center', alignItems: 'center' }}*/}
+              <Text style={[styles.menuArrowMed, { color: theme.border }]}>←</Text>
             </TouchableOpacity>
     
             {/*<View style={styles.logoContainer}>
@@ -816,15 +821,17 @@ const rollD100 = () => {
                 resizeMode="contain"
               />
             </View>//Just put this textvv here instead of the image ^^*/}
-            <Text style={styles.redHeader}>EOTE DICE</Text>
+            <Text style={[styles.redHeader, { color: theme.darkerborder }]}>EOTE DICE</Text>
             {/* Settings button */}
-    
-            <TouchableOpacity onPress={() => setDrawerVisible(true)} style={styles.sideButton2}>
-              <Image source={require('../assets/images/TransparentWhiteSettingsIcon.png')} style={styles.profileImageNC} />
+
+            <TouchableOpacity onPress={() => setDrawerVisible(true)} style={[styles.sideButton2, { borderColor: theme.border }]}>
+              <Image source={require('../assets/images/TransparentWhiteSettingsIcon.png')} style={[styles.profileImageNC, { tintColor: theme.border }]} />
             </TouchableOpacity>
             {/* Settings drawer */}
             <SettingsDrawer visible={drawerVisible} onClose={() => setDrawerVisible(false)} />
           </View>
+
+
 {/* // all the code for the top dice, roll buttons, clear, ect */}
          <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
             {/* Dice section - takes 2/3 of width */}
