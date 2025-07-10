@@ -14,6 +14,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useTheme } from './ThemeContext';
 
 
 const initialSlots = [
@@ -65,6 +66,7 @@ export default function Spinner() {
   const [isSpinning, setIsSpinning] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [confirmationVisible, setConfirmationVisible] = useState(false);
+  const { theme, themeName } = useTheme();
   // state stuff? 
   const [credits, setCredits] = useState<number | null>(null); // null = not started
    const [creditInput, setCreditInput] = useState("1000");
@@ -179,23 +181,29 @@ if (credits !== null) {
     <View style={styles.container}>
         <Stack.Screen options={{ headerShown: false }} />
         {/* header here */}
-        <View style={styles.header}>
-                <TouchableOpacity onPress={() => router.push('/GameList')} style={styles.sideButton}>
-                  <Text style={styles.menuArrow}>←</Text>
-                </TouchableOpacity>
+        <View  style={[
+                    styles.header,
+                    { backgroundColor: theme.background, borderBottomColor: theme.border },
+                  ]}>
+                <TouchableOpacity
+                            onPress={() => router.push('/')}
+                            style={[styles.sideButton, { borderColor: theme.border }]}
+                          >
+                            <Text style={[styles.menuArrow, { color: theme.border }]}>←</Text>
+                  </TouchableOpacity>
         
                 <View style={styles.logoContainer}>
-                  <Image
-                    source={require('../assets/images/logos/rpg_main_logo.png')}
-                    style={styles.smallImage}
-                    resizeMode="contain"
-                  />
-                </View>
+                            <Image
+                              source={require('../assets/images/logos/rpg_main_logo.png')}
+                              style={styles.smallImage}
+                              resizeMode="contain"
+                            />
+                          </View>
         
                <TouchableOpacity onPress={() => setInfoModalVisible(true)} style={styles.sideButton}>
                     <Image
                         source={require('../assets/images/Icons/informationIcon1.png')}
-                        style={[styles.profileImage, { backgroundColor: 'white' }]}
+                        style={[styles.iconImage, { tintColor: theme.icon }]}
                     />
                 </TouchableOpacity>
               </View>
@@ -377,44 +385,52 @@ if (credits !== null) {
 
     {credits !== null && (
   <View style={{ marginBottom: 10 }}>
-    <Text style={{ color: "#fff", fontSize: 18 }}>Credits: {credits}</Text>
-    <Text style={{ color: "#fff", fontSize: 16 }}>Spins: {spins}</Text>
-  </View>
+  <Text style={{ color: theme.text, fontSize: 18 }}>Credits: {credits}</Text>
+  <Text style={{ color: theme.text, fontSize: 16 }}>Spins: {spins}</Text>
+</View>
 )}
-        <View style={styles.wheelOuter}> 
-                
-      <Animated.View style={[styles.wheel, { transform: [{ rotate: interpolated }] }]}>
-        {spinnerSlots.map((slot, i) => {
-          const angle = (360 / spinnerSlots.length) * i;
-          const rad = (angle * Math.PI) / 180;
-          const radius = WHEEL_SIZE / 2.5;
+        <View style={[styles.wheelOuter, { backgroundColor: theme.darkerborder, borderColor: theme.border }]}> 
+  <Animated.View style={[styles.wheel, { transform: [{ rotate: interpolated }] }]}>
+    {spinnerSlots.map((slot, i) => {
+      const angle = (360 / spinnerSlots.length) * i;
+      const rad = (angle * Math.PI) / 180;
+      const radius = WHEEL_SIZE / 2.5;
 
-          const x = radius * Math.cos(rad);
-          const y = radius * Math.sin(rad);
+      const x = radius * Math.cos(rad);
+      const y = radius * Math.sin(rad);
 
-          return (
-            <View
-              key={i}
-              style={[
-                styles.segment,
-                {
-                  position: "absolute",
-                  left: WHEEL_SIZE / 2 + x - 30,
-                  top: WHEEL_SIZE / 2 + y - 15,
-                },
-              ]}
-            >
-              <Text style={styles.segmentText}>{slot.label}</Text>
-            </View>
-          );
-        })}
-      </Animated.View>
+      return (
+        <View
+          key={i}
+          style={[
+            styles.segment,
+            {
+              position: "absolute",
+              left: WHEEL_SIZE / 2 + x - 30,
+              top: WHEEL_SIZE / 2 + y - 15,
+              backgroundColor: theme.background,
+              borderColor: theme.border,
+            },
+          ]}
+        >
+          <Text style={[styles.segmentText, { color: theme.text }]}>{slot.label}</Text>
         </View>
-      <View style={styles.pointer} />
+      );
+    })}
+  </Animated.View>
+</View>
 
-      <TouchableOpacity style={styles.spinButton} onPress={spin} disabled={isSpinning}>
-        <Text style={styles.spinText}>{isSpinning ? "Spinning..." : "SPIN"}</Text>
-      </TouchableOpacity>
+<View style={[styles.pointer, { backgroundColor: theme.darkerborder || theme.border }]} />
+
+      <TouchableOpacity
+  style={[styles.spinButton, { backgroundColor: theme.border }]}
+  onPress={spin}
+  disabled={isSpinning}
+>
+  <Text style={[styles.spinText, { color: theme.text }]}>
+    {isSpinning ? "Spinning..." : "SPIN"}
+  </Text>
+</TouchableOpacity>
 
      
 
@@ -467,6 +483,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'grey',
     flex: 1,
   },
+  
   wheel: {
     width: WHEEL_SIZE,
     height: WHEEL_SIZE,
@@ -530,6 +547,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16,
   },
+
+
+
   resultText: {
     color: "#fff",
     fontSize: 18,
@@ -678,6 +698,10 @@ logoContainer: {
   alignItems: 'center',
   paddingTop: 20,
 },
+iconImage: {
+    width: 26,
+    height: 26,
+  },
 smallImage: {
     width: '50%',
     height: '100%',
