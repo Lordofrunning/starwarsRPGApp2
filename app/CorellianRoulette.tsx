@@ -436,7 +436,7 @@ if (credits !== null) {
 
       <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 60, padding: 30 }}>
   <TouchableOpacity
-    style={[styles.closeButton, { flex: 1, borderColor: 'navy', borderWidth: 2, justifyContent: 'center', alignItems: 'center' }]}
+    style={[styles.closeButton, { flex: 1, borderColor: theme.darkerborder, borderWidth: 2, justifyContent: 'center', alignItems: 'center', backgroundColor: theme.background }]}
     onPress={() => {
       setModalVisible(false);
       resetSpinnerSlots();
@@ -445,11 +445,11 @@ if (credits !== null) {
       router.push("./GameList");
     }}
   >
-    <Text style={styles.closeButtonText}>Close</Text>
+    <Text style={[styles.closeButtonText, {color: theme.text}]}>Close</Text>
   </TouchableOpacity>
 
   <TouchableOpacity
-    style={[styles.closeButton, { flex: 1, borderColor: 'navy', borderWidth: 2, justifyContent: 'center', alignItems: 'center'  }]}
+    style={[styles.closeButton, { flex: 1, borderColor: theme.darkerborder, borderWidth: 2, justifyContent: 'center', alignItems: 'center', backgroundColor: theme.background,   }]}
     onPress={() => {
       setModalVisible(false);
       resetSpinnerSlots();
@@ -457,17 +457,17 @@ if (credits !== null) {
       setSpins(0);
     }}
   >
-    <Text style={[styles.closeButtonText, {}]}>Restart</Text>
+    <Text style={[styles.closeButtonText, {color: theme.text}]}>Restart</Text>
   </TouchableOpacity>
 </View>
 
     <TouchableOpacity
-    style={[styles.closeButton, { flex: 1, borderColor: 'navy', borderWidth: 2, justifyContent: 'center', alignItems: 'center', backgroundColor: '#484848', marginBottom: 40, width: '100%'  }]}
+    style={[styles.closeButton, { flex: 1, borderColor: theme.darkerborder, borderWidth: 2, justifyContent: 'center', alignItems: 'center', backgroundColor: theme.background, marginBottom: 40, width: '100%'  }]}
     onPress={() => {
       setConfirmationVisible(true);
     }}
   >
-    <Text style={[styles.closeButtonText, {color: 'white'}]}>Lock in Credits</Text>
+    <Text style={[styles.closeButtonText, {color: theme.border}]}>Lock in Credits</Text>
   </TouchableOpacity>
 
       

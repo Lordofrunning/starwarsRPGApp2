@@ -3,17 +3,22 @@ import React, { useState } from 'react';
 
 import { styles } from './index.styles';
 
+import { BlurView } from 'expo-blur';
+import { LinearGradient } from 'expo-linear-gradient';
 import {
   Dimensions,
   Image,
   ImageBackground,
   Modal,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
+
+import { ThemeName, useTheme } from './ThemeContext';
 
 export const sectionStyles = StyleSheet.create({
   headingMain: {
@@ -108,6 +113,29 @@ export const tableStyles = StyleSheet.create({
   },
   blue: { color: 'blue', fontWeight: 'bold' },
   black: { color: 'black', fontWeight: 'bold' },
+});
+const holoStyles = StyleSheet.create({
+  holoWrapper: {
+    borderWidth: 1,
+    borderRadius: 10,
+    marginVertical: 8,
+    overflow: 'hidden',
+    width: '70%',
+  },
+  blurContainer: {
+    borderRadius: 10,
+    overflow: 'hidden',
+  },
+  holoGradient: {
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    fontSize: 14,
+    fontWeight: '600',
+  },
 });
 
 export const symbolImages = {
@@ -533,6 +561,19 @@ const StarshipManeuvers = () => (
 export default function InfoPage() {
   const [visibleSection, setVisibleSection] = useState<'section1' | 'section2' | 'section3' | 'section4' | 'section5' | 'section6' | null>(null);
   const [d100Result, setD100Result] = useState<number | null>(null);
+  
+  const { theme, themeName, setThemeName } = useTheme();
+  const buttonGradients: Record<ThemeName, string[]> = {
+    imperial: ['rgba(255, 60, 60, 0.05)', 'rgba(255, 60, 60, 0.2)', 'rgba(255, 60, 60, 0.4)'],
+    rebel: [
+      'rgba(214,180,0,0.05)',  // light golden glow
+      'rgba(214,180,0,0.2)',   // faded tactical yellow
+      'rgba(155,120,0,0.35)',  // gritty golden brown
+    ],
+    jedi:     ['rgba(92, 173, 170, 0.05)', 'rgba(92, 173, 170, 0.2)', 'rgba(92, 173, 170, 0.4)'],
+  };
+
+
   return (
     <ImageBackground
       source={require('../assets/images/BiggerDataPadCustom.png')}
@@ -555,38 +596,131 @@ export default function InfoPage() {
       {visibleSection === null && (
       <View style={styles.overlayContainerInfoPage}>
         {/* Buttons was modalbackgroundInfoPageTrent*/}
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => setVisibleSection('section1')}
-        >
-          <Text style={styles.buttonText}>Actions</Text>
-        </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => setVisibleSection('section2')}
-        >
-          <Text style={styles.buttonText}>Manuevers</Text>
-        </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => setVisibleSection('section3')}
-        >
-          <Text style={styles.buttonText}>Critical Injuries</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => setVisibleSection('section4')}
-        >
-          <Text style={styles.buttonText}>Starship Actions</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => setVisibleSection('section5')}
-        >
-          <Text style={styles.buttonText}>Starship Maneuvers</Text>
-        </TouchableOpacity>
+
+
+       <Pressable
+  onPress={() => setVisibleSection('section1')}
+  style={({ pressed }) => [
+    holoStyles.holoWrapper,
+    { borderColor: theme.darkerborder },
+    pressed && { backgroundColor: theme.onPressed },
+  ]}
+>
+  <BlurView intensity={10} tint="light" style={holoStyles.blurContainer}>
+    <LinearGradient
+      colors={buttonGradients[themeName] as [string, string, string]}
+      start={{ x: 0.5, y: 0 }}
+      end={{ x: 0.5, y: 1 }}
+      style={holoStyles.holoGradient}
+    >
+      <Text style={[holoStyles.buttonText, { color: theme.text }]}>
+        Actions
+      </Text>
+    </LinearGradient>
+  </BlurView>
+</Pressable>
+
+
+        <Pressable
+  onPress={() => setVisibleSection('section2')}
+  style={({ pressed }) => [
+    holoStyles.holoWrapper,
+    { borderColor: theme.darkerborder },
+    pressed && { backgroundColor: theme.onPressed },
+  ]}
+>
+  <BlurView intensity={10} tint="light" style={holoStyles.blurContainer}>
+    <LinearGradient
+      colors={buttonGradients[themeName] as [string, string, string]}
+      start={{ x: 0.5, y: 0 }}
+      end={{ x: 0.5, y: 1 }}
+      style={holoStyles.holoGradient}
+    >
+      <Text style={[holoStyles.buttonText, { color: theme.text }]}>
+        Manuevers
+      </Text>
+    </LinearGradient>
+  </BlurView>
+</Pressable>
+
+
+
+
+         <Pressable
+  onPress={() => setVisibleSection('section3')}
+  style={({ pressed }) => [
+    holoStyles.holoWrapper,
+    { borderColor: theme.darkerborder },
+    pressed && { backgroundColor: theme.onPressed },
+  ]}
+>
+  <BlurView intensity={10} tint="light" style={holoStyles.blurContainer}>
+    <LinearGradient
+      colors={buttonGradients[themeName] as [string, string, string]}
+      start={{ x: 0.5, y: 0 }}
+      end={{ x: 0.5, y: 1 }}
+      style={holoStyles.holoGradient}
+    >
+      <Text style={[holoStyles.buttonText, { color: theme.text }]}>
+        Critical Injuries
+      </Text>
+    </LinearGradient>
+  </BlurView>
+</Pressable>
+
+
+
+         <Pressable
+  onPress={() => setVisibleSection('section4')}
+  style={({ pressed }) => [
+    holoStyles.holoWrapper,
+    { borderColor: theme.darkerborder },
+    pressed && { backgroundColor: theme.onPressed },
+  ]}
+>
+  <BlurView intensity={10} tint="light" style={holoStyles.blurContainer}>
+    <LinearGradient
+      colors={buttonGradients[themeName] as [string, string, string]}
+      start={{ x: 0.5, y: 0 }}
+      end={{ x: 0.5, y: 1 }}
+      style={holoStyles.holoGradient}
+    >
+      <Text style={[holoStyles.buttonText, { color: theme.text }]}>
+        StarShip Actions
+      </Text>
+    </LinearGradient>
+  </BlurView>
+</Pressable>
+
+
+
+
+          <Pressable
+  onPress={() => setVisibleSection('section5')}
+  style={({ pressed }) => [
+    holoStyles.holoWrapper,
+    { borderColor: theme.darkerborder },
+    pressed && { backgroundColor: theme.onPressed },
+  ]}
+>
+  <BlurView intensity={10} tint="light" style={holoStyles.blurContainer}>
+    <LinearGradient
+      colors={buttonGradients[themeName] as [string, string, string]}
+      start={{ x: 0.5, y: 0 }}
+      end={{ x: 0.5, y: 1 }}
+      style={holoStyles.holoGradient}
+    >
+      <Text style={[holoStyles.buttonText, { color: theme.text }]}>
+        StarShip Maneuvers
+      </Text>
+    </LinearGradient>
+  </BlurView>
+</Pressable>
+
+
+
         {/*<TouchableOpacity
           style={styles.button}
           onPress={() => setVisibleSection('section6')}

@@ -1149,7 +1149,7 @@ const rollD100 = () => {
     bottom: 20,
     left: 20,
     right: 20,
-    backgroundColor: '#222',
+    backgroundColor: theme.background,
     padding: 10,
     borderRadius: 10,
     shadowColor: '#000',
