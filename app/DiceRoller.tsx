@@ -848,11 +848,8 @@ const rollD100 = () => {
                         key={type}
                         onPress={() => addDieToPool(type)}
                         style={{
-                        width: '25%', //(type === 'SuccessSymbol' || type === 'AdvantageSymbol') ? '25%' : '25%',    // ~3 per row
-                        aspectRatio: 1,
-                        marginBottom: 2,
-                        justifyContent: 'center',
-                        alignItems: 'center',
+                        width: '25%' //(type === 'SuccessSymbol' || type === 'AdvantageSymbol') ? '25%' : '25%',    // ~3 per row
+                        ,aspectRatio: 1
                         }}
                     >
                         <Image
@@ -1107,62 +1104,71 @@ const rollD100 = () => {
   </View>
 )}
 
-   <View style={{ flex: 1 }}>
-  {/* Saved Dice Pools in a scrollable grid */}
-  <ScrollView contentContainerStyle={{ padding: 2 }}>
-    <Text style={{ color: 'white', marginBottom: 2 }}>Saved Dice Pools:</Text>
-    <View style={{
+<View style={{ flex: 1, backgroundColor: theme.background }}>
+  <View
+    style={{
+      flex: 1,
       flexDirection: 'row',
-      flexWrap: 'wrap',
-      justifyContent: 'center'
-    }}>
-      {Object.keys(savedPools).map((name) => (
-        <TouchableOpacity
-  key={name}
-  onPress={() => setDicePool(savedPools[name])}
-  onLongPress={() => {
-    setPoolToDelete(name);
-    setDeleteConfirmVisible(true);
-  }}
-  delayLongPress={500}
-  style={{
-    width: '22%',
-    aspectRatio: 1,
-    backgroundColor: '#333',
-    margin: 6,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#777',
-  }}
->
-  <Text style={{ color: 'white', textAlign: 'center', fontSize: 12 }}>{name}</Text>
-</TouchableOpacity>
-      ))}
-    </View>
-  </ScrollView>
+      padding: 10,
+    }}
+  >
+    {/* Scrollable Saved Pools Grid */}
+    <ScrollView style={{ flex: 4 }}>
+      <View
+        style={{
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          justifyContent: 'space-between',
+        }}
+      >
+        {Object.keys(savedPools).map((name) => (
+          <TouchableOpacity
+            key={name}
+            onPress={() => setDicePool(savedPools[name])}
+            onLongPress={() => {
+              setPoolToDelete(name);
+              setDeleteConfirmVisible(true);
+            }}
+            delayLongPress={500}
+            style={{
+              width: '31%',
+              aspectRatio: 1,
+              backgroundColor: theme.background,
+              marginBottom: 10,
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 8,
+              borderWidth: 1,
+              borderColor: theme.border,
+            }}
+          >
+            <Text
+              style={{
+                color: theme.text,
+                textAlign: 'center',
+                fontSize: 12,
+              }}
+            >
+              {name}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+    </ScrollView>
 
-  {/* Fixed Save Button */}
-  <View style={{
-    position: 'absolute',
-    bottom: 20,
-    left: 20,
-    right: 20,
-    backgroundColor: theme.background,
-    padding: 10,
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 5,
-    marginVertical: 15
-  }}>
-    <Button title="Save Dice Pool" onPress={saveCurrentPool} />
+    {/* Compact Save Button */}
+    <View
+      style={{
+        width: 60, // fixed width
+        alignItems: 'center',
+        paddingTop: 5, // minimal padding
+        marginHorizontal: 5
+      }}
+    >
+      <Button title="Save Pool" onPress={saveCurrentPool} color={theme.icon} />
+    </View>
   </View>
 </View>
-
 
     
     </View>
