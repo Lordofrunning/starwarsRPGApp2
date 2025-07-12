@@ -479,16 +479,6 @@ const impStyles = StyleSheet.create({
   );
 }
 
-// // The root component exports the ThemeProvider wrapped around HomeScreenContent
-// export default function Index() {
-//   return (
-//     <ThemeProvider>
-//       <HomeScreen />
-//     </ThemeProvider>
-//   );
-// }
-
-
 
 const localStyles = StyleSheet.create({
   main: {

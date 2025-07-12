@@ -51,14 +51,50 @@ export default function NPCButtonsPage() {
   },
   },
   imperial: {
-    sabaccPosition: { top: 200, left: 100, width: 140, height: 70 },
-    pazaakPosition: { top: 160, left: 360, width: 145, height: 75 },
-    roulettePosition: { top: 110, left: 30, width: 160, height: 85 },
+    sabaccPosition: {
+    top: '13%',
+    left: '40%',
+    width: 80,
+    height: 178,
+    borderRadius: 60,
+  },
+  roulettePosition: {
+    top: '4%',
+    left: '8%',
+    width: 100,
+    height: 100,
+    borderRadius: 60,
+  },
+  pazaakPosition: {
+    top: '5%',
+    right: '5%',
+    width: 70,
+    height: 95,
+    borderRadius: 20,
+  },
   },
   rebel: {
-    sabaccPosition: { top: 190, left: 110, width: 155, height: 85 },
-    pazaakPosition: { top: 165, left: 365, width: 150, height: 80 },
-    roulettePosition: { top: 125, left: 25, width: 150, height: 75 },
+    sabaccPosition: {
+    top: '13%',
+    left: '40%',
+    width: 80,
+    height: 178,
+    borderRadius: 60,
+  },
+  roulettePosition: {
+    top: '4%',
+    left: '8%',
+    width: 100,
+    height: 100,
+    borderRadius: 60,
+  },
+  pazaakPosition: {
+    top: '5%',
+    right: '5%',
+    width: 70,
+    height: 95,
+    borderRadius: 20,
+  },
   },
 };
 

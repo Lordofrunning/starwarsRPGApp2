@@ -1,6 +1,8 @@
 import { Stack, useRouter, } from 'expo-router';
 import React, { useEffect, useState, } from 'react';
 import { Alert, Image, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useTheme } from './ThemeContext';
+
 
 type SideCard = {
   value: number;         // The numeric value (positive or negative)
@@ -29,6 +31,7 @@ export default function PazaakScreen() {
   const [matchOver, setMatchOver] = useState(false);
 
   const [infoModalVisible, setInfoModalVisible] = useState(false);
+  const { theme, themeName } = useTheme();
     const router = useRouter();
   // Round state
   const [playerScore, setPlayerScore] = useState(0);
@@ -144,9 +147,9 @@ export default function PazaakScreen() {
     <View style={[styles.container, {width: '100%'}]}>
       <Stack.Screen options={{ headerShown: false }} />
        {/* Header */}
-          <View style={[styles.headerSmall, {width: "100%"}]}>
-            <TouchableOpacity onPress={() => router.back()} style={styles.sideButton}>
-              <Text style={styles.smallMenuArrow}>←</Text>
+          <View style={[styles.headerSmall, {width: "100%", backgroundColor: theme.background, borderBottomColor: theme.border}]}>
+            <TouchableOpacity onPress={() => router.back()} style={[styles.sideButton,{borderColor: theme.border}]}>
+              <Text style={[styles.smallMenuArrow, {color: theme.border}]}>←</Text>
             </TouchableOpacity>
     
             <View style={styles.logoContainer}>
@@ -157,16 +160,16 @@ export default function PazaakScreen() {
               />
             </View>
     
-           <TouchableOpacity onPress={() => setInfoModalVisible(true)} style={styles.sideButton}>
+           <TouchableOpacity onPress={() => setInfoModalVisible(true)} style={[styles.sideButton,{borderColor: theme.border}]}>
                                          <Image
                                              source={require('../assets/images/Icons/informationIcon1.png')}
-                                             style={[styles.profileImage, { backgroundColor: 'white' }]}
+                                             style={[styles.profileImage, { borderColor: theme.darkerborder, tintColor: theme.icon }]}
                                          />
                                      </TouchableOpacity>
             
           </View>
 
-      <Text style={[styles.title, {paddingTop: 30}]}>🃏 Pazaak - Best of 5</Text>
+      <Text style={[styles.title, {paddingTop: 30, color: theme.text}]}> Pazaak - Best of 5</Text>
 
       <Text style={styles.score}>
         Round: {roundNumber > 5 || matchOver ? 'Match Over' : roundNumber} {'\n'}
@@ -175,32 +178,32 @@ export default function PazaakScreen() {
 
       {matchOver ? (
         <View style={{ marginVertical: 20 }}>
-          <Text style={styles.matchOverText}>
+          <Text style={[styles.matchOverText, { color: theme.text }]}>
             {playerRoundWins > npcRoundWins ? '🎉 You won the match!' : '😞 NPC won the match!'}
           </Text>
-          <TouchableOpacity style={styles.resetButton} onPress={handleResetMatch}>
-            <Text style={styles.resetButtonText}>Play Again</Text>
+          <TouchableOpacity style={[styles.resetButton, { backgroundColor: theme.darkerborder }]} onPress={handleResetMatch}>
+            <Text style={[styles.resetButtonText, { color: theme.text,}]}>Play Again</Text>
           </TouchableOpacity>
         </View>
       ) : (
         <>
           {/* Player Score Box */}
-          <View style={styles.scoreBox}>
-            <Text style={styles.scoreBoxText}>Player Score: {playerScore}</Text>
+          <View style={[styles.scoreBox, { borderColor: theme.border }]}>
+            <Text style={[styles.scoreBoxText, { color: theme.text }]}>Player Score: {playerScore}</Text>
           </View>
 
           <Text style={styles.score}>NPC Score: {roundOver ? npcScore : '???'}</Text>
 
           <View style={styles.buttonRow}>
-            <TouchableOpacity style={[styles.button, roundOver && styles.disabledButton]} disabled={roundOver} onPress={handleDraw}>
-              <Text style={styles.buttonText}>Draw Card</Text>
+            <TouchableOpacity style={[styles.button, roundOver && styles.disabledButton, { borderColor: theme.border, backgroundColor: theme.darkerborder }]} disabled={roundOver} onPress={handleDraw}>
+              <Text style={[styles.buttonText, { color: theme.text }]}>Draw Card</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.button, roundOver && styles.disabledButton]} disabled={roundOver} onPress={() => handleStand()}>
-              <Text style={styles.buttonText}>Stand</Text>
+            <TouchableOpacity style={[styles.button, roundOver && styles.disabledButton, {borderColor: theme.border, backgroundColor: theme.darkerborder}]} disabled={roundOver} onPress={() => handleStand()}>
+              <Text style={[styles.buttonText, { color: theme.text }]}>Stand</Text>
             </TouchableOpacity>
           </View>
 
-          <Text style={styles.subTitle}>Side Deck (Use once per round)</Text>
+          <Text style={styles.subTitle}>Side Deck </Text>
           <View style={styles.buttonRow}>
             {playerSideDeck.map((card, i) => {
               const used = card.used;
@@ -208,11 +211,11 @@ export default function PazaakScreen() {
               return (
                 <TouchableOpacity
                   key={i}
-                  style={[styles.sideCardButton, used && styles.sideCardUsed]}
+                  style={[styles.sideCardButton, used && styles.sideCardUsed, { borderColor: theme.border, backgroundColor: used ? theme.darkerborder : theme.darkerborder }]}
                   disabled={used || roundOver}
                   onPress={() => useSideCard(i)}
                 >
-                  <Text style={[styles.sideCardText, used && styles.sideCardTextUsed]}>{display}</Text>
+                  <Text style={[styles.sideCardText, used && styles.sideCardTextUsed, { color: used ? theme.darkerborder : theme.text }]}>{display}</Text>
                 </TouchableOpacity>
               );
             })}
