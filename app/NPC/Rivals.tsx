@@ -2,12 +2,13 @@ import { Stack, useRouter } from 'expo-router';
 import React from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
-
+import { useTheme } from '.././ThemeContext';
 import { styles } from '../index.styles';
 
 
 export default function MinionGalleryPage() {
   const router = useRouter();
+  const { theme, themeName } = useTheme();
   const imageData = [
   {
     src: require('../../assets/images/RivalsNemesis/Barabel.png'),
@@ -87,19 +88,20 @@ export default function MinionGalleryPage() {
     <View style={styles.container}>
       <Stack.Screen options={{ headerShown: false }} />
 
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.sideButton}>
-          <Text style={styles.menuArrow}>←</Text>
-        </TouchableOpacity>
-
-        <View style={styles.logoContainer}>
-          <Image
-            source={require('../../assets/images/logos/rpg_main_logo.png')}
-            style={styles.smallImage}
-            resizeMode="contain"
-          />
-        </View>
+       {/* Header */}
+            <View style={[styles.header, {backgroundColor: theme.background, borderBottomColor: theme.border}]}>
+              <TouchableOpacity onPress={() => router.back()} style={styles.sideButton}>
+                <Text style={[styles.menuArrow, {color: theme.border}]}>←</Text>
+              </TouchableOpacity>
+      
+              <View style={styles.logoContainer}>
+                <Image
+                  source={require('../../assets/images/logos/rpg_main_logo.png')}
+                  style={styles.smallImage}
+                  resizeMode="contain"
+                />
+              </View>
+              
         <TouchableOpacity onPress={() => router.push('/DiceRoller')} style={styles.sideButton}>
                   <Image
                     source={require('../../assets/dice/TransparentDice/YellowDie.png')}

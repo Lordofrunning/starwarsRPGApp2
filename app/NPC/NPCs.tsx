@@ -2,12 +2,13 @@ import { Stack, useRouter } from 'expo-router';
 import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 
-
+import { useTheme } from '.././ThemeContext';
 import { styles } from '../index.styles';
 
 
 export default function NPCButtonsPage() {
   const router = useRouter();
+  const { theme, themeName } = useTheme();
 
   return (
      <View style={{ flex: 1, position: 'relative', backgroundColor: '#D3D3D3' }}>
@@ -15,9 +16,9 @@ export default function NPCButtonsPage() {
       <Stack.Screen options={{ headerShown: false }} />
 
       {/* Header */}
-      <View style={styles.header}>
+      <View style={[styles.header, {backgroundColor: theme.background, borderBottomColor: theme.border}]}>
         <TouchableOpacity onPress={() => router.back()} style={styles.sideButton}>
-          <Text style={styles.menuArrow}>←</Text>
+          <Text style={[styles.menuArrow, {color: theme.border}]}>←</Text>
         </TouchableOpacity>
 
         <View style={styles.logoContainer}>
@@ -28,11 +29,11 @@ export default function NPCButtonsPage() {
           />
         </View>
 
-        <TouchableOpacity onPress={() => console.log('Profile pressed')} style={styles.sideButton}>
+        <TouchableOpacity onPress={() => console.log('Profile pressed')} style={[styles.sideButton,{ borderColor: theme.border}]}>
           <Image
-            source={require('../../assets/images/empty_profile_pic.png')}
-            style={styles.profileImage}
-          />
+                                source={require('../../assets/images/Icons/informationIcon1.png')}
+                                style={[styles.iconImage, { tintColor: theme.icon }]}
+                              />
         </TouchableOpacity>
       </View>
         {/* Button stack */}
