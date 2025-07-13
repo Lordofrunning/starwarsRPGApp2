@@ -34,6 +34,7 @@ export default function NPCButtonsPage() {
     width: 80,
     height: 178,
     borderRadius: 60,
+    //borderColor: theme.border,
   },
   roulettePosition: {
     top: '0%',
@@ -144,7 +145,7 @@ const positions = tablePositionsByTheme[currentTheme];
                   <Pressable
   onPress={() => router.push('/Sabacc')}
   style={({ pressed }) => [
-    localStyles.invisibleButton,
+    //localStyles.invisibleButton,
     positions.sabaccPosition,
     pressed && {
       borderColor: theme.border,

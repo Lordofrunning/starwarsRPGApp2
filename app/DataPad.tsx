@@ -156,6 +156,524 @@ const popupWidth = screenWidth * 0.75;
 const { width } = Dimensions.get('window');
 const router = useRouter();
 
+const CombatManeuvers = () => {
+  const [showExtra, setShowExtra] = useState(false);
+  return(
+  <View style={{ backgroundColor: 'transparent', width: popupWidth }}>
+    <Text style={sectionStyles.headingMain}>Combat Maneuvers</Text>
+
+    {/* Aim */}
+    <Text style={sectionStyles.heading}>Aim</Text>
+    <Text style={sectionStyles.text}>
+      Add <Text style={tableStyles.blue}>🟦</Text> to next combat check, or
+      <Text style={tableStyles.blue}>🟦</Text>
+      <Text style={tableStyles.blue}>🟦</Text>
+      if character spends 2 consecutive maneuvers aiming. Or target a specific part of target or item carried, add
+      <Text style={tableStyles.black}>⬛</Text>
+      <Text style={tableStyles.black}>⬛</Text> to next check,
+      <Text style={tableStyles.black}>⬛</Text> if character spends 2 consecutive maneuvers aiming.
+    </Text>
+
+    {/* Assist */}
+    <Text style={sectionStyles.heading}>Assist</Text>
+    <Text style={sectionStyles.text}>
+      Add <Text style={tableStyles.blue}>🟦</Text> to an engaged ally’s next check.
+    </Text>
+
+    {/* Guarded Stance */}
+    <Text style={sectionStyles.heading}>Guarded Stance</Text>
+    <Text style={sectionStyles.text}>
+      Add <Text style={tableStyles.black}>⬛</Text> 
+      to any combat check the character makes until the end of his next turn, but gain +1 melee defense.
+    </Text>
+
+    {/* Take Cover */}
+    <Text style={sectionStyles.heading}>Take Cover</Text>
+    <Text style={sectionStyles.text}>
+      Take cover in doorways or behind objects to gain a ranged defense of 1 (some cover may grant a ranged defense higher than 1 if particularly sturdy).
+    </Text>
+
+    {/* Manage Gear */}
+    <Text style={sectionStyles.heading}>Manage Gear</Text>
+    <Text style={sectionStyles.text}>
+      Draw, holster, ready, or load a weapon, or draw something from storage or put it away.
+    </Text>
+
+    {/* Interact with Environment */}
+    <Text style={sectionStyles.heading}>Interact with Environment</Text>
+    <Text style={sectionStyles.text}>
+      Move a large item. Open or close a door. Enteract with a control panel.
+    </Text>
+    
+
+    {/* Mount / Dismount */}
+    <Text style={sectionStyles.heading}>Mount / Dismount</Text>
+    <Text style={sectionStyles.text}>
+      Mounting a vehicle or gunnery station, or mounting a domesticated creature (successfully mounting an animal requires an Average
+      <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+      <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+      Survival check).
+    </Text>
+
+    {/* Move */}
+    <Text style={sectionStyles.heading}>Move</Text>
+    <Text style={sectionStyles.text}>
+      Change range increment.
+      {'\n'}Engage or Disengage with an opponent.
+      {'\n'}Move within Short range.
+    </Text>
+    {/* Expandable/Dropdown Section */}
+      <TouchableOpacity onPress={() => setShowExtra(!showExtra)}>
+        <Text style={[sectionStyles.text, { color: '#39d', textDecorationLine: 'underline' }]}>
+          {showExtra ? 'Hide Move Cost Table ▲' : 'Move Maneuver Cost Table ▼'}
+        </Text>
+      </TouchableOpacity>
+      {showExtra && <MoveCostTable />}
+
+    {/* Move to/from Prone */}
+    <Text style={sectionStyles.heading}>Move to/from Prone</Text>
+    <Text style={sectionStyles.text}>
+      Dropping prone allows a character to add <Text style={tableStyles.black}>⬛</Text> to all ranged attacks made against him, although he must also add 
+      <Text style={tableStyles.blue}>🟦</Text> to all melee attacks made against him.
+    </Text>
+
+    {/* Preparation */}
+    <Text style={sectionStyles.heading}>Preparation</Text>
+    <Text style={sectionStyles.text}>
+      Some actions require additional preparation to be used. This maneuver is used to confer a bonus, offset a penalty, or fulfill a requirement.
+    </Text>
+  </View>
+)};
+
+const CombatActions = () => {
+  const [showExtra, setShowExtra] = useState(false);
+  return(
+  <View style={{ backgroundColor: 'transparent', width: popupWidth }}>
+    <Text style={sectionStyles.headingMain}>Combat Actions</Text>
+
+    {/* Make Combat Check */}
+    <Text style={sectionStyles.heading}>Melee Combat Check</Text>
+    <Text style={sectionStyles.text}>
+      Use the brawl skill for punching, grappling, and other unarmed combat. Use melee for any close range weapon like a sword, axe, or vibroblade.
+    </Text>
+    <Text style={sectionStyles.textDiff}>
+      Average diffuculty (
+        <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+        <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+      )
+    </Text>
+    <Text style={sectionStyles.heading}>Ranged Combat Check</Text>
+    <Text style={sectionStyles.text}>
+      Use one of the 3 ranged comabat skill types based on the weapon. 
+      Difficulty increases with distance from the target and also with the size of your gun when engaged with the target. 
+      Using bigger guns when engaged with a target is more difficult, and using gunnery is impossible against and engaged target. 
+    </Text>
+    <Text style={sectionStyles.textDiff}>
+      {'  '}-Ranged checks while engaged-{'\n'}
+      Ranged light:     {' '}average(
+        <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+        <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+      ){'\n'}
+      Ranged heavy:        {' '}hard(
+        <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+        <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+        <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+      ){'\n'}
+      {'  '}-All types at range-{'\n'}
+      Short range:          {'   '}easy(
+        <Image source={symbolImages.purple} style={sectionStyles.symbol} />){'\n'}
+      Medium range:  average(
+        <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+        <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+      ){'\n'}
+      Long range:           {'   '}hard(
+        <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+        <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+        <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+      ){'\n'}
+      Extreme range: daunting(
+        <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+        <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+        <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+        <Image source={symbolImages.purple} style={sectionStyles.symbol} />
+      )
+    </Text>
+    {/* Expandable/Dropdown Section */}
+      <TouchableOpacity onPress={() => setShowExtra(!showExtra)}>
+        <Text style={[sectionStyles.text, { color: '#39d', textDecorationLine: 'underline' }]}>
+          {showExtra ? 'Hide Advantage Options Table ▲' : 'Spending Advantage Options ▼'}
+        </Text>
+      </TouchableOpacity>
+      {showExtra && <CombatAdvantageTable />}
+
+    {/* Exchange for a Maneuver */}
+    <Text style={sectionStyles.heading}>Exchange for a Maneuver</Text>
+    <Text style={sectionStyles.text}>
+      A character can exchange his action for an additional maneuver during his turn, 
+      but still may not perform more than two maneuvers during his turn, no matter how he gained access to them.
+    </Text>
+
+    {/* Activate Ability */}
+    <Text style={sectionStyles.heading}>Activate Ability</Text>
+    <Text style={sectionStyles.text}>
+      Certain abilities or talents require an action to activate.
+    </Text>
+
+    {/* Activate Force Power */}
+    <Text style={sectionStyles.heading}>Activate Force Power</Text>
+    <Text style={sectionStyles.text}>
+      Most Force powers require an action to activate.
+    </Text>
+
+    {/* Make Skill Check */}
+    <Text style={sectionStyles.heading}>Make Skill Check</Text>
+    <Text style={sectionStyles.text}>
+      Perform a skill check within the structured time of combat. 
+      This could include Mechanics, Computers, Medicine, or other checks. 
+      The GM may determine that certain skill checks require multiple actions or cannot be performed while the encounter continues.
+    </Text>
+  </View>
+  )
+};
+
+const MoveCostTable = () => {
+  return(
+    <ScrollView style={tableStyles.container}>
+      {/* Header Row */}
+      <View style={tableStyles.headerRow}>
+        <Text style={sectionStyles.textDiff}>
+          Engaged: 1 to Short (Disengage) {'\n'}
+          Short Range: 1 to Engaged / Medium {'\n'}
+          Medium Range: 1 to Short / 2 to Long {'\n'}
+          Long Range: 2 to Medium / Extreme {'\n'}
+          Extreme Range: 2 to Long
+        </Text>
+      </View>
+    </ScrollView>
+  );
+};
+
+const CombatAdvantageTable = () => {
+  return (
+    <ScrollView style={tableStyles.container}>
+      {/* Header Row */}
+      <View style={tableStyles.headerRow}>
+        <Text style={tableStyles.headerCell}>Cost</Text>
+        <Text style={tableStyles.headerCell}>Result Options</Text>
+      </View>
+
+      {/* Row 1 – 1 Advantage or Triumph */}
+      <View style={tableStyles.row}>
+        <Text style={tableStyles.costCell}>
+          <Image source={symbolImages.advantage} style={tableStyles.iconStyles} /> {'or'}{' '}
+          <Image source={symbolImages.triumph} style={tableStyles.iconStyles} />
+        </Text>
+        <View style={tableStyles.resultCell}>
+          <Text style={sectionStyles.text}>• Recover 1 strain (may be selected more than once).</Text>
+          <Text style={sectionStyles.text}>• Add <Text style={tableStyles.blue}>🟦</Text> to the next allied character’s check.</Text>
+          <Text style={sectionStyles.text}>• Notice a single important point in the ongoing conflict.</Text>
+          <Text style={sectionStyles.text}>• Inflict a Critical Hit that bypasses soak (<Image source={symbolImages.triumph} style={tableStyles.iconStyles} /> cost may vary).</Text>
+          <Text style={sectionStyles.text}>• Activate a weapon quality (<Image source={symbolImages.triumph} style={tableStyles.iconStyles} /> cost may vary).</Text>
+        </View>
+      </View>
+
+      {/* Row 2 – 2 Advantage or Triumph */}
+      <View style={tableStyles.row}>
+        <Text style={tableStyles.costCell}>
+          <Image source={symbolImages.advantage} style={tableStyles.iconStyles} />
+          <Image source={symbolImages.advantage} style={tableStyles.iconStyles} /> {'or'}{' '}
+          <Image source={symbolImages.triumph} style={tableStyles.iconStyles} />
+        </Text>
+        <View style={tableStyles.resultCell}>
+          <Text style={sectionStyles.text}>• Perform one free maneuver (still bound by 2‑maneuver limit).</Text>
+          <Text style={sectionStyles.text}>• Add <Text style={tableStyles.black}>⬛</Text> to the targeted character’s next check.</Text>
+          <Text style={sectionStyles.text}>• Add <Text style={tableStyles.blue}>🟦</Text> to any allied character’s next check (including the active character).</Text>
+        </View>
+      </View>
+
+      {/* Row 3 – 3 Advantage or Triumph */}
+      <View style={tableStyles.row}>
+        <Text style={tableStyles.costCell}>
+          <Image source={symbolImages.advantage} style={tableStyles.iconStyles} />
+          <Image source={symbolImages.advantage} style={tableStyles.iconStyles} />
+          <Image source={symbolImages.advantage} style={tableStyles.iconStyles} /> {'or'}{' '}
+          <Image source={symbolImages.triumph} style={tableStyles.iconStyles} />
+        </Text>
+        <View style={tableStyles.resultCell}>
+          <Text style={sectionStyles.text}>• Negate the target’s defensive bonuses until end of the round.</Text>
+          <Text style={sectionStyles.text}>• Ignore penalizing environmental conditions until end of next turn.</Text>
+          <Text style={sectionStyles.text}>• Temporarily disable a specific component or item instead of dealing wounds/strain.</Text>
+          <Text style={sectionStyles.text}>• Gain +1 melee or ranged defense until end of next turn.</Text>
+          <Text style={sectionStyles.text}>• Force the target to drop a melee or ranged weapon it is wielding.</Text>
+        </View>
+      </View>
+
+      {/* Row 4 – Triumph */}
+      <View style={tableStyles.row}>
+        <Text style={tableStyles.costCell}>
+          <Image source={symbolImages.triumph} style={tableStyles.iconStyles} />
+        </Text>
+        <View style={tableStyles.resultCell}>
+          <Text style={sectionStyles.text}>• Upgrade the difficulty of the targeted character’s next check.</Text>
+          <Text style={sectionStyles.text}>• Upgrade any allied character’s next check, including the active character.</Text>
+          <Text style={sectionStyles.text}>• Do something vital to the tide of battle (e.g., seal nearby blast doors).</Text>
+        </View>
+      </View>
+
+      {/* Row 5 – 2 Triumph */}
+      <View style={tableStyles.row}>
+        <Text style={tableStyles.costCell}>
+          <Image source={symbolImages.triumph} style={tableStyles.iconStyles} />
+          <Image source={symbolImages.triumph} style={tableStyles.iconStyles} />
+        </Text>
+        <View style={tableStyles.resultCell}>
+          <Text style={sectionStyles.text}>• When dealing damage, the attack destroys a piece of equipment the target is using.</Text>
+        </View>
+      </View>
+      {/* Row 6 – 1 Threat or Despair */}
+      <View style={tableStyles.row}> {/* alternate background */}
+        <Text style={tableStyles.costCell}>
+          <Image source={symbolImages.threat} style={tableStyles.iconStyles} />
+          {' '}
+          or{' '}
+          <Image source={symbolImages.despair} style={tableStyles.iconStyles} />
+        </Text>
+        <View style={tableStyles.resultCell}>
+          <Text style={sectionStyles.text}>• The active character suffers 1 strain (may be selected more than once).</Text>
+          <Text style={sectionStyles.text}>• The active character loses the benefit of a prior maneuver (e.g., taking cover) until he performs the maneuver again.</Text>
+        </View>
+      </View>
+
+      {/* Row 7 – 2 Threat or Despair */}
+      <View style={tableStyles.row}>
+        <Text style={tableStyles.costCell}>
+          <Image source={symbolImages.threat} style={tableStyles.iconStyles} />
+          <Image source={symbolImages.threat} style={tableStyles.iconStyles} />{' '}
+          or{' '}
+          <Image source={symbolImages.despair} style={tableStyles.iconStyles} />
+        </Text>
+        <View style={tableStyles.resultCell}>
+          <Text style={sectionStyles.text}>• An opponent may immediately perform 1 free maneuver in response to the active character’s check.</Text>
+          <Text style={sectionStyles.text}>• Add <Text style={tableStyles.blue}>🟦</Text> to the targeted character’s next check.</Text>
+          <Text style={sectionStyles.text}>• The active or an allied character suffers <Text style={tableStyles.black}>⬛</Text> on his next action.</Text>
+        </View>
+      </View>
+
+      {/* Row 8 – 3 Threat or Despair */}
+      <View style={tableStyles.row}>
+        <Text style={tableStyles.costCell}>
+          <Image source={symbolImages.threat} style={tableStyles.iconStyles} />
+          <Image source={symbolImages.threat} style={tableStyles.iconStyles} />
+          <Image source={symbolImages.threat} style={tableStyles.iconStyles} />{' '}
+          or{' '}
+          <Image source={symbolImages.despair} style={tableStyles.iconStyles} />
+        </Text>
+        <View style={tableStyles.resultCell}>
+          <Text style={sectionStyles.text}>• The active character falls prone.</Text>
+          <Text style={sectionStyles.text}>• The active character grants the enemy a significant advantage in the conflict (e.g., blasting controls to a bridge he needed).</Text>
+        </View>
+      </View>
+
+      {/* Row 9 – Despair */}
+      <View style={tableStyles.row}>
+        <Text style={tableStyles.costCell}>
+          <Image source={symbolImages.despair} style={tableStyles.iconStyles} />
+        </Text>
+        <View style={tableStyles.resultCell}>
+          <Text style={sectionStyles.text}>• The character’s ranged weapon immediately runs out of ammunition for the encounter.</Text>
+          <Text style={sectionStyles.text}>• Upgrade the difficulty of an allied character’s next check (including the active character).</Text>
+          <Text style={sectionStyles.text}>• The tool or melee weapon the character is using becomes damaged one step.</Text>
+        </View>
+      </View>
+    </ScrollView>
+  );
+};
+
+/*  Critical Injury (Characters) – d100 table
+    - Follows the same styling conventions as your other tables.
+    - Uses tableStyles (container, headerRow, headerCell, row, rowAlt, costCell, resultCell, iconStyles)
+    - Uses sectionStyles.text for bullet text
+    - Uses symbolImages.purple (difficulty die), symbolImages.black (setback), symbolImages.blue (boost)
+    - Severity column is expressed via inline images: Easy = 1 purple, Average = 2 purple, Hard = 3 purple, Daunting = 4 purple.
+    - Group shading: every other severity block alternates rowAlt for readability (Easy, Average, Hard, Daunting)
+*/
+const StarshipCritChart = () => (
+  <ScrollView style={tableStyles.container}>
+    {/* Header */}
+    <View style={tableStyles.headerRow}>
+      <Text style={tableStyles.headerCell}>d100</Text>
+      <Text style={tableStyles.headerCell}>Severity</Text>
+      <Text style={tableStyles.headerCell}>Result</Text>
+    </View>
+
+    {/* ---------- EASY (1 purple) ---------- */}
+    {[
+      ['01 – 09', 'Mechanical Stress: The ship suffers 1 point of system strain.'],
+      ['10 – 18', 'Jostled: All crew suffer 1 strain and are disoriented for 1 round.'],
+      ['19 – 27', 'Losing Power to Shields: Reduce defense in affected zone by 1 (or +1 system strain if no defense).'],
+      ['28 – 36', 'Knocked off Course: Pilot cannot execute maneuvers next turn; must make Piloting check to regain control (difficulty = current speed).'],
+      ['37 – 45', 'Tailspin: All firing suffers <Image source={symbolImages.setback} style={tableStyles.iconStyles}/> until end of pilot’s next turn; crew immobilized until then.'],
+      ['46 – 54', 'Component Hit: One component of attacker’s choice knocked offline until end of next round.'],
+    ].map((row, i) => (
+      <View key={`easy-${i}`} style={tableStyles.row}>
+        <Text style={tableStyles.costCell}>{row[0]}</Text>
+        <Text style={tableStyles.costCell}><Image source={symbolImages.purple} style={tableStyles.iconStyles}/></Text>
+        <View style={tableStyles.resultCell}><Text style={sectionStyles.text}>• {row[1]}</Text></View>
+      </View>
+    ))}
+
+    {/* ---------- AVERAGE (2 purple) ---------- */}
+    {[
+      ['55 – 63', 'Shields Failing: Reduce defense in all zones by 1 (or +2 system strain if none).'],
+      ['64 – 72', 'Navicomputer Failure: Cannot make hyperspace jump; navigation systems blind without hyperdrive.'],
+      ['73 – 81', 'Power Fluctuations: Pilot cannot voluntarily inflict system strain until repaired.'],
+    ].map((row, i) => (
+      <View key={`avg-${i}`} style={tableStyles.row}>
+        <Text style={tableStyles.costCell}>{row[0]}</Text>
+        <Text style={tableStyles.costCell}>
+          <Image source={symbolImages.purple} style={tableStyles.iconStyles}/>
+          <Image source={symbolImages.purple} style={tableStyles.iconStyles}/>
+        </Text>
+        <View style={tableStyles.resultCell}><Text style={sectionStyles.text}>• {row[1]}</Text></View>
+      </View>
+    ))}
+
+    {/* ---------- HARD (3 purple) ---------- */}
+    {[
+      ['82 – 90', 'Shields Down: Defense in affected zone to 0; all others –1 (or +4 strain if none).'],
+      ['91 – 99', 'Engine Damaged: Max speed –1 (min 1) until repaired.'],
+      ['100 – 108', 'Shield Overload: All defenses to 0 for encounter; +2 strain. If no defense, armor –1 until repaired.'],
+      ['109 – 117', 'Engines Down: Max speed 0; cannot execute maneuvers until repaired.'],
+      ['118 – 126', 'Major Systems Failure: One component heavily damaged and inoperable until repaired.'],
+    ].map((row, i) => (
+      <View key={`hard-${i}`} style={tableStyles.row}>
+        <Text style={tableStyles.costCell}>{row[0]}</Text>
+        <Text style={tableStyles.costCell}>
+          <Image source={symbolImages.purple} style={tableStyles.iconStyles}/>
+          <Image source={symbolImages.purple} style={tableStyles.iconStyles}/>
+          <Image source={symbolImages.purple} style={tableStyles.iconStyles}/>
+        </Text>
+        <View style={tableStyles.resultCell}><Text style={sectionStyles.text}>• {row[1]}</Text></View>
+      </View>
+    ))}
+
+    {/* ---------- DAUNTING (4 purple) ---------- */}
+    {[
+      ['127 – 133', 'Major Hull Breach: Ship depressurizes (or suffers Destabilized in atmosphere).'],
+      ['134 – 138', 'Destabilized: Hull trauma & system strain thresholds halved until repaired.'],
+      ['139 – 144', 'Fire!: Ship takes 2 strain; fire spreads (see core rules).'],
+      ['145 – 153', 'Breaking Up: Ship destroyed at end of next round unless crew escape!'],
+      ['154 +', 'Vaporized: Ship completely destroyed in a dramatic fireball.'],
+    ].map((row, i) => (
+      <View key={`daunt-${i}`} style={tableStyles.row}>
+        <Text style={tableStyles.costCell}>{row[0]}</Text>
+        <Text style={tableStyles.costCell}>
+          <Image source={symbolImages.purple} style={tableStyles.iconStyles}/>
+          <Image source={symbolImages.purple} style={tableStyles.iconStyles}/>
+          <Image source={symbolImages.purple} style={tableStyles.iconStyles}/>
+          <Image source={symbolImages.purple} style={tableStyles.iconStyles}/>
+        </Text>
+        <View style={tableStyles.resultCell}><Text style={sectionStyles.text}>• {row[1]}</Text></View>
+      </View>
+    ))}
+  </ScrollView>
+);
+
+const PersonalCritChart = () => {
+  return(
+  <ScrollView style={tableStyles.container}>
+    {/* Header */}
+    <View style={tableStyles.headerRow}>
+      <Text style={tableStyles.headerCell}>d100</Text>
+      <Text style={tableStyles.headerCell}>Severity</Text>
+      <Text style={tableStyles.headerCell}>Result</Text>
+    </View>
+
+    {/* ----------------------------- EASY (1 purple) -------------------------------- */}
+    {[
+      {range: '01 – 05', result: 'Minor Nick: Suffer 1 strain.'},
+      {range: '06 – 10', result: 'Slowed Down: May only act during last allied Initiative slot on next turn.'},
+      {range: '11 – 15', result: 'Sudden Jolt: Drop whatever is in hand.'},
+      {range: '16 – 20', result: 'Distracted: Cannot perform free maneuver on next turn.'},
+      {range: '21 – 25', result: 'Off‑Balance: Add <Image source={symbolImages.setback} style={tableStyles.iconStyles}/> to next skill check.'},
+      {range: '26 – 30', result: 'Discouraging Wound: Flip one Light Destiny to Dark (reverse if NPC).'},
+      {range: '31 – 35', result: 'Stunned: <Italic>Staggered</Italic> until end of next turn.'},
+      {range: '36 – 40', result: 'Stinger: Increase difficulty (<Image source={symbolImages.purple} style={tableStyles.iconStyles}/> +1) of next check.'},
+    ].map((row, idx) => (
+      <View key={`easy-${idx}`} style={tableStyles.row}>
+        <Text style={tableStyles.costCell}>{row.range}</Text>
+        <Text style={tableStyles.costCell}><Image source={symbolImages.purple} style={tableStyles.iconStyles}/></Text>
+        <View style={tableStyles.resultCell}><Text style={sectionStyles.text}>• {row.result}</Text></View>
+      </View>
+    ))}
+
+    {/* ----------------------------- AVERAGE (2 purple) ------------------------------ */}
+    {[
+      {range: '41 – 45', result: 'Bowled Over: Knocked prone and suffer 1 strain.'},
+      {range: '46 – 50', result: 'Head Ringer: Increase difficulty of all Intellect & Cunning checks until end of encounter.'},
+      {range: '51 – 55', result: 'Fearsome Wound: Increase difficulty of Presence & Willpower checks until end of encounter.'},
+      {range: '56 – 60', result: 'Agonizing Wound: Increase difficulty of Brawn & Agility checks until end of encounter.'},
+      {range: '61 – 65', result: 'Slightly Dazed: <Italic>Disoriented</Italic> (add <Image source={symbolImages.setback} style={tableStyles.iconStyles}/> to all checks) until end of encounter.'},
+      {range: '66 – 70', result: 'Scattered Senses: Remove all <Image source={symbolImages.blue} style={tableStyles.iconStyles}/> from skill checks until end of encounter.'},
+      {range: '71 – 75', result: 'Hamstrung: Lose free maneuver until end of encounter.'},
+      {range: '76 – 80', result: 'Overpowered: Attacker may immediately make another free attack with same pool.'},
+      {range: '81 – 85', result: 'Winded: Cannot voluntarily suffer strain for abilities or extra maneuvers until end of encounter.'},
+      {range: '86 – 90', result: 'Compromised: Increase difficulty (<Image source={symbolImages.purple} style={tableStyles.iconStyles}/> +1) of all checks until end of encounter.'},
+    ].map((row, idx) => (
+      <View key={`avg-${idx}`} style={tableStyles.row}>
+        <Text style={tableStyles.costCell}>{row.range}</Text>
+        <Text style={tableStyles.costCell}>
+          <Image source={symbolImages.purple} style={tableStyles.iconStyles}/>
+          <Image source={symbolImages.purple} style={tableStyles.iconStyles}/>
+        </Text>
+        <View style={tableStyles.resultCell}><Text style={sectionStyles.text}>• {row.result}</Text></View>
+      </View>
+    ))}
+
+    {/* ----------------------------- HARD (3 purple) --------------------------------- */}
+    {[
+      {range: '91 – 95', result: 'At the Brink: Suffer 1 strain each time you perform an action.'},
+      {range: '96 – 100', result: 'Crippled: Limb crippled until healed or replaced. Increase difficulty (+1<Image source={symbolImages.purple} style={tableStyles.iconStyles}/>) of all checks relying on that limb.'},
+      {range: '101 – 105', result: 'Maimed: Limb permanently lost. Unless replaced, cannot perform actions requiring that limb. Add <Image source={symbolImages.setback} style={tableStyles.iconStyles}/> to all other actions.'},
+      {range: '106 – 110', result: 'Horrific Injury: Roll 1d10 to lower a random characteristic by 1 until healed.'},
+      {range: '111 – 115', result: 'Temporarily Lame: May not perform more than one maneuver each turn until healed.'},
+      {range: '116 – 120', result: 'Blinded: Cannot see. Upgrade difficulty of all checks twice; Perception & Vigilance three times.'},
+      {range: '121 – 125', result: 'Knocked Senseless: <Italic>Staggered</Italic> for remainder of encounter.'},
+    ].map((row, idx) => (
+      <View key={`hard-${idx}`} style={tableStyles.row}>
+        <Text style={tableStyles.costCell}>{row.range}</Text>
+        <Text style={tableStyles.costCell}>
+          <Image source={symbolImages.purple} style={tableStyles.iconStyles}/>
+          <Image source={symbolImages.purple} style={tableStyles.iconStyles}/>
+          <Image source={symbolImages.purple} style={tableStyles.iconStyles}/>
+        </Text>
+        <View style={tableStyles.resultCell}><Text style={sectionStyles.text}>• {row.result}</Text></View>
+      </View>
+    ))}
+
+    {/* ----------------------------- DAUNTING (4 purple) ------------------------------ */}
+    {[
+      {range: '126 – 130', result: 'Gruesome Injury: Randomly reduce one characteristic permanently by 1 (min 1).'},
+      {range: '131 – 140', result: 'Bleeding Out: Suffer 1 wound & 1 strain each round; every 5 wounds ⇒ another critical injury.'},
+      {range: '141 – 150', result: 'The End is Nigh: Die after the last Initiative slot next round.'},
+      {range: '151 +',   result: 'Dead: Complete, obliterated death.'},
+    ].map((row, idx) => (
+      <View key={`daunt-${idx}`} style={tableStyles.row}>
+        <Text style={tableStyles.costCell}>{row.range}</Text>
+        <Text style={tableStyles.costCell}>
+          <Image source={symbolImages.purple} style={tableStyles.iconStyles}/>
+          <Image source={symbolImages.purple} style={tableStyles.iconStyles}/>
+          <Image source={symbolImages.purple} style={tableStyles.iconStyles}/>
+          <Image source={symbolImages.purple} style={tableStyles.iconStyles}/>
+        </Text>
+        <View style={tableStyles.resultCell}><Text style={sectionStyles.text}>• {row.result}</Text></View>
+      </View>
+    ))}
+
+  </ScrollView>
+  );
+};
+
 const StarshipCombatTable = () => {
   return (
     <ScrollView style={tableStyles.container}>
@@ -688,7 +1206,7 @@ export default function InfoPage() {
       style={holoStyles.holoGradient}
     >
       <Text style={[holoStyles.buttonText, { color: theme.text }]}>
-        StarShip Actions
+        Starship Actions
       </Text>
     </LinearGradient>
   </BlurView>
@@ -713,7 +1231,29 @@ export default function InfoPage() {
       style={holoStyles.holoGradient}
     >
       <Text style={[holoStyles.buttonText, { color: theme.text }]}>
-        StarShip Maneuvers
+        Starship Maneuvers
+      </Text>
+    </LinearGradient>
+  </BlurView>
+</Pressable>
+
+<Pressable
+  onPress={() => setVisibleSection('section6')}
+  style={({ pressed }) => [
+    holoStyles.holoWrapper,
+    { borderColor: theme.darkerborder },
+    pressed && { backgroundColor: theme.onPressed },
+  ]}
+>
+  <BlurView intensity={10} tint="light" style={holoStyles.blurContainer}>
+    <LinearGradient
+      colors={buttonGradients[themeName] as [string, string, string]}
+      start={{ x: 0.5, y: 0 }}
+      end={{ x: 0.5, y: 1 }}
+      style={holoStyles.holoGradient}
+    >
+      <Text style={[holoStyles.buttonText, { color: theme.text }]}>
+        Starship Crit Chart
       </Text>
     </LinearGradient>
   </BlurView>
@@ -795,26 +1335,32 @@ export default function InfoPage() {
               )}
             </View>
           )}
-          {(visibleSection === 'section4' || visibleSection === 'section5') ? (
-          <View style={{ backgroundColor: 'transparent', width: popupWidth }}>
-            <Text style={{ color: '#fff', fontSize: 18, marginBottom: 12 }}>
-              {/* Your custom text for section 4 or 5 here */}
-              {visibleSection === 'section4'
+          {(visibleSection === 'section1' || visibleSection === 'section2' || visibleSection === 'section3' || visibleSection === 'section4' || visibleSection === 'section5' || visibleSection === 'section6') ? (
+          <View style={{ backgroundColor: 'transparent', width: popupWidth}}>
+            {/*<Text style={{ color: '#fff', fontSize: 18, marginBottom: 12 }}>*/}
+              {/* Your custom text for sections*/}
+              {
+                visibleSection === 'section1'
+                ? <CombatActions />
+                : visibleSection === 'section2'
+                ? <CombatManeuvers />
+                : visibleSection === 'section3'
+                ? <PersonalCritChart/>
+                : visibleSection === 'section4'
                 ? <StarshipActions />
-                : <StarshipManeuvers />}
-            </Text>
+                : visibleSection === 'section5'
+                ? <StarshipManeuvers />
+                : visibleSection === 'section6'
+                ? <StarshipCritChart/>
+                : null
+              }
+            {/*</Text>*/}
             {/* You can add more <Text> or other components here */}
           </View>
           ) : (
           <Image
                 source={
-                  visibleSection === 'section1'
-                    ? require('../assets/images/Actions.jpg')
-                    : visibleSection === 'section2'
-                    ? require('../assets/images/Maneuvers.jpg')
-                    : visibleSection === 'section3'
-                    ? require('../assets/images/section3.jpg')
-                    : visibleSection === 'section6'
+                    visibleSection === 'section7'
                     ? require('../assets/images/section2.png')
                     : null
                 }
