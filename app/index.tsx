@@ -205,12 +205,12 @@ const impStyles = StyleSheet.create({
 
         <Text style={[styles.headerTitle, { color: theme.text }]}>GM AID</Text>
 
-        <TouchableOpacity style={[styles.sideButton, { borderColor: theme.border }]}>
-          <Image
-            source={require('../assets/images/Icons/informationIcon1.png')}
-            style={[styles.iconImage, { tintColor: theme.icon }]}
-          />
-        </TouchableOpacity>
+        <TouchableOpacity onPress={() => setInfoModalVisible(true)} style={[styles.sideButton, { borderColor: theme.border }]}>
+                            <Image
+                              source={require('../assets/images/Icons/informationIcon1.png')}
+                              style={[styles.iconImage, { tintColor: theme.icon }]}
+                            />
+                          </TouchableOpacity>
       </View>
 
       {/* Popup Menu */}
@@ -462,7 +462,10 @@ const impStyles = StyleSheet.create({
                                   {/* Put your long info text here */}
                                 {"\n\n"} this app has lots of different uses. it has a sound board, to help emerse your players into the game, a map, listing all the planets and where they are in the wider galaxy. it has a dice roller, with dice pool saving, optional bonus rules, and more. 
                                 {"\n\n"} its also got a random shop generator, and a bunch of star wars casino games. enough for any pc to bet to their hearts content. there are also enemy sheets, giving easy access to enemy stats for use in game. 
+                                {"\n"}
                                 </Text>
+                               <Text style={localStyles.modalHeaderMedium}>Dont Like the Colors?</Text>
+                                <Text style={localStyles.modalDescriptionBig}>  {"\n\n"} this app comes with a theme swithcer. you can have the imposing colors of an the galactic Empire, the colors of a rebel cell, and much more. the theme switcher is in the menue bar on this page   </Text>
                                
                                 
                                
