@@ -1,17 +1,17 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Stack, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { Image, ScrollView, Switch, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Modal, ScrollView, Switch, Text, TouchableOpacity, View } from 'react-native';
 
 
 import { allArmor, allBlackMarketItems, allItems, allWeapons, armor, blackMarketItem, Item, shopNames, weapon } from '../data/shopData';
 import { styles } from './index.styles';
-
+import { useTheme } from './ThemeContext';
 
 
 export default function Page3() {
   const [shopName, setShopName] = useState('');
-  
+  const { theme, themeName } = useTheme();
 
   // menue holders for each item type. (rare, normal item, wepaon, armor)
 const [shopSaved, setShopSaved] = useState(false);
@@ -35,6 +35,7 @@ const [weaponItems, setWeaponItems] = useState<weapon[]>([]);
 const [armorItems, setArmorItems] = useState<armor[]>([]);
 
   const router = useRouter();
+  const [infoModalVisible, setInfoModalVisible] = useState(false);
 
  useEffect(() => {
   const load = async () => {
@@ -379,26 +380,34 @@ if (loading) {
       <Stack.Screen options={{ headerShown: false }} />
 
       {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.sideButton}>
-          <Text style={styles.menuArrow}>←</Text>
-        </TouchableOpacity>
-
-        <View style={styles.logoContainer}>
-          <Image
-            source={require('../assets/images/logos/rpg_main_logo.png')}
-            style={styles.smallImage}
-            resizeMode="contain"
-          />
-        </View>
-
-        <TouchableOpacity onPress={() => console.log('Profile pressed')} style={styles.sideButton}>
-          <Image
-            source={require('../assets/images/empty_profile_pic.png')}
-            style={styles.profileImage}
-          />
-        </TouchableOpacity>
-      </View>
+              <View
+                style={[
+                  styles.header,
+                  { backgroundColor: theme.background, borderBottomColor: theme.border },
+                ]}
+              >
+                <TouchableOpacity
+                  onPress={() => router.push('/')}
+                  style={[styles.sideButton, { borderColor: theme.border }]}
+                >
+                  <Text style={[styles.menuArrow, { color: theme.border }]}>←</Text>
+                </TouchableOpacity>
+      
+                <View style={styles.logoContainer}>
+                  <Image
+                    source={require('../assets/images/logos/rpg_main_logo.png')}
+                    style={styles.smallImage}
+                    resizeMode="contain"
+                  />
+                </View>
+      
+                <TouchableOpacity onPress={() => setInfoModalVisible(true)} style={[styles.sideButton, { borderColor: theme.border }]}>
+                          <Image
+                            source={require('../assets/images/Icons/informationIcon1.png')}
+                            style={[styles.iconImage, { tintColor: theme.icon }]}
+                          />
+                        </TouchableOpacity>
+              </View>
       
        {/* Fixed background image */}
      
@@ -424,6 +433,37 @@ if (loading) {
     <Text style={{ marginRight: 8 }}>Save?</Text>
     <Switch value={shopSaved} onValueChange={toggleSave} />
   </View>
+                 <Modal
+                                visible={infoModalVisible}
+                                animationType="slide"
+                                transparent={true}
+                                onRequestClose={() => setInfoModalVisible(false)}
+                              >
+                                <View style={styles.modalOverlayBig}>
+                                  <View style={styles.modalContentBig}>
+                                    <Text style={styles.modalHeaderBig}>Local Shop {"\n"}</Text>
+                                    <ScrollView contentContainerStyle={styles.scrollViewContent}>
+                                      <Text style={styles.modalHeaderMedium}>buy any thing</Text>
+                                      <Text style={styles.modalDescriptionBig}>
+                                        {/* Put your long info text here */}
+                                        generate random shops here, or let fate decide the items you can and cannot purchase. 
+                                        {"\n"}{"\n"} want to come back to the same store multiple times? just save the shop, and it will be there until you are ready to leave. 
+                                      </Text>
+                                      <View style={[styles.divider,{marginBottom: 20}]}></View>
+                                      
+                                      <Text style={styles.modalHeaderMedium}></Text>
+                                      <Text style={styles.modalDescriptionBig}>
+                                         
+                              
+                              
+                                      </Text>
+                                    </ScrollView>
+                                    <TouchableOpacity style={styles.closeButtonBig} onPress={() => setInfoModalVisible(false)}>
+                                      <Text style={styles.closeButtonTextBig}>Got it</Text>
+                                    </TouchableOpacity>
+                                  </View>
+                                </View>
+                              </Modal>
   
     </View>
     
