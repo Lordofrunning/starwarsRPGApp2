@@ -614,6 +614,45 @@ popupcontainerInfoPage: {
   width: '100%',
   height: '100%',
 },
+divider: {
+  height: 4,
+  backgroundColor: "#0ff", // or white, gray, etc.
+   marginVertical: 5, // spacing above and below the line
+  width: '100%',
+},
+scrollViewContent: {
+    paddingBottom: 20,  // add space below scroll content for comfortable scrolling
+  },
+  modalHeaderBig: {
+    fontSize: 30,
+    fontWeight: "bold",
+    color: "#0ff",
+    marginBottom: 12,
+  },
+  modalHeaderMedium: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "yellow",
+    marginBottom: 12,
+  },
+   modalDescriptionBig: {
+    fontSize: 16,
+    color: "#fff",
+    lineHeight: 22,
+  },
+
+  closeButtonBig: {
+    backgroundColor: "#0f0",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 8,
+    marginTop: 15,
+    alignSelf: "center",
+  },
+   closeButtonTextBig: {
+    color: "#000",
+    fontWeight: "bold",
+  },
    
 });
 

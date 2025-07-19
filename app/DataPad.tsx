@@ -1384,6 +1384,7 @@ export default function InfoPage() {
     </TouchableOpacity>
         </View>
       </Modal>
+      
     </ImageBackground>
   );
 }
