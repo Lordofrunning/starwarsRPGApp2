@@ -174,8 +174,29 @@ const impStyles = StyleSheet.create({
     'rgba(214,180,0,0.2)',   // faded tactical yellow
     'rgba(155,120,0,0.35)',  // gritty golden brown
   ],
+  mandalorian: [
+    'rgba(164,124,72,0.05)',  // light bronze glow
+    'rgba(164,124,72,0.2)',   // faded burnished bronze
+    'rgba(164,124,72,0.4)',   // gritty dark bronze
+  ],
+ republic: [
+    'rgba(201, 201, 201, 0.77)',   // top gray → now bottom
+  'rgba(243, 243, 243, 0.94)',   // light gray
+  'rgb(255, 255, 255)',   // off-white
+  'rgba(255, 255, 255, 0.96)',   // pure white
+  'rgba(255, 255, 255, 0.8)',   // light red
+  'rgba(229, 115, 115, 1)',     // firebrick red
+  'rgba(155, 15, 15, .8)'  
+  ],
+  separatist: [
+  'rgba(159, 163, 167, 0.53)',  // Muted dark blue
+  'rgba(88, 125, 156, 0.49)',  // Slightly stronger
+  'rgba(44, 55, 207, 0.69)'    // Warm metallic grey
+],
   jedi:     ['rgba(92, 173, 170, 0.05)', 'rgba(92, 173, 170, 0.2)', 'rgba(92, 173, 170, 0.4)'],
 };
+
+
     useEffect(() => {
   Audio.setAudioModeAsync({
     allowsRecordingIOS: false,
@@ -247,6 +268,40 @@ const impStyles = StyleSheet.create({
           Imperial
         </Text>
       </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => setThemeName('republic')}>
+        <Text
+          style={[
+            impStyles.menuItem,
+            themeName === 'republic' && { color: theme.border },
+          ]}
+        >
+          Republic
+        </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => setThemeName('separatist')}>
+        <Text
+          style={[
+            impStyles.menuItem,
+            themeName === 'separatist' && { color: theme.border },
+          ]}
+        >
+          Separatist
+        </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => setThemeName('mandalorian')}>
+        <Text
+          style={[
+            impStyles.menuItem,
+            themeName === 'mandalorian' && { color: theme.border },
+          ]}
+        >
+          Mandalorian
+        </Text>
+      </TouchableOpacity>
+
       <TouchableOpacity onPress={() => setThemeName('rebel')}>
         <Text
           style={[
@@ -257,6 +312,7 @@ const impStyles = StyleSheet.create({
           Rebel
         </Text>
       </TouchableOpacity>
+
       <TouchableOpacity onPress={() => setThemeName('jedi')}>
         <Text
           style={[

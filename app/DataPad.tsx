@@ -1081,13 +1081,28 @@ export default function InfoPage() {
   const [d100Result, setD100Result] = useState<number | null>(null);
   
   const { theme, themeName, setThemeName } = useTheme();
-  const buttonGradients: Record<ThemeName, string[]> = {
+   const buttonGradients: Record<ThemeName, string[]> = {
     imperial: ['rgba(255, 60, 60, 0.05)', 'rgba(255, 60, 60, 0.2)', 'rgba(255, 60, 60, 0.4)'],
     rebel: [
       'rgba(214,180,0,0.05)',  // light golden glow
       'rgba(214,180,0,0.2)',   // faded tactical yellow
       'rgba(155,120,0,0.35)',  // gritty golden brown
     ],
+    mandalorian: [
+      'rgba(164,124,72,0.05)',  // light bronze glow
+      'rgba(164,124,72,0.2)',   // faded burnished bronze
+      'rgba(164,124,72,0.4)',   // gritty dark bronze
+    ],
+   republic: [
+    'rgba(148, 148, 148, .80)',  // pure white with 50% opacity
+    'rgb(255, 255, 255)',  // light warm gold with 50% opacity
+    'rgba(194, 0, 0, 0.75)'    // classic gold with 20% opacity
+  ],
+    separatist: [
+    'rgba(159, 163, 167, 0.53)',  // Muted dark blue
+    'rgba(88, 125, 156, 0.49)',  // Slightly stronger
+    'rgba(44, 55, 207, 0.69)'    // Warm metallic grey
+  ],
     jedi:     ['rgba(92, 173, 170, 0.05)', 'rgba(92, 173, 170, 0.2)', 'rgba(92, 173, 170, 0.4)'],
   };
 

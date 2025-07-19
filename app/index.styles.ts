@@ -304,8 +304,30 @@ imageWrapperMinionBig: {
     height: 26,
   },
 
+  // double button stack styles here
+ buttonGrid: {
+  flex: 1,
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  
+},
 
+buttonCell: {
+  width: '50%',
+  height: '33.33%',
+  padding: 8,
+  backgroundColor: '#E0E0E0', // neutral light gray
+  borderWidth: 1,
+  borderColor: '#B0B0B0',
+  justifyContent: 'center',
+  alignItems: 'center',
+},
 
+buttonText: {
+  fontSize: 16,
+  color: '#000',
+  textAlign: 'center',
+},
   // button styles here 
 
 

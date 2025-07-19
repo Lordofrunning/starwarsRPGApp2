@@ -13,7 +13,7 @@ export default function NPCButtonsPage() {
   const [infoModalVisible, setInfoModalVisible] = useState(false);
 
 
-  type ThemeName = 'jedi' | 'imperial' | 'rebel';
+  type ThemeName = 'jedi' | 'imperial' | 'rebel' | 'mandalorian' | 'republic' | 'separatist';
   type TablePositions = {
   sabaccPosition: ViewStyle;
   roulettePosition: ViewStyle;
@@ -23,6 +23,9 @@ export default function NPCButtonsPage() {
   imperial: require('../assets/images/GameStuff/CasinoImperialImage.png'),
   rebel: require('../assets/images/GameStuff/CasinoRebelsImage.png'),
   jedi: require('../assets/images/GameStuff/CasinoJedi2Image.png'),
+  mandalorian: require('../assets/images/GameStuff/CasinoMandalorianImage.png'),
+   republic: require('../assets/images/GameStuff/CasinoRepublicImage.png'),
+  separatist: require('../assets/images/GameStuff/CasinoSeparatistImage.png'),
 
 };
 
@@ -95,6 +98,75 @@ export default function NPCButtonsPage() {
     height: 95,
     borderRadius: 20,
   },
+  },
+  mandalorian: {
+    sabaccPosition: {
+    top: '11%',
+    left: '40%',
+    width: 80,
+    height: 178,
+    borderRadius: 60,
+  },
+  roulettePosition: {
+    top: '-26%',
+    left: '8%',
+    width: 100,
+    height: 120,
+    borderRadius: 60,
+  },
+  pazaakPosition: {
+    top: '-41%',
+    right: '-77%',
+    width: 70,
+    height: 95,
+    borderRadius: 20,
+  },
+},
+  republic: {
+    sabaccPosition: {
+    top: '11%',
+    left: '38%',
+    width: 84,
+    height: 168,
+    borderRadius: 60,
+  },
+  roulettePosition: {
+    top: '-23%',
+    left: '6%',
+    width: 100,
+    height: 120,
+    borderRadius: 60,
+  },
+  pazaakPosition: {
+    top: '-38%',
+    right: '-77%',
+    width: 74,
+    height: 95,
+    borderRadius: 100,
+  },
+  },
+  separatist: {
+    sabaccPosition: {
+      top: '11%',
+      left: '40%',
+      width: 80,
+      height: 178,
+      borderRadius: 60,
+    },
+    roulettePosition: {
+      top: '-26%',
+      left: '8%',
+      width: 100,
+      height: 120,
+      borderRadius: 60,
+    },
+    pazaakPosition: {
+      top: '-41%',
+      right: '-77%',
+      width: 70,
+      height: 95,
+      borderRadius: 20,
+    },
   },
 };
 
