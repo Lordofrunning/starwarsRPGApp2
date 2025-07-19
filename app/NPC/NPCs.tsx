@@ -50,9 +50,12 @@ export default function NPCButtonsPage() {
                       <TouchableOpacity style={styles.buttonBig} onPress={() => router.push('/NPC/Nemeses')}>
                         <Text style={styles.buttonText}>Nemesis</Text>
                       </TouchableOpacity>
-                      {/*<TouchableOpacity style={styles.buttonBig} onPress={() => router.push('/NPC/NPCs')}>
-                        <Text style={styles.buttonText}>Enemies / NPCs</Text>
-                      </TouchableOpacity>*/}
+                      <TouchableOpacity style={styles.buttonBig} onPress={() => router.push('./LandShips')}>
+                        <Text style={styles.buttonText}>Land Vehicles</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={styles.buttonBig} onPress={() => router.push('./Ships')}>
+                        <Text style={styles.buttonText}>Starships</Text>
+                      </TouchableOpacity>
                     </View>
     </View>
   </View>
