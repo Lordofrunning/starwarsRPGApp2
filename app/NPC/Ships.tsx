@@ -11,29 +11,39 @@ export default function MinionGalleryPage() {
   const { theme, themeName } = useTheme();
   const imageData = [
   {
-    src: require('../../assets/images/Monsters/JungleRancor.png'),
-    style: { width: 350, height: 300 },
+    src: require('../../assets/images/Starships/Tie.png'),
+    style: { width: 355, height: 300 },
     boxStyle: { width: 380, height: 240 },
   },
   {
-    src: require('../../assets/images/Monsters/Gundark.png'),
-    style: { width: 350, height: 480 }, // Taller image
-    boxStyle: { width: 380, height: 500 },
+    src: require('../../assets/images/Starships/TieAce.png'),
+    style: { width: 355, height: 480 }, // Taller image
+    boxStyle: { width: 380, height: 240 },
   },
   {
-    src: require('../../assets/images/Monsters/SandGundark.png'),
-    style: { width: 350, height: 480 }, // Taller image
-    boxStyle: { width: 380, height: 480 },
+    src: require('../../assets/images/Starships/Defender.png'),
+    style: { width: 355, height: 480 }, // Taller image
+    boxStyle: { width: 380, height: 440 },
   },
   {
-    src: require('../../assets/images/Monsters/Acklay.png'),
-    style: { width: 350, height: 480 }, // Taller image
-    boxStyle: { width: 380, height: 480 },
+    src: require('../../assets/images/Starships/Hunter.png'),
+    style: { width: 355, height: 480 }, // Taller image
+    boxStyle: { width: 380, height: 280 },
   },
   {
-    src: require('../../assets/images/Monsters/KraytDragon.png'),
+    src: require('../../assets/images/Starships/Hunter.png'),
+    style: { width: 355, height: 480 }, // Taller image
+    boxStyle: { width: 380, height: 280 },
+  },
+  {
+    src: require('../../assets/images/Starships/SkyHopper.png'),
+    style: { width: 355, height: 480 }, // Taller image
+    boxStyle: { width: 380, height: 180 },
+  },
+  {
+    src: require('../../assets/images/Starships/Hoth.png'),
     style: { width: 350, height: 480 }, // Taller image
-    boxStyle: { width: 380, height: 290 },
+    boxStyle: { width: 380, height: 280 },
   },
   // Add more images with custom styles
 ];
@@ -65,7 +75,7 @@ export default function MinionGalleryPage() {
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-  <Text style={styles.shopTitle}>{"Monsters"}</Text>
+  <Text style={styles.shopTitle}>{"Starships"}</Text>
   {imageData.map((img, index) => (
     <View key={index} style={[styles.imageWrapperMinion, img.boxStyle]}>
       <Image source={img.src} style={[styles.imageMinionCards, img.style]} resizeMode="contain" />

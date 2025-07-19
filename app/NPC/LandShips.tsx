@@ -11,29 +11,19 @@ export default function MinionGalleryPage() {
   const { theme, themeName } = useTheme();
   const imageData = [
   {
-    src: require('../../assets/images/Monsters/JungleRancor.png'),
+    src: require('../../assets/images/Landships/SpeederBike.png'),
+    style: { width: 350, height: 480 }, // Taller image
+    boxStyle: { width: 380, height: 260 },
+  },
+  {
+    src: require('../../assets/images/Landships/SpeederBike.png'),
     style: { width: 350, height: 300 },
     boxStyle: { width: 380, height: 240 },
   },
   {
-    src: require('../../assets/images/Monsters/Gundark.png'),
+    src: require('../../assets/images/Landships/SpeederBike.png'),
     style: { width: 350, height: 480 }, // Taller image
     boxStyle: { width: 380, height: 500 },
-  },
-  {
-    src: require('../../assets/images/Monsters/SandGundark.png'),
-    style: { width: 350, height: 480 }, // Taller image
-    boxStyle: { width: 380, height: 480 },
-  },
-  {
-    src: require('../../assets/images/Monsters/Acklay.png'),
-    style: { width: 350, height: 480 }, // Taller image
-    boxStyle: { width: 380, height: 480 },
-  },
-  {
-    src: require('../../assets/images/Monsters/KraytDragon.png'),
-    style: { width: 350, height: 480 }, // Taller image
-    boxStyle: { width: 380, height: 290 },
   },
   // Add more images with custom styles
 ];
