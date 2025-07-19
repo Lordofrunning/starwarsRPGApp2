@@ -211,11 +211,11 @@ export default function PazaakScreen() {
               return (
                 <TouchableOpacity
                   key={i}
-                  style={[styles.sideCardButton, used && styles.sideCardUsed, { borderColor: theme.border, backgroundColor: used ? theme.darkerborder : theme.darkerborder }]}
+                  style={[styles.sideCardButton, used && styles.sideCardUsed, { borderColor: theme.border, backgroundColor: used ? theme.background : theme.background }]}
                   disabled={used || roundOver}
                   onPress={() => useSideCard(i)}
                 >
-                  <Text style={[styles.sideCardText, used && styles.sideCardTextUsed, { color: used ? theme.darkerborder : theme.text }]}>{display}</Text>
+                  <Text style={[styles.sideCardText, used && styles.sideCardTextUsed, { color: used ? theme.background : theme.text }]}>{display}</Text>
                 </TouchableOpacity>
               );
             })}

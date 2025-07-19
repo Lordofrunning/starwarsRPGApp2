@@ -34,18 +34,17 @@ export default function NPCButtonsPage() {
     width: 80,
     height: 178,
     borderRadius: 60,
-    //borderColor: theme.border,
   },
   roulettePosition: {
-    top: '0%',
+    top: '-26%',
     left: '8%',
     width: 100,
-    height: 100,
+    height: 120,
     borderRadius: 60,
   },
   pazaakPosition: {
-    top: '1%',
-    right: '5%',
+    top: '-41%',
+    right: '-77%',
     width: 70,
     height: 95,
     borderRadius: 20,
@@ -53,22 +52,22 @@ export default function NPCButtonsPage() {
   },
   imperial: {
     sabaccPosition: {
-    top: '13%',
-    left: '40%',
+    top: '14%',
+    left: '39.5%',
     width: 80,
     height: 178,
     borderRadius: 60,
   },
   roulettePosition: {
-    top: '4%',
+    top: '-24%',
     left: '8%',
     width: 100,
-    height: 100,
+    height: 120,
     borderRadius: 60,
   },
   pazaakPosition: {
-    top: '5%',
-    right: '5%',
+    top: '-37%',
+    left: '76%',
     width: 70,
     height: 95,
     borderRadius: 20,
@@ -83,15 +82,15 @@ export default function NPCButtonsPage() {
     borderRadius: 60,
   },
   roulettePosition: {
-    top: '4%',
+    top: '-24%',
     left: '8%',
     width: 100,
-    height: 100,
+    height: 120,
     borderRadius: 60,
   },
   pazaakPosition: {
-    top: '5%',
-    right: '5%',
+    top: '-37%',
+    right: '-76%',
     width: 70,
     height: 95,
     borderRadius: 20,
@@ -111,7 +110,7 @@ const positions = tablePositionsByTheme[currentTheme];
         <View
           style={[
             styles.header,
-            { backgroundColor: theme.background, borderBottomColor: theme.border },
+            { backgroundColor: theme.background, borderBottomColor: theme.border, zIndex: 10, elevation: 10 },
           ]}
         >
           <TouchableOpacity
@@ -145,33 +144,37 @@ const positions = tablePositionsByTheme[currentTheme];
                   <Pressable
   onPress={() => router.push('/Sabacc')}
   style={({ pressed }) => [
-    //localStyles.invisibleButton,
     positions.sabaccPosition,
-    pressed && {
+    {
       borderColor: theme.border,
       borderWidth: 2,
-      backgroundColor: 'rgba(255, 255, 255, 0.05)', // optional
+      backgroundColor: 'rgba(255, 255, 255, 0.05)', // Always visible
+    },
+    pressed && {
       shadowColor: theme.border,
       shadowOpacity: 0.8,
       shadowRadius: 10,
       shadowOffset: { width: 0, height: 0 },
+      backgroundColor: 'rgba(255, 255, 255, 0.2)', // Optional: highlight on press
     },
   ]}
 />
 
-<Pressable
+  <Pressable
   onPress={() => router.push('/CorellianRoulette')}
   style={({ pressed }) => [
-    localStyles.invisibleButton,
     positions.roulettePosition,
-    pressed && {
+    {
       borderColor: theme.border,
       borderWidth: 2,
-      backgroundColor: 'rgba(255, 255, 255, 0.05)',
+      backgroundColor: 'rgba(255, 255, 255, 0.05)', // Always visible
+    },
+    pressed && {
       shadowColor: theme.border,
       shadowOpacity: 0.8,
       shadowRadius: 10,
       shadowOffset: { width: 0, height: 0 },
+      backgroundColor: 'rgba(255, 255, 255, 0.2)', // Optional: highlight on press
     },
   ]}
 />
@@ -179,16 +182,18 @@ const positions = tablePositionsByTheme[currentTheme];
 <Pressable
   onPress={() => router.push('/Pazaak')}
   style={({ pressed }) => [
-    localStyles.invisibleButton,
     positions.pazaakPosition,
-    pressed && {
+    {
       borderColor: theme.border,
       borderWidth: 2,
-      backgroundColor: 'rgba(255, 255, 255, 0.05)',
+      backgroundColor: 'rgba(255, 255, 255, 0.05)', // Always visible
+    },
+    pressed && {
       shadowColor: theme.border,
       shadowOpacity: 0.8,
       shadowRadius: 10,
       shadowOffset: { width: 0, height: 0 },
+      backgroundColor: 'rgba(255, 255, 255, 0.2)', // Optional: highlight on press
     },
   ]}
 />
