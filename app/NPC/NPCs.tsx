@@ -37,26 +37,28 @@ export default function NPCButtonsPage() {
         </TouchableOpacity>
       </View>
         {/* Button stack */}
-                    <View style={styles.buttonStack}>
-                      <TouchableOpacity style={styles.buttonBig} onPress={() => router.push('/NPC/Minions')}>
-                        <Text style={styles.buttonTextCentered}>Minion Group Stats</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity style={styles.buttonBig} onPress={() => router.push('/NPC/Monsters')}>
-                        <Text style={styles.buttonText}>Monsters</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity style={styles.buttonBig} onPress={() => router.push('/NPC/Rivals')}>
-                        <Text style={styles.buttonText}>Rivals</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity style={styles.buttonBig} onPress={() => router.push('/NPC/Nemeses')}>
-                        <Text style={styles.buttonText}>Nemesis</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity style={styles.buttonBig} onPress={() => router.push('./LandShips')}>
-                        <Text style={styles.buttonText}>Land Vehicles</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity style={styles.buttonBig} onPress={() => router.push('./Ships')}>
-                        <Text style={styles.buttonText}>Starships</Text>
-                      </TouchableOpacity>
-                    </View>
+                    <View style={styles.buttonGrid}>
+  <TouchableOpacity style={styles.buttonCell} onPress={() => router.push('/NPC/Minions')}>
+    <Text style={styles.buttonText}>Minion Group Stats</Text>
+  </TouchableOpacity>
+  <TouchableOpacity style={styles.buttonCell} onPress={() => router.push('/NPC/Monsters')}>
+    <Text style={styles.buttonText}>Monsters</Text>
+  </TouchableOpacity>
+  <TouchableOpacity style={styles.buttonCell} onPress={() => router.push('/NPC/Rivals')}>
+    <Text style={styles.buttonText}>Rivals</Text>
+  </TouchableOpacity>
+  <TouchableOpacity style={styles.buttonCell} onPress={() => router.push('/NPC/Nemeses')}>
+    <Text style={styles.buttonText}>Nemesis</Text>
+  </TouchableOpacity>
+  <TouchableOpacity style={styles.buttonCell} onPress={() => router.push('./LandShips')}>
+    <Text style={styles.buttonText}>Land Vehicles</Text>
+  </TouchableOpacity>
+  <TouchableOpacity style={styles.buttonCell} onPress={() => router.push('./Ships')}>
+    <Text style={styles.buttonText}>Starships</Text>
+  </TouchableOpacity>
+</View>
+
+
     </View>
   </View>
     //<ItemsDropdown items={Items} />

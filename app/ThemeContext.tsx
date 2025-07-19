@@ -48,7 +48,7 @@ const themes = {
 },
 
 republic: {
-   name: 'republic-minimal',
+   name: 'republic',
   background: '#F5F3F0',     // soft off-white
   border: '#B22222',         // firebrick red
   darkerborder: '#7C1B1B',   // deep red
