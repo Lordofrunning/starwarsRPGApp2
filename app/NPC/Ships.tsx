@@ -31,9 +31,29 @@ export default function MinionGalleryPage() {
     boxStyle: { width: 380, height: 280 },
   },
   {
-    src: require('../../assets/images/Starships/Hunter.png'),
+    src: require('../../assets/images/Starships/XWing.png'),
     style: { width: 355, height: 480 }, // Taller image
-    boxStyle: { width: 380, height: 280 },
+    boxStyle: { width: 380, height: 260 },
+  },
+  {
+    src: require('../../assets/images/Starships/YT13.png'),
+    style: { width: 355, height: 480 }, // Taller image
+    boxStyle: { width: 380, height: 340 },
+  },
+  {
+    src: require('../../assets/images/Starships/YT24.png'),
+    style: { width: 355, height: 480 }, // Taller image
+    boxStyle: { width: 380, height: 340 },
+  },
+  {
+    src: require('../../assets/images/Starships/CR90.png'),
+    style: { width: 355, height: 480 }, // Taller image
+    boxStyle: { width: 380, height: 270 },
+  },
+  {
+    src: require('../../assets/images/Starships/AirSpeeder.png'),
+    style: { width: 355, height: 480 }, // Taller image
+    boxStyle: { width: 380, height: 230 },
   },
   {
     src: require('../../assets/images/Starships/SkyHopper.png'),

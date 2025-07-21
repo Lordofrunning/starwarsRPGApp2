@@ -11,19 +11,24 @@ export default function MinionGalleryPage() {
   const { theme, themeName } = useTheme();
   const imageData = [
   {
+    src: require('../../assets/images/Landships/LandSpeeder.png'),
+    style: { width: 350, height: 300 },
+    boxStyle: { width: 380, height: 290 },
+  },
+  {
     src: require('../../assets/images/Landships/SpeederBike.png'),
     style: { width: 350, height: 480 }, // Taller image
     boxStyle: { width: 380, height: 260 },
   },
   {
-    src: require('../../assets/images/Landships/SpeederBike.png'),
+    src: require('../../assets/images/Landships/Troop.png'),
     style: { width: 350, height: 300 },
     boxStyle: { width: 380, height: 240 },
   },
   {
-    src: require('../../assets/images/Landships/SpeederBike.png'),
+    src: require('../../assets/images/Landships/Walker.png'),
     style: { width: 350, height: 480 }, // Taller image
-    boxStyle: { width: 380, height: 500 },
+    boxStyle: { width: 380, height: 460 },
   },
   // Add more images with custom styles
 ];

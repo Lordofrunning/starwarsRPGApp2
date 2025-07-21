@@ -323,11 +323,11 @@ buttonCell: {
   alignItems: 'center',
 },
 
-buttonText: {
-  fontSize: 16,
-  color: '#000',
-  textAlign: 'center',
-},
+// buttonText: {
+//   fontSize: 16,
+//   color: '#000',
+//   textAlign: 'center',
+// },
   // button styles here 
 
 
