@@ -11,8 +11,8 @@ export default function NPCButtonsPage() {
   const { theme, themeName } = useTheme();
 
   return (
-     <View style={{ flex: 1, position: 'relative', backgroundColor: '#D3D3D3' }}>
-    <View style={styles.container}>
+     <View style={{ flex: 1, position: 'relative', backgroundColor: theme.border }}>
+    <View style={[styles.container, ]}>
       <Stack.Screen options={{ headerShown: false }} />
 
       {/* Header */}
@@ -37,7 +37,7 @@ export default function NPCButtonsPage() {
         </TouchableOpacity>
       </View>
         {/* Button stack */}
-                    <View style={styles.buttonGrid}>
+                    <View style={[styles.buttonGrid]}>
   <TouchableOpacity style={styles.buttonCell} onPress={() => router.push('/NPC/Minions')}>
      <ImageBackground
       source={require('../../assets/images/minions/StormTrooperMinionImage.png')}
@@ -55,19 +55,35 @@ export default function NPCButtonsPage() {
   </TouchableOpacity>
 
   <TouchableOpacity style={styles.buttonCell} onPress={() => router.push('/NPC/Rivals')}>
+    <ImageBackground
+      source={require('../../assets/images/RivalsNemesis/droidikaImage.png')}
+      style={styles.buttonImageBackground}>
     <Text style={styles.buttonText}>Rivals</Text>
+    </ImageBackground>
   </TouchableOpacity>
 
   <TouchableOpacity style={styles.buttonCell} onPress={() => router.push('/NPC/Nemeses')}>
+     <ImageBackground
+      source={require('../../assets/images/RivalsNemesis/NemesisImage.png')}
+      style={styles.buttonImageBackground}>
     <Text style={styles.buttonText}>Nemesis</Text>
+    </ImageBackground>
   </TouchableOpacity>
 
   <TouchableOpacity style={styles.buttonCell} onPress={() => router.push('./LandShips')}>
+    <ImageBackground
+      source={require('../../assets/images/Landships/ATSTImage.png')}
+      style={styles.buttonImageBackground}>
     <Text style={styles.buttonText}>Land Vehicles</Text>
+    </ImageBackground>
   </TouchableOpacity>
 
   <TouchableOpacity style={styles.buttonCell} onPress={() => router.push('./Ships')}>
+    <ImageBackground
+      source={require('../../assets/images/Starships/XWingImage.png')}
+      style={styles.buttonImageBackground}>
     <Text style={styles.buttonText}>Starships</Text>
+    </ImageBackground>
   </TouchableOpacity>
 </View>
 
