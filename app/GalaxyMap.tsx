@@ -66,12 +66,12 @@ const planetData = [
   { name: 'Iridonia', x: 1043, y: 678, info: "Iridonia was a planet located in the Mid Rim. It was known for its harsh landscapes and the Zabrak species that inhabited it.", imperialPrecence: 3, rim: 'Mid Rim', extra: '', underWorld: 4,},
   { name: 'Dorin', x: 1014, y: 794, info: "Dorin was a planet in the Expansion Region home to the Kel Dor species. Its Dorin gas and helium made them need rebreathers off-world, as oxygen was deadly to them.", imperialPrecence: 1, rim: 'Expansion Region', extra: '', underWorld: 1,},
   { name: 'Borleias', x: 1128, y: 935, info: "Borleias was a planet located in the galaxy's Core Worlds. It was known for its dense forests and was a popular location for hunting expeditions.", imperialPrecence: 6, rim: 'Core', extra: 'during the galactic civil war, Borleias became a black market center, dealing in many illegal goods.', underWorld: 9,},
-  { name: 'Name', x: 100000, y: 100000, info: "DESCRIptionHERE", imperialPrecence: 0, rim: 'CORETYPEHERE', extra: '', underWorld: 0,},
-  { name: 'Name', x: 100000, y: 100000, info: "DESCRIptionHERE", imperialPrecence: 0, rim: 'CORETYPEHERE', extra: '', underWorld: 0,},
-  { name: 'Name', x: 100000, y: 100000, info: "DESCRIptionHERE", imperialPrecence: 0, rim: 'CORETYPEHERE', extra: '', underWorld: 0,},
-  { name: 'Name', x: 100000, y: 100000, info: "DESCRIptionHERE", imperialPrecence: 0, rim: 'CORETYPEHERE', extra: '', underWorld: 0,},
-  { name: 'Name', x: 100000, y: 100000, info: "DESCRIptionHERE", imperialPrecence: 0, rim: 'CORETYPEHERE', extra: '', underWorld: 0,},
-  { name: 'Name', x: 100000, y: 100000, info: "DESCRIptionHERE", imperialPrecence: 0, rim: 'CORETYPEHERE', extra: '', underWorld: 0,},
+  { name: 'Kattada ', x: 1381, y: 1031, info: "Kattada  was a terrestrial planet with a tropical climate. It was well known for its beautiful beaches. The city of Haleoda was the capital and the planet's main spaceport. ", imperialPrecence: 1, rim: 'Colonies', extra: 'Prior to 0 BBY, the planet was ruled by Mia Ikova, a Rebel sympathizer. It was the site of the Battle of Kattada, which was a battle fought between Imperial and Rebellion forces led by Princess Leia Organa.', underWorld: 2,},
+  { name: 'Talasea ', x: 1390, y: 989, info: "Talasea was a planet located in the galaxy's Core Worlds. It was known for its vast oceans and unique marine life. land was formed into many islands, ranging from large to  small.", imperialPrecence: 1, rim: 'Colonies', extra: '', underWorld: 0,},
+  { name: 'Arkania ', x: 1290, y: 892, info: "Arkania  was the adopted homeworld of the Arkanian species. It was covered with tundra and rich in diamonds and other precious minerals. the Arkanians were masters of technology and trade ", imperialPrecence: 4, rim: 'Colonies', extra: '', underWorld: 5,},
+  { name: 'Champala', x: 1245, y: 862, info: "Champala was a planet in the Inner Rim and the homeworld of the Chagrian people. Most of its starports were high and dry on plateaus, but its cities were submerged at high tide. It was a popular resort world. ", imperialPrecence: 2, rim: 'Inner Rim', extra: '', underWorld: 2,},
+  { name: 'Ord Mantell', x: 1172, y: 724, info: "Ord Mantell was primarily known as a former industrial world, where large portions of the planet's surface was covered in immense junkyard fields, which served as the perfect lawless haven for many smugglers, mercenaries and bounty hunters of all stripes. ", imperialPrecence: 4, rim: 'Mid Rim', extra: '', underWorld: 9,},
+  { name: 'Genassa ', x: 1282, y: 679, info: "Genassa was a terrestrial planet located in the Genassa system, and was home to humanoid like creatures.", imperialPrecence: 2, rim: 'Mid Rim', extra: '', underWorld: 3,},
   { name: 'Name', x: 100000, y: 100000, info: "DESCRIptionHERE", imperialPrecence: 0, rim: 'CORETYPEHERE', extra: '', underWorld: 0,},
   { name: 'Name', x: 100000, y: 100000, info: "DESCRIptionHERE", imperialPrecence: 0, rim: 'CORETYPEHERE', extra: '', underWorld: 0,},
   { name: 'Name', x: 100000, y: 100000, info: "DESCRIptionHERE", imperialPrecence: 0, rim: 'CORETYPEHERE', extra: '', underWorld: 0,},
@@ -154,7 +154,7 @@ const GalaxyMap = () => {
   const router = useRouter();
   const [menuVisible, setMenuVisible] = useState(false);
 const { theme } = useTheme();
-  const [devMode, setDevMode] = useState(false);
+  const [devMode, setDevMode] = useState(true);
 
   const [selectedPlanet, setSelectedPlanet] = useState<{name: string;x: number;y: number; info: string; imperialPrecence: number; rim: string; extra: string;
 } | null>(null);
