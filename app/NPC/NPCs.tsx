@@ -1,6 +1,6 @@
 import { Stack, useRouter } from 'expo-router';
 import React from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ImageBackground, Text, TouchableOpacity, View } from 'react-native';
 
 import { useTheme } from '.././ThemeContext';
 import { styles } from '../index.styles';
@@ -39,20 +39,33 @@ export default function NPCButtonsPage() {
         {/* Button stack */}
                     <View style={styles.buttonGrid}>
   <TouchableOpacity style={styles.buttonCell} onPress={() => router.push('/NPC/Minions')}>
+     <ImageBackground
+      source={require('../../assets/images/minions/StormTrooperMinionImage.png')}
+      style={styles.buttonImageBackground}> 
     <Text style={styles.buttonText}>Minion Group Stats</Text>
+    </ImageBackground>
   </TouchableOpacity>
+
   <TouchableOpacity style={styles.buttonCell} onPress={() => router.push('/NPC/Monsters')}>
+    <ImageBackground
+      source={require('../../assets/images/Monsters/RancorImage.png')}
+      style={styles.buttonImageBackground}>
     <Text style={styles.buttonText}>Monsters</Text>
+    </ImageBackground>
   </TouchableOpacity>
+
   <TouchableOpacity style={styles.buttonCell} onPress={() => router.push('/NPC/Rivals')}>
     <Text style={styles.buttonText}>Rivals</Text>
   </TouchableOpacity>
+
   <TouchableOpacity style={styles.buttonCell} onPress={() => router.push('/NPC/Nemeses')}>
     <Text style={styles.buttonText}>Nemesis</Text>
   </TouchableOpacity>
+
   <TouchableOpacity style={styles.buttonCell} onPress={() => router.push('./LandShips')}>
     <Text style={styles.buttonText}>Land Vehicles</Text>
   </TouchableOpacity>
+
   <TouchableOpacity style={styles.buttonCell} onPress={() => router.push('./Ships')}>
     <Text style={styles.buttonText}>Starships</Text>
   </TouchableOpacity>

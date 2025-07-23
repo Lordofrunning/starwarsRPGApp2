@@ -216,6 +216,13 @@ height: '100%',
   zIndex: -10,
 },
 
+buttonImageBackground: {
+  width: '100%',
+  height: '100%', 
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+
 // normal content starting here
   content: {
     flex: 1,
@@ -315,7 +322,7 @@ imageWrapperMinionBig: {
 buttonCell: {
   width: '50%',
   height: '33.33%',
-  padding: 8,
+  padding: 2,
   backgroundColor: '#E0E0E0', // neutral light gray
   borderWidth: 1,
   borderColor: '#B0B0B0',
