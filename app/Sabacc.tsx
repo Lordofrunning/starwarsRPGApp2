@@ -12,6 +12,7 @@ import {
   View,
 } from "react-native";
 import { styles as sharedStyles } from './index.styles';
+import { useTheme } from './ThemeContext';
 
 const sabaccDeck = [
   // Circle cards
@@ -82,7 +83,7 @@ const sabaccDeck = [
 
   { id: 'green_sylop', name: 'Green Sylop', value: 0, image: require('../assets/Cards/Sylop/sylop_green.png') },
   { id: 'red_sylop', name: 'Red Sylop', value: 0, image: require('../assets/Cards/Sylop/sylop_red.png') },
-  { id: 'card_back', name: 'Card Back', value: 0, image: require('../assets/Cards/card_back.png') },
+  
 ];
 const dieSides = [
       require('../assets/dice/Sabacc/dice_core.jpg'),
@@ -106,6 +107,7 @@ export default function GenerateCard() {
 const [selectedCardIndex, setSelectedCardIndex] = useState<number | null>(null);
 const [infoModalVisible, setInfoModalVisible] = useState(false);
   const router = useRouter();
+  const { theme, themeName } = useTheme();
 
   const [hand, setHand] = useState<Card[]>([]);
   const [folded, setFolded] = useState(false);
@@ -212,7 +214,12 @@ const [enableFanning, setEnableFanning] = useState(false);
       <Stack.Screen options={{ headerShown: false }} />
       <ScrollView contentContainerStyle={sharedStyles.container}>
         {/* Header */}
-        <View style={sharedStyles.header}>
+        <View
+                  style={[
+                    sharedStyles.header,
+                    { backgroundColor: theme.background, borderBottomColor: theme.border, zIndex: 10, elevation: 10, marginBottom: 10 },
+                  ]}
+                >
           <TouchableOpacity
                 onPress={() => {
                     resetDeck();      
@@ -220,7 +227,7 @@ const [enableFanning, setEnableFanning] = useState(false);
                 }}
                 style={sharedStyles.sideButton}
                 >
-                <Text style={sharedStyles.menuArrow}>←</Text>
+                <Text style={[sharedStyles.menuArrow, { color: theme.border }]}>←</Text>
         </TouchableOpacity>
           <View style={sharedStyles.logoContainer}>
             <Image
@@ -230,10 +237,10 @@ const [enableFanning, setEnableFanning] = useState(false);
             />
           </View>
 
-          <TouchableOpacity onPress={() => setInfoModalVisible(true)} style={localStyles.sideButton}>
+          <TouchableOpacity onPress={() => setInfoModalVisible(true)} style={[localStyles.sideButton, { borderColor: theme.border }]}>
                               <Image
                                   source={require('../assets/images/Icons/informationIcon1.png')}
-                                  style={[localStyles.profileImage, { backgroundColor: 'white' }]}
+                                  style={[localStyles.profileImage, {tintColor: theme.icon }]}
                               />
                           </TouchableOpacity>
         </View>
