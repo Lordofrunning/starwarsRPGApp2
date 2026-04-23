@@ -1,8 +1,10 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Audio } from 'expo-av';
 import { Stack, useRouter } from 'expo-router';
-import React, { useEffect, useState } from 'react';
-import { Image, ImageBackground, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Animated, Image, ImageBackground, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { styles } from './index.styles';
+import { useTheme } from './ThemeContext';
 
 const soundData = [
   { label: 'Star Wars', image: null, file: require('../assets/sounds/StarWars.mp3') },
@@ -46,10 +48,187 @@ const soundData = [
   { label: 'Lava Chicken', image: require("../assets/images/SoundImages/LavaChicken.jpg"), file: require('../assets/sounds/LavaChicken.mp3') },
 ];
 
+const settingsStyles = StyleSheet.create({
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    width: '100%',
+    height: '100%',
+    padding: 1,
+  },
+  drawer: {
+    position: 'absolute',
+    top: 50,
+    right: 0,
+    width: '90%',
+    height: '95%',
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 8,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 2 },
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  closeText: {
+    fontSize: 20,
+    color: 'blue',
+  },
+  optionRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginVertical: 15,
+    paddingHorizontal: 10,
+  },
+  optionText: {
+    fontSize: 16,
+    fontWeight: '500',
+  },
+  optionButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    borderWidth: 2,
+    alignItems: 'center',
+  },
+  optionButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
+});
+
+type SettingsDrawerProps = {
+  visible: boolean;
+  onClose: () => void;
+  columns: number;
+  onColumnsChange: (columns: number) => void;
+};
+
+const SettingsDrawer: React.FC<SettingsDrawerProps> = ({ visible, onClose, columns, onColumnsChange }) => {
+  const { theme } = useTheme();
+  const translateX = useRef(new Animated.Value(300)).current;
+
+  useEffect(() => {
+    if (visible) {
+      Animated.timing(translateX, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    } else {
+      Animated.timing(translateX, {
+        toValue: 300,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [visible]);
+
+  return (
+    <Modal
+      visible={visible}
+      animationType="none"
+      transparent={true}
+      onRequestClose={onClose}
+    >
+      <View style={settingsStyles.overlay}>
+        <Animated.View style={[settingsStyles.drawer, { transform: [{ translateX }] }]}>
+          <View style={settingsStyles.header}>
+            <Text style={settingsStyles.title}>Sound Board Layout</Text>
+            <TouchableOpacity onPress={onClose}>
+              <Text style={settingsStyles.closeText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={settingsStyles.optionRow}>
+            <Text style={settingsStyles.optionText}>Columns: 3</Text>
+            <TouchableOpacity
+              style={[
+                settingsStyles.optionButton,
+                {
+                  borderColor: columns === 3 ? theme.border : '#ccc',
+                  backgroundColor: columns === 3 ? 'rgba(0,0,0,0.1)' : '#fff',
+                },
+              ]}
+              onPress={() => onColumnsChange(3)}
+            >
+              <Text style={[settingsStyles.optionButtonText, { color: columns === 3 ? theme.border : '#999' }]}>Set 3 Columns</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={settingsStyles.optionRow}>
+            <Text style={settingsStyles.optionText}>Columns: 4</Text>
+            <TouchableOpacity
+              style={[
+                settingsStyles.optionButton,
+                {
+                  borderColor: columns === 4 ? theme.border : '#ccc',
+                  backgroundColor: columns === 4 ? 'rgba(0,0,0,0.1)' : '#fff',
+                },
+              ]}
+              onPress={() => onColumnsChange(4)}
+            >
+              <Text style={[settingsStyles.optionButtonText, { color: columns === 4 ? theme.border : '#999' }]}>Set 4 Columns</Text>
+            </TouchableOpacity>
+          </View>
+        </Animated.View>
+      </View>
+    </Modal>
+  );
+};
+
 export default function SoundboardPage() {
   const [sound, setSound] = useState<Audio.Sound | null>(null);
   const [playingIndex, setPlayingIndex] = useState<number | null>(null);
+  const [columns, setColumns] = useState(2);
+  const [drawerVisible, setDrawerVisible] = useState(false);
   const router = useRouter();
+  const { theme } = useTheme();
+
+  // Load columns setting on mount
+  useEffect(() => {
+    const loadSettings = async () => {
+      try {
+        const saved = await AsyncStorage.getItem('soundBoardColumns');
+        if (saved) {
+          setColumns(parseInt(saved, 10));
+        }
+      } catch (error) {
+        console.error('Error loading settings:', error);
+      }
+    };
+    loadSettings();
+  }, []);
+
+  // Handle columns change and save to storage
+  const handleColumnsChange = async (newColumns: number) => {
+    setColumns(newColumns);
+    try {
+      await AsyncStorage.setItem('soundBoardColumns', newColumns.toString());
+    } catch (error) {
+      console.error('Error saving settings:', error);
+    }
+    setDrawerVisible(false);
+  };
+
+  // Calculate grid button width based on columns
+  const getGridButtonWidth = () => {
+    if (columns === 3) return '31%';
+    if (columns === 4) return '22%';
+    return '47%'; // default 2 columns
+  };
 
   // Cleanup on unmount
   useEffect(() => {
@@ -94,9 +273,9 @@ export default function SoundboardPage() {
       <Stack.Screen options={{ headerShown: false }} />
 
       {/* Header */}
-      <View style={styles.headerTitleCenter}>
+      <View style={[styles.headerTitleCenter, { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: theme.background, paddingVertical: 12, marginBottom: 10 }]}>
         <TouchableOpacity onPress={() => router.back()} style={styles.sideButton}>
-          <Text style={styles.menuArrow}>←</Text>
+          <Text style={[styles.menuArrow, { color: theme.border }]}>←</Text>
         </TouchableOpacity>
 
         <View style={styles.logoContainer}>
@@ -106,12 +285,18 @@ export default function SoundboardPage() {
             resizeMode="contain"
           />
         </View>
+
+        <TouchableOpacity onPress={() => setDrawerVisible(true)} style={[styles.sideButton2, { borderColor: theme.border, justifyContent: 'center', alignItems: 'center' }]}>
+          <Image source={require('../assets/images/TransparentWhiteSettingsIcon.png')} style={[styles.profileImageNC, { tintColor: theme.border }]} />
+        </TouchableOpacity>
       </View>
+
+      <SettingsDrawer visible={drawerVisible} onClose={() => setDrawerVisible(false)} columns={columns} onColumnsChange={handleColumnsChange} />
 
       <ScrollView contentContainerStyle={[{ alignItems: 'center', maxHeight: 3500 }]}>
         <Text style={styles.title}>Sound Board</Text>
         {/* Top Big Button */}
-        <TouchableOpacity onPress={() => playSound(0)} style={styles.bigButton}>
+        <TouchableOpacity onPress={() => playSound(0)} style={[styles.bigButton, { marginTop: -20 }]}>
           <ImageBackground
             source={require('../assets/images/starwars_opening_crawl.png')}
             style={styles.imageBackground}
@@ -128,7 +313,7 @@ export default function SoundboardPage() {
 <View style={styles.gridSoundsPage}>
   {soundData.slice(1).map((item, i) => (
     
-    <TouchableOpacity key={i + 1} onPress={() => playSound(i + 1)} style={styles.gridButton}>
+    <TouchableOpacity key={i + 1} onPress={() => playSound(i + 1)} style={[styles.gridButton, { width: getGridButtonWidth() }]}>
       <ImageBackground
   source={item.image || require('../assets/images/starwars_opening_crawl.png')}
   style={styles.imageBackground}

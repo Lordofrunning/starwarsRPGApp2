@@ -1,14 +1,15 @@
 import { Stack, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-    Alert,
-    Dimensions,
-    Image,
-    Modal,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
+  Alert,
+  Dimensions,
+  Image,
+  Modal,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import ImageZoom from 'react-native-image-pan-zoom';
 import { useTheme } from './ThemeContext';
@@ -270,13 +271,14 @@ const { theme } = useTheme();
     animationType="fade"
     onRequestClose={() => setSelectedPlanet(null)}
   >
-    <View
+    <Pressable
       style={{
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'rgba(0,0,0,0.7)',
       }}
+      onPress={() => setSelectedPlanet(null)}
     >
       <View
         style={{
@@ -297,7 +299,7 @@ const { theme } = useTheme();
           <Text style={{ color: theme.border, fontSize: 16 }}>Close</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </Pressable>
   </Modal>
   
 </View>
