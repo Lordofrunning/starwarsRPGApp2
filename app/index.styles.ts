@@ -8,7 +8,8 @@ export const styles = StyleSheet.create({
 emptyMessage: {
   textAlign: 'center',
   fontStyle: 'italic',
-  color: '#666',
+  color: '#FFFFFF',
+  fontSize: 18,
   paddingVertical: 10,
 },
 fixedToggle: {

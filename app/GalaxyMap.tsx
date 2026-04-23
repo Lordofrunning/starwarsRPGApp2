@@ -154,7 +154,7 @@ const GalaxyMap = () => {
   const router = useRouter();
   const [menuVisible, setMenuVisible] = useState(false);
 const { theme } = useTheme();
-  const [devMode, setDevMode] = useState(true);
+  const [devMode, setDevMode] = useState(false);
 
   const [selectedPlanet, setSelectedPlanet] = useState<{name: string;x: number;y: number; info: string; imperialPrecence: number; rim: string; extra: string;
 } | null>(null);

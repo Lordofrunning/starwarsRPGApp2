@@ -180,13 +180,9 @@ const impStyles = StyleSheet.create({
     'rgba(164,124,72,0.4)',   // gritty dark bronze
   ],
  republic: [
-    'rgba(201, 201, 201, 0.77)',   // top gray → now bottom
-  'rgba(243, 243, 243, 0.94)',   // light gray
-  'rgb(255, 255, 255)',   // off-white
-  'rgba(255, 255, 255, 0.96)',   // pure white
-  'rgba(255, 255, 255, 0.8)',   // light red
-  'rgba(229, 115, 115, 1)',     // firebrick red
-  'rgba(155, 15, 15, .8)'  
+    'rgba(148, 148, 148, .80)',    // grey/white with opacity
+    'rgb(255, 255, 255)',          // pure white
+    'rgba(194, 0, 0, 0.75)'        // red with opacity
   ],
   separatist: [
   'rgba(159, 163, 167, 0.53)',  // Muted dark blue
