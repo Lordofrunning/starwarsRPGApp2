@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Audio } from 'expo-av';
 import { Stack, useRouter } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
-import { Animated, Image, ImageBackground, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Animated, Image, ImageBackground, Modal, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { styles } from './index.styles';
 import { useTheme } from './ThemeContext';
 
@@ -58,11 +58,11 @@ const settingsStyles = StyleSheet.create({
   },
   drawer: {
     position: 'absolute',
-    top: 50,
+    top: 0,
     right: 0,
-    width: '90%',
-    height: '95%',
-    backgroundColor: '#fff',
+    width: '45%',
+    height: '100%',
+    backgroundColor: 'white',
     padding: 20,
     borderRadius: 8,
     elevation: 2,
@@ -73,24 +73,26 @@ const settingsStyles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     marginBottom: 20,
+    gap: 10,
   },
   title: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: 'bold',
   },
   closeText: {
-    fontSize: 20,
-    color: 'blue',
+    fontSize: 28,
+    color: 'black',
   },
   optionRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     marginVertical: 15,
     paddingHorizontal: 10,
+    gap: 10,
   },
   optionText: {
     fontSize: 16,
@@ -104,7 +106,7 @@ const settingsStyles = StyleSheet.create({
     alignItems: 'center',
   },
   optionButtonText: {
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: '600',
   },
 });
@@ -143,48 +145,64 @@ const SettingsDrawer: React.FC<SettingsDrawerProps> = ({ visible, onClose, colum
       transparent={true}
       onRequestClose={onClose}
     >
-      <View style={settingsStyles.overlay}>
-        <Animated.View style={[settingsStyles.drawer, { transform: [{ translateX }] }]}>
+      <Pressable style={settingsStyles.overlay} onPress={onClose}>
+        <TouchableWithoutFeedback>
+          <Animated.View 
+            style={[settingsStyles.drawer, { transform: [{ translateX }], backgroundColor: theme.background }]}
+          >
           <View style={settingsStyles.header}>
-            <Text style={settingsStyles.title}>Sound Board Layout</Text>
             <TouchableOpacity onPress={onClose}>
-              <Text style={settingsStyles.closeText}>Close</Text>
+              <Text style={[settingsStyles.closeText, { color: theme.border }]}>✕</Text>
             </TouchableOpacity>
           </View>
 
           <View style={settingsStyles.optionRow}>
-            <Text style={settingsStyles.optionText}>Columns: 3</Text>
+            <TouchableOpacity
+              style={[
+                settingsStyles.optionButton,
+                {
+                  borderColor: columns === 2 ? theme.border : '#ccc',
+                  backgroundColor: columns === 2 ? theme.onPressed : 'rgba(0,0,0,0.05)',
+                },
+              ]}
+              onPress={() => onColumnsChange(2)}
+            >
+              <Text style={[settingsStyles.optionButtonText, { color: columns === 2 ? theme.border : '#999' }]}>2 Columns</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={settingsStyles.optionRow}>
             <TouchableOpacity
               style={[
                 settingsStyles.optionButton,
                 {
                   borderColor: columns === 3 ? theme.border : '#ccc',
-                  backgroundColor: columns === 3 ? 'rgba(0,0,0,0.1)' : '#fff',
+                  backgroundColor: columns === 3 ? theme.onPressed : 'rgba(0,0,0,0.05)',
                 },
               ]}
               onPress={() => onColumnsChange(3)}
             >
-              <Text style={[settingsStyles.optionButtonText, { color: columns === 3 ? theme.border : '#999' }]}>Set 3 Columns</Text>
+              <Text style={[settingsStyles.optionButtonText, { color: columns === 3 ? theme.border : '#999' }]}>3 Columns</Text>
             </TouchableOpacity>
           </View>
 
           <View style={settingsStyles.optionRow}>
-            <Text style={settingsStyles.optionText}>Columns: 4</Text>
             <TouchableOpacity
               style={[
                 settingsStyles.optionButton,
                 {
                   borderColor: columns === 4 ? theme.border : '#ccc',
-                  backgroundColor: columns === 4 ? 'rgba(0,0,0,0.1)' : '#fff',
+                  backgroundColor: columns === 4 ? theme.onPressed : 'rgba(0,0,0,0.05)',
                 },
               ]}
               onPress={() => onColumnsChange(4)}
             >
-              <Text style={[settingsStyles.optionButtonText, { color: columns === 4 ? theme.border : '#999' }]}>Set 4 Columns</Text>
+              <Text style={[settingsStyles.optionButtonText, { color: columns === 4 ? theme.border : '#999' }]}>4 Columns</Text>
             </TouchableOpacity>
           </View>
-        </Animated.View>
-      </View>
+          </Animated.View>
+        </TouchableWithoutFeedback>
+      </Pressable>
     </Modal>
   );
 };
