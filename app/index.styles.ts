@@ -639,10 +639,11 @@ popupcontainerInfoPage: {
   },
   imageBackground: {
   flex: 1,
-  justifyContent: 'center',
+  justifyContent: 'flex-end',
   alignItems: 'center',
   width: '100%',
   height: '100%',
+  paddingBottom: 2,
 },
 divider: {
   height: 4,

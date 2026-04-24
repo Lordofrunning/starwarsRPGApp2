@@ -318,7 +318,7 @@ export default function SoundboardPage() {
           <ImageBackground
             source={require('../assets/images/starwars_opening_crawl.png')}
             style={styles.imageBackground}
-            imageStyle={{ borderRadius: 10 }}
+            imageStyle={{ borderRadius: 10, resizeMode: 'cover' }}
           >
             {soundData[0].image ? (
               <Image source={soundData[0].image} style={[{ width: '100%' }]} />
@@ -331,11 +331,11 @@ export default function SoundboardPage() {
 <View style={styles.gridSoundsPage}>
   {soundData.slice(1).map((item, i) => (
     
-    <TouchableOpacity key={i + 1} onPress={() => playSound(i + 1)} style={[styles.gridButton, { width: getGridButtonWidth() }]}>
+    <TouchableOpacity key={i + 1} onPress={() => playSound(i + 1)} style={[styles.gridButton, { width: getGridButtonWidth(), backgroundColor: theme.background }]}>
       <ImageBackground
   source={item.image || require('../assets/images/starwars_opening_crawl.png')}
   style={styles.imageBackground}
-  imageStyle={{ borderRadius: 10 }}
+  imageStyle={{ borderRadius: 10, resizeMode: 'cover' }}
 >
   <Text style={styles.buttonText}>{item.label}</Text>
 </ImageBackground>
