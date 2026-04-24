@@ -304,7 +304,7 @@ export default function SoundboardPage() {
           />
         </View>
 
-        <TouchableOpacity onPress={() => setDrawerVisible(true)} style={[styles.sideButton2, { borderColor: theme.border, justifyContent: 'center', alignItems: 'center' }]}>
+        <TouchableOpacity onPress={() => setDrawerVisible(true)} style={[styles.sideButton2, { borderColor: theme.border, justifyContent: 'center', alignItems: 'center', marginTop: 25 }]}>
           <Image source={require('../assets/images/TransparentWhiteSettingsIcon.png')} style={[styles.profileImageNC, { tintColor: theme.border }]} />
         </TouchableOpacity>
       </View>
