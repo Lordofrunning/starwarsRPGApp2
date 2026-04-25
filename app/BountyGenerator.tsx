@@ -27,6 +27,27 @@ export default function BountyGeneratorPage() {
     'Body Guard': false,
     'Weapon for Hire': false,
   });
+  const [archetypeModalVisible, setArchetypeModalVisible] = useState(false);
+  const [selectedArchetypes, setSelectedArchetypes] = useState<{ [key: string]: boolean }>({
+    Spy: true,
+    Assassin: true,
+    'Crime Boss': true,
+    'Force Sensitive': true,
+    'Ex Imperial': true,
+    Smuggler: true,
+    Scientist: true,
+    Cloner: true,
+    Hacker: true,
+    Politician: true,
+  });
+  const [tierModalVisible, setTierModalVisible] = useState(false);
+  const [selectedTiers, setSelectedTiers] = useState<{ [key: string]: boolean }>({
+    'Tier 1': false,
+    'Tier 2': false,
+    'Tier 3': false,
+    'Tier 4': false,
+    'Tier 5': false,
+  });
   const [settingsModalVisible, setSettingsModalVisible] = useState(false);
   const [debugEnabled, setDebugEnabled] = useState(false);
 
@@ -57,8 +78,8 @@ export default function BountyGeneratorPage() {
       <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', paddingVertical: 0, paddingBottom: 15, backgroundColor: theme.background }}>
         <TouchableOpacity onPress={() => setEraModalVisible(true)} style={{ width: '10%', aspectRatio: 1, backgroundColor: theme.border, borderRadius: 8 }} />
         <TouchableOpacity onPress={() => setAffiliationModalVisible(true)} style={{ width: '10%', aspectRatio: 1, backgroundColor: theme.border, borderRadius: 8 }} />
-        <TouchableOpacity style={{ width: '10%', aspectRatio: 1, backgroundColor: theme.border, borderRadius: 8 }} />
-        <TouchableOpacity style={{ width: '10%', aspectRatio: 1, backgroundColor: theme.border, borderRadius: 8 }} />
+        <TouchableOpacity onPress={() => setArchetypeModalVisible(true)} style={{ width: '10%', aspectRatio: 1, backgroundColor: theme.border, borderRadius: 8 }} />
+        <TouchableOpacity onPress={() => setTierModalVisible(true)} style={{ width: '10%', aspectRatio: 1, backgroundColor: theme.border, borderRadius: 8 }} />
       </View>
 
       {/* Era Selection Modal */}
@@ -439,6 +460,355 @@ export default function BountyGeneratorPage() {
         </Pressable>
       </Modal>
 
+      {/* Archetype Modal */}
+      <Modal
+        visible={archetypeModalVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setArchetypeModalVisible(false)}
+      >
+        <Pressable
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0,0,0,0.7)',
+          }}
+          onPress={() => setArchetypeModalVisible(false)}
+        >
+          <View
+            style={{
+              backgroundColor: theme.background,
+              borderRadius: 12,
+              padding: 24,
+              borderColor: theme.darkerborder,
+              borderWidth: 2,
+              width: '80%',
+              maxHeight: '80%',
+            }}
+          >
+            <Text style={{ color: theme.text, fontSize: 18, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' }}>Archetype</Text>
+
+            <ScrollView style={{ marginBottom: 16 }}>
+              <View style={{ flexDirection: 'column', gap: 12 }}>
+                {/* Row 1 */}
+                <View style={{ flexDirection: 'row', gap: 12, justifyContent: 'space-between' }}>
+                  {['Spy', 'Assassin'].map((archetype) => (
+                    <TouchableOpacity
+                      key={archetype}
+                      onPress={() => setSelectedArchetypes({ ...selectedArchetypes, [archetype]: !selectedArchetypes[archetype] })}
+                      style={{
+                        flex: 1,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        paddingVertical: 12,
+                        paddingHorizontal: 12,
+                        backgroundColor: selectedArchetypes[archetype] ? theme.onPressed : 'rgba(0,0,0,0.1)',
+                        borderRadius: 8,
+                        borderColor: theme.border,
+                        borderWidth: selectedArchetypes[archetype] ? 2 : 1,
+                      }}
+                    >
+                      <View style={{
+                        width: 20,
+                        height: 20,
+                        borderRadius: 4,
+                        borderWidth: 2,
+                        borderColor: theme.border,
+                        marginRight: 12,
+                        backgroundColor: selectedArchetypes[archetype] ? theme.border : 'transparent',
+                      }} />
+                      <Text style={{ color: theme.text, fontSize: 14 }}>{archetype}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+
+                {/* Row 2 */}
+                <View style={{ flexDirection: 'row', gap: 12, justifyContent: 'space-between' }}>
+                  {['Crime Boss', 'Force Sensitive'].map((archetype) => (
+                    <TouchableOpacity
+                      key={archetype}
+                      onPress={() => setSelectedArchetypes({ ...selectedArchetypes, [archetype]: !selectedArchetypes[archetype] })}
+                      style={{
+                        flex: 1,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        paddingVertical: 12,
+                        paddingHorizontal: 12,
+                        backgroundColor: selectedArchetypes[archetype] ? theme.onPressed : 'rgba(0,0,0,0.1)',
+                        borderRadius: 8,
+                        borderColor: theme.border,
+                        borderWidth: selectedArchetypes[archetype] ? 2 : 1,
+                      }}
+                    >
+                      <View style={{
+                        width: 20,
+                        height: 20,
+                        borderRadius: 4,
+                        borderWidth: 2,
+                        borderColor: theme.border,
+                        marginRight: 12,
+                        backgroundColor: selectedArchetypes[archetype] ? theme.border : 'transparent',
+                      }} />
+                      <Text style={{ color: theme.text, fontSize: 14 }}>{archetype}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+
+                {/* Row 3 */}
+                <View style={{ flexDirection: 'row', gap: 12, justifyContent: 'space-between' }}>
+                  {['Ex Imperial', 'Smuggler'].map((archetype) => (
+                    <TouchableOpacity
+                      key={archetype}
+                      onPress={() => setSelectedArchetypes({ ...selectedArchetypes, [archetype]: !selectedArchetypes[archetype] })}
+                      style={{
+                        flex: 1,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        paddingVertical: 12,
+                        paddingHorizontal: 12,
+                        backgroundColor: selectedArchetypes[archetype] ? theme.onPressed : 'rgba(0,0,0,0.1)',
+                        borderRadius: 8,
+                        borderColor: theme.border,
+                        borderWidth: selectedArchetypes[archetype] ? 2 : 1,
+                      }}
+                    >
+                      <View style={{
+                        width: 20,
+                        height: 20,
+                        borderRadius: 4,
+                        borderWidth: 2,
+                        borderColor: theme.border,
+                        marginRight: 12,
+                        backgroundColor: selectedArchetypes[archetype] ? theme.border : 'transparent',
+                      }} />
+                      <Text style={{ color: theme.text, fontSize: 14 }}>{archetype}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+
+                {/* Row 4 */}
+                <View style={{ flexDirection: 'row', gap: 12, justifyContent: 'space-between' }}>
+                  {['Scientist', 'Cloner'].map((archetype) => (
+                    <TouchableOpacity
+                      key={archetype}
+                      onPress={() => setSelectedArchetypes({ ...selectedArchetypes, [archetype]: !selectedArchetypes[archetype] })}
+                      style={{
+                        flex: 1,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        paddingVertical: 12,
+                        paddingHorizontal: 12,
+                        backgroundColor: selectedArchetypes[archetype] ? theme.onPressed : 'rgba(0,0,0,0.1)',
+                        borderRadius: 8,
+                        borderColor: theme.border,
+                        borderWidth: selectedArchetypes[archetype] ? 2 : 1,
+                      }}
+                    >
+                      <View style={{
+                        width: 20,
+                        height: 20,
+                        borderRadius: 4,
+                        borderWidth: 2,
+                        borderColor: theme.border,
+                        marginRight: 12,
+                        backgroundColor: selectedArchetypes[archetype] ? theme.border : 'transparent',
+                      }} />
+                      <Text style={{ color: theme.text, fontSize: 14 }}>{archetype}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+
+                {/* Row 5 */}
+                <View style={{ flexDirection: 'row', gap: 12, justifyContent: 'space-between' }}>
+                  {['Hacker', 'Politician'].map((archetype) => (
+                    <TouchableOpacity
+                      key={archetype}
+                      onPress={() => setSelectedArchetypes({ ...selectedArchetypes, [archetype]: !selectedArchetypes[archetype] })}
+                      style={{
+                        flex: 1,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        paddingVertical: 12,
+                        paddingHorizontal: 12,
+                        backgroundColor: selectedArchetypes[archetype] ? theme.onPressed : 'rgba(0,0,0,0.1)',
+                        borderRadius: 8,
+                        borderColor: theme.border,
+                        borderWidth: selectedArchetypes[archetype] ? 2 : 1,
+                      }}
+                    >
+                      <View style={{
+                        width: 20,
+                        height: 20,
+                        borderRadius: 4,
+                        borderWidth: 2,
+                        borderColor: theme.border,
+                        marginRight: 12,
+                        backgroundColor: selectedArchetypes[archetype] ? theme.border : 'transparent',
+                      }} />
+                      <Text style={{ color: theme.text, fontSize: 14 }}>{archetype}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              </View>
+            </ScrollView>
+
+            <TouchableOpacity
+              onPress={() => setArchetypeModalVisible(false)}
+              style={{
+                paddingVertical: 10,
+                paddingHorizontal: 20,
+                backgroundColor: theme.border,
+                borderRadius: 8,
+                alignItems: 'center',
+              }}
+            >
+              <Text style={{ color: theme.background, fontWeight: 'bold' }}>Done</Text>
+            </TouchableOpacity>
+          </View>
+        </Pressable>
+      </Modal>
+
+      {/* Tier Modal */}
+      <Modal
+        visible={tierModalVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setTierModalVisible(false)}
+      >
+        <Pressable
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0,0,0,0.7)',
+          }}
+          onPress={() => setTierModalVisible(false)}
+        >
+          <View
+            style={{
+              backgroundColor: theme.background,
+              borderRadius: 12,
+              padding: 24,
+              borderColor: theme.darkerborder,
+              borderWidth: 2,
+              width: '80%',
+            }}
+          >
+            <Text style={{ color: theme.text, fontSize: 18, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' }}>Tier</Text>
+
+            <View style={{ flexDirection: 'column', gap: 12, marginBottom: 20 }}>
+              {/* Row 1 */}
+              <View style={{ flexDirection: 'row', gap: 12, justifyContent: 'space-between' }}>
+                {['Tier 1', 'Tier 2'].map((tier) => (
+                  <TouchableOpacity
+                    key={tier}
+                    onPress={() => setSelectedTiers({ ...selectedTiers, [tier]: !selectedTiers[tier] })}
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      paddingVertical: 12,
+                      paddingHorizontal: 12,
+                      backgroundColor: selectedTiers[tier] ? theme.onPressed : 'rgba(0,0,0,0.1)',
+                      borderRadius: 8,
+                      borderColor: theme.border,
+                      borderWidth: selectedTiers[tier] ? 2 : 1,
+                    }}
+                  >
+                    <View style={{
+                      width: 20,
+                      height: 20,
+                      borderRadius: 4,
+                      borderWidth: 2,
+                      borderColor: theme.border,
+                      marginRight: 12,
+                      backgroundColor: selectedTiers[tier] ? theme.border : 'transparent',
+                    }} />
+                    <Text style={{ color: theme.text, fontSize: 14 }}>{tier}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+
+              {/* Row 2 */}
+              <View style={{ flexDirection: 'row', gap: 12, justifyContent: 'space-between' }}>
+                {['Tier 3', 'Tier 4'].map((tier) => (
+                  <TouchableOpacity
+                    key={tier}
+                    onPress={() => setSelectedTiers({ ...selectedTiers, [tier]: !selectedTiers[tier] })}
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      paddingVertical: 12,
+                      paddingHorizontal: 12,
+                      backgroundColor: selectedTiers[tier] ? theme.onPressed : 'rgba(0,0,0,0.1)',
+                      borderRadius: 8,
+                      borderColor: theme.border,
+                      borderWidth: selectedTiers[tier] ? 2 : 1,
+                    }}
+                  >
+                    <View style={{
+                      width: 20,
+                      height: 20,
+                      borderRadius: 4,
+                      borderWidth: 2,
+                      borderColor: theme.border,
+                      marginRight: 12,
+                      backgroundColor: selectedTiers[tier] ? theme.border : 'transparent',
+                    }} />
+                    <Text style={{ color: theme.text, fontSize: 14 }}>{tier}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+
+              {/* Row 3 */}
+              <View style={{ flexDirection: 'row', gap: 12, justifyContent: 'space-between' }}>
+                <TouchableOpacity
+                  onPress={() => setSelectedTiers({ ...selectedTiers, 'Tier 5': !selectedTiers['Tier 5'] })}
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    paddingVertical: 12,
+                    paddingHorizontal: 12,
+                    backgroundColor: selectedTiers['Tier 5'] ? theme.onPressed : 'rgba(0,0,0,0.1)',
+                    borderRadius: 8,
+                    borderColor: theme.border,
+                    borderWidth: selectedTiers['Tier 5'] ? 2 : 1,
+                  }}
+                >
+                  <View style={{
+                    width: 20,
+                    height: 20,
+                    borderRadius: 4,
+                    borderWidth: 2,
+                    borderColor: theme.border,
+                    marginRight: 12,
+                    backgroundColor: selectedTiers['Tier 5'] ? theme.border : 'transparent',
+                  }} />
+                  <Text style={{ color: theme.text, fontSize: 14 }}>Tier 5</Text>
+                </TouchableOpacity>
+                <View style={{ flex: 1 }} />
+              </View>
+            </View>
+
+            <TouchableOpacity
+              onPress={() => setTierModalVisible(false)}
+              style={{
+                paddingVertical: 10,
+                paddingHorizontal: 20,
+                backgroundColor: theme.border,
+                borderRadius: 8,
+                alignItems: 'center',
+              }}
+            >
+              <Text style={{ color: theme.background, fontWeight: 'bold' }}>Done</Text>
+            </TouchableOpacity>
+          </View>
+        </Pressable>
+      </Modal>
+
       {/* Settings Modal */}
       <Modal
         visible={settingsModalVisible}
@@ -501,7 +871,9 @@ export default function BountyGeneratorPage() {
                 <Text style={{ color: theme.text, fontSize: 11, marginBottom: 3 }}>Era: {selectedEra || 'None'}</Text>
                 <Text style={{ color: theme.text, fontSize: 11, marginBottom: 3 }}>Planet: {selectedPlanet?.name || 'None'}</Text>
                 <Text style={{ color: theme.text, fontSize: 11, marginBottom: 3 }}>Affiliations: {Object.entries(selectedAffiliations).filter(([_, isSelected]) => isSelected).map(([name]) => name).join(', ') || 'None'}</Text>
-                <Text style={{ color: theme.text, fontSize: 11 }}>Job Types: {Object.entries(selectedJobTypes).filter(([_, isSelected]) => isSelected).map(([name]) => name).join(', ') || 'None'}</Text>
+                <Text style={{ color: theme.text, fontSize: 11, marginBottom: 3 }}>Job Types: {Object.entries(selectedJobTypes).filter(([_, isSelected]) => isSelected).map(([name]) => name).join(', ') || 'None'}</Text>
+                <Text style={{ color: theme.text, fontSize: 11, marginBottom: 3 }}>Archetypes: {Object.entries(selectedArchetypes).filter(([_, isSelected]) => isSelected).map(([name]) => name).join(', ') || 'None'}</Text>
+                <Text style={{ color: theme.text, fontSize: 11 }}>Tiers: {Object.entries(selectedTiers).filter(([_, isSelected]) => isSelected).map(([name]) => name).join(', ') || 'None'}</Text>
               </View>
             )}
 
@@ -533,7 +905,9 @@ export default function BountyGeneratorPage() {
           <Text style={{ color: '#FFFFFF', fontSize: 12, marginBottom: 4 }}>Era: {selectedEra || 'None'}</Text>
           <Text style={{ color: '#FFFFFF', fontSize: 12, marginBottom: 4 }}>Planet: {selectedPlanet?.name || 'None'}</Text>
           <Text style={{ color: '#FFFFFF', fontSize: 12, marginBottom: 4 }}>Affiliations: {Object.entries(selectedAffiliations).filter(([_, isSelected]) => isSelected).map(([name]) => name).join(', ') || 'None'}</Text>
-          <Text style={{ color: '#FFFFFF', fontSize: 12 }}>Job Types: {Object.entries(selectedJobTypes).filter(([_, isSelected]) => isSelected).map(([name]) => name).join(', ') || 'None'}</Text>
+          <Text style={{ color: '#FFFFFF', fontSize: 12, marginBottom: 4 }}>Job Types: {Object.entries(selectedJobTypes).filter(([_, isSelected]) => isSelected).map(([name]) => name).join(', ') || 'None'}</Text>
+          <Text style={{ color: '#FFFFFF', fontSize: 12, marginBottom: 4 }}>Archetypes: {Object.entries(selectedArchetypes).filter(([_, isSelected]) => isSelected).map(([name]) => name).join(', ') || 'None'}</Text>
+          <Text style={{ color: '#FFFFFF', fontSize: 12 }}>Tiers: {Object.entries(selectedTiers).filter(([_, isSelected]) => isSelected).map(([name]) => name).join(', ') || 'None'}</Text>
         </View>
       )}
     </View>
