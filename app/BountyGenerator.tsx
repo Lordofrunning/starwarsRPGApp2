@@ -48,6 +48,7 @@ export default function BountyGeneratorPage() {
     'Tier 4': false,
     'Tier 5': false,
   });
+  const [targetRevealed, setTargetRevealed] = useState(false);
   const [settingsModalVisible, setSettingsModalVisible] = useState(false);
   const [debugEnabled, setDebugEnabled] = useState(false);
 
@@ -894,10 +895,56 @@ export default function BountyGeneratorPage() {
         </Pressable>
       </Modal>
 
-      <ScrollView contentContainerStyle={[{ alignItems: 'center', paddingVertical: 20 }]}>
-        <Text style={styles.title}>Bounty Generator</Text>
-        {/* Content will go here */}
+      <ScrollView contentContainerStyle={[{ flex: 1, alignItems: 'center', paddingVertical: 20 }]}>
+        {/* Top 1/3 - Generate Target */}
+        <View style={{ width: '90%', flex: 1, flexDirection: 'row', gap: 12, marginBottom: 20 }}>
+          {/* Left Side - Generate Content */}
+          <View style={{ flex: 1, justifyContent: 'center' }}>
+            {/* Content for target generation will go here */}
+          </View>
+
+          {/* Right Side - Target Image */}
+          <View style={{ width: '35%', backgroundColor: '#000000', borderRadius: 8, borderColor: theme.border, borderWidth: 1 }}>
+            {/* Target image placeholder */}
+          </View>
+        </View>
+
+        {/* Divider */}
+        <View style={{ width: '90%', height: 6, backgroundColor: theme.darkerborder, marginBottom: 20 }} />
+
+        {/* Bottom 2/3 - Location & Target Info */}
+        <View style={{ width: '90%', flex: 2 }}>
+          {/* Location and target info will go here */}
+        </View>
       </ScrollView>
+
+      {/* Reveal Target Overlay - Below Header & Buttons */}
+      {!targetRevealed && (
+        <View style={{
+          position: 'absolute',
+          top: 170,
+          left: 0,
+          right: 0,
+          height: 225,
+          backgroundColor: '#000000',
+          justifyContent: 'center',
+          alignItems: 'center',
+          zIndex: 10,
+        }}>
+          <TouchableOpacity
+            onPress={() => setTargetRevealed(true)}
+            style={{
+              paddingVertical: 16,
+              paddingHorizontal: 32,
+              backgroundColor: theme.border,
+              borderRadius: 12,
+              alignItems: 'center',
+            }}
+          >
+            <Text style={{ color: theme.background, fontWeight: 'bold', fontSize: 18 }}>Reveal Target</Text>
+          </TouchableOpacity>
+        </View>
+      )}
 
       {/* Debug Footer */}
       {debugEnabled && (
