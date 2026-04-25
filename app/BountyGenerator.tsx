@@ -12,6 +12,8 @@ export default function BountyGeneratorPage() {
   const [selectedEra, setSelectedEra] = useState<'cloneWars' | 'empire' | 'postEmpire' | null>(null);
   const [selectedPlanet, setSelectedPlanet] = useState<typeof planetData[0] | null>(null);
   const [planetSearch, setPlanetSearch] = useState('');
+  const [settingsModalVisible, setSettingsModalVisible] = useState(false);
+  const [debugEnabled, setDebugEnabled] = useState(false);
 
   return (
     <View style={{ flex: 1, position: 'relative', backgroundColor: '#D3D3D3' }}>
@@ -31,7 +33,7 @@ export default function BountyGeneratorPage() {
           />
         </View>
 
-        <TouchableOpacity style={[styles.sideButton2, { borderColor: theme.border, justifyContent: 'center', alignItems: 'center', marginTop: 25 }]}>
+        <TouchableOpacity onPress={() => setSettingsModalVisible(true)} style={[styles.sideButton2, { borderColor: theme.border, justifyContent: 'center', alignItems: 'center', marginTop: 25 }]}>
           <Image source={require('../assets/images/TransparentWhiteSettingsIcon.png')} style={[styles.profileImageNC, { tintColor: theme.border }]} />
         </TouchableOpacity>
       </View>
@@ -211,10 +213,90 @@ export default function BountyGeneratorPage() {
         </Pressable>
       </Modal>
 
+      {/* Settings Modal */}
+      <Modal
+        visible={settingsModalVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setSettingsModalVisible(false)}
+      >
+        <Pressable
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0,0,0,0.7)',
+          }}
+          onPress={() => setSettingsModalVisible(false)}
+        >
+          <View
+            style={{
+              backgroundColor: theme.background,
+              borderRadius: 12,
+              padding: 24,
+              borderColor: theme.darkerborder,
+              borderWidth: 2,
+              width: '80%',
+            }}
+          >
+            <Text style={{ color: theme.text, fontSize: 18, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' }}>Settings</Text>
+
+            {/* Debug Toggle */}
+            <TouchableOpacity
+              onPress={() => setDebugEnabled(!debugEnabled)}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                paddingVertical: 12,
+                paddingHorizontal: 12,
+                marginVertical: 8,
+                backgroundColor: debugEnabled ? theme.onPressed : 'rgba(0,0,0,0.1)',
+                borderRadius: 8,
+                borderColor: theme.border,
+                borderWidth: debugEnabled ? 2 : 1,
+              }}
+            >
+              <View style={{
+                width: 20,
+                height: 20,
+                borderRadius: 10,
+                borderWidth: 2,
+                borderColor: theme.border,
+                marginRight: 12,
+                backgroundColor: debugEnabled ? theme.border : 'transparent',
+              }} />
+              <Text style={{ color: theme.text, fontSize: 16, flex: 1 }}>Debug Settings</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => setSettingsModalVisible(false)}
+              style={{
+                marginTop: 20,
+                paddingVertical: 10,
+                paddingHorizontal: 20,
+                backgroundColor: theme.border,
+                borderRadius: 8,
+                alignItems: 'center',
+              }}
+            >
+              <Text style={{ color: theme.background, fontWeight: 'bold' }}>Done</Text>
+            </TouchableOpacity>
+          </View>
+        </Pressable>
+      </Modal>
+
       <ScrollView contentContainerStyle={[{ alignItems: 'center', paddingVertical: 20 }]}>
         <Text style={styles.title}>Bounty Generator</Text>
         {/* Content will go here */}
       </ScrollView>
+
+      {/* Debug Footer */}
+      {debugEnabled && (
+        <View style={{ backgroundColor: theme.background, paddingVertical: 12, paddingHorizontal: 16, borderTopColor: theme.darkerborder, borderTopWidth: 1 }}>
+          <Text style={{ color: '#FFFFFF', fontSize: 12, marginBottom: 4 }}>Era: {selectedEra || 'None'}</Text>
+          <Text style={{ color: '#FFFFFF', fontSize: 12 }}>Planet: {selectedPlanet?.name || 'None'}</Text>
+        </View>
+      )}
     </View>
   );
 }
