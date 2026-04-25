@@ -12,6 +12,21 @@ export default function BountyGeneratorPage() {
   const [selectedEra, setSelectedEra] = useState<'cloneWars' | 'empire' | 'postEmpire' | null>(null);
   const [selectedPlanet, setSelectedPlanet] = useState<typeof planetData[0] | null>(null);
   const [planetSearch, setPlanetSearch] = useState('');
+  const [affiliationModalVisible, setAffiliationModalVisible] = useState(false);
+  const [selectedAffiliations, setSelectedAffiliations] = useState<{ [key: string]: boolean }>({
+    Empire: false,
+    Rebel: false,
+    'Galactic Republic': false,
+    'Bounty Guild': false,
+    'Crime Syndicate': false,
+    Separatist: false,
+  });
+  const [selectedJobTypes, setSelectedJobTypes] = useState<{ [key: string]: boolean }>({
+    Bounty: false,
+    Extraction: false,
+    'Body Guard': false,
+    'Weapon for Hire': false,
+  });
   const [settingsModalVisible, setSettingsModalVisible] = useState(false);
   const [debugEnabled, setDebugEnabled] = useState(false);
 
@@ -41,7 +56,7 @@ export default function BountyGeneratorPage() {
       {/* Button Row */}
       <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', paddingVertical: 0, paddingBottom: 15, backgroundColor: theme.background }}>
         <TouchableOpacity onPress={() => setEraModalVisible(true)} style={{ width: '10%', aspectRatio: 1, backgroundColor: theme.border, borderRadius: 8 }} />
-        <TouchableOpacity style={{ width: '10%', aspectRatio: 1, backgroundColor: theme.border, borderRadius: 8 }} />
+        <TouchableOpacity onPress={() => setAffiliationModalVisible(true)} style={{ width: '10%', aspectRatio: 1, backgroundColor: theme.border, borderRadius: 8 }} />
         <TouchableOpacity style={{ width: '10%', aspectRatio: 1, backgroundColor: theme.border, borderRadius: 8 }} />
         <TouchableOpacity style={{ width: '10%', aspectRatio: 1, backgroundColor: theme.border, borderRadius: 8 }} />
       </View>
@@ -213,6 +228,217 @@ export default function BountyGeneratorPage() {
         </Pressable>
       </Modal>
 
+      {/* Affiliation Modal */}
+      <Modal
+        visible={affiliationModalVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setAffiliationModalVisible(false)}
+      >
+        <Pressable
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0,0,0,0.7)',
+          }}
+          onPress={() => setAffiliationModalVisible(false)}
+        >
+          <View
+            style={{
+              backgroundColor: theme.background,
+              borderRadius: 12,
+              padding: 24,
+              borderColor: theme.darkerborder,
+              borderWidth: 2,
+              width: '80%',
+            }}
+          >
+            <Text style={{ color: theme.text, fontSize: 18, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' }}>Affiliation</Text>
+
+            {/* 2-Column Grid */}
+            <View style={{ flexDirection: 'column', gap: 12, marginBottom: 20 }}>
+              {/* Row 1 */}
+              <View style={{ flexDirection: 'row', gap: 12, justifyContent: 'space-between' }}>
+                {['Empire', 'Rebel'].map((affiliation) => (
+                  <TouchableOpacity
+                    key={affiliation}
+                    onPress={() => setSelectedAffiliations({ ...selectedAffiliations, [affiliation]: !selectedAffiliations[affiliation] })}
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      paddingVertical: 12,
+                      paddingHorizontal: 12,
+                      backgroundColor: selectedAffiliations[affiliation] ? theme.onPressed : 'rgba(0,0,0,0.1)',
+                      borderRadius: 8,
+                      borderColor: theme.border,
+                      borderWidth: selectedAffiliations[affiliation] ? 2 : 1,
+                    }}
+                  >
+                    <View style={{
+                      width: 20,
+                      height: 20,
+                      borderRadius: 4,
+                      borderWidth: 2,
+                      borderColor: theme.border,
+                      marginRight: 12,
+                      backgroundColor: selectedAffiliations[affiliation] ? theme.border : 'transparent',
+                    }} />
+                    <Text style={{ color: theme.text, fontSize: 14 }}>{affiliation}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+
+              {/* Row 2 */}
+              <View style={{ flexDirection: 'row', gap: 12, justifyContent: 'space-between' }}>
+                {['Galactic Republic', 'Bounty Guild'].map((affiliation) => (
+                  <TouchableOpacity
+                    key={affiliation}
+                    onPress={() => setSelectedAffiliations({ ...selectedAffiliations, [affiliation]: !selectedAffiliations[affiliation] })}
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      paddingVertical: 12,
+                      paddingHorizontal: 12,
+                      backgroundColor: selectedAffiliations[affiliation] ? theme.onPressed : 'rgba(0,0,0,0.1)',
+                      borderRadius: 8,
+                      borderColor: theme.border,
+                      borderWidth: selectedAffiliations[affiliation] ? 2 : 1,
+                    }}
+                  >
+                    <View style={{
+                      width: 20,
+                      height: 20,
+                      borderRadius: 4,
+                      borderWidth: 2,
+                      borderColor: theme.border,
+                      marginRight: 12,
+                      backgroundColor: selectedAffiliations[affiliation] ? theme.border : 'transparent',
+                    }} />
+                    <Text style={{ color: theme.text, fontSize: 14 }}>{affiliation}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+
+              {/* Row 3 */}
+              <View style={{ flexDirection: 'row', gap: 12, justifyContent: 'space-between' }}>
+                {['Crime Syndicate', 'Separatist'].map((affiliation) => (
+                  <TouchableOpacity
+                    key={affiliation}
+                    onPress={() => setSelectedAffiliations({ ...selectedAffiliations, [affiliation]: !selectedAffiliations[affiliation] })}
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      paddingVertical: 12,
+                      paddingHorizontal: 12,
+                      backgroundColor: selectedAffiliations[affiliation] ? theme.onPressed : 'rgba(0,0,0,0.1)',
+                      borderRadius: 8,
+                      borderColor: theme.border,
+                      borderWidth: selectedAffiliations[affiliation] ? 2 : 1,
+                    }}
+                  >
+                    <View style={{
+                      width: 20,
+                      height: 20,
+                      borderRadius: 4,
+                      borderWidth: 2,
+                      borderColor: theme.border,
+                      marginRight: 12,
+                      backgroundColor: selectedAffiliations[affiliation] ? theme.border : 'transparent',
+                    }} />
+                    <Text style={{ color: theme.text, fontSize: 14 }}>{affiliation}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+
+            {/* Job Type Section */}
+            <Text style={{ color: theme.text, fontSize: 16, fontWeight: 'bold', marginBottom: 12 }}>Job Type</Text>
+            <View style={{ flexDirection: 'column', gap: 12, marginBottom: 20 }}>
+              {/* Row 1 */}
+              <View style={{ flexDirection: 'row', gap: 12, justifyContent: 'space-between' }}>
+                {['Bounty', 'Extraction'].map((jobType) => (
+                  <TouchableOpacity
+                    key={jobType}
+                    onPress={() => setSelectedJobTypes({ ...selectedJobTypes, [jobType]: !selectedJobTypes[jobType] })}
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      paddingVertical: 12,
+                      paddingHorizontal: 12,
+                      backgroundColor: selectedJobTypes[jobType] ? theme.onPressed : 'rgba(0,0,0,0.1)',
+                      borderRadius: 8,
+                      borderColor: theme.border,
+                      borderWidth: selectedJobTypes[jobType] ? 2 : 1,
+                    }}
+                  >
+                    <View style={{
+                      width: 20,
+                      height: 20,
+                      borderRadius: 4,
+                      borderWidth: 2,
+                      borderColor: theme.border,
+                      marginRight: 12,
+                      backgroundColor: selectedJobTypes[jobType] ? theme.border : 'transparent',
+                    }} />
+                    <Text style={{ color: theme.text, fontSize: 14 }}>{jobType}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+
+              {/* Row 2 */}
+              <View style={{ flexDirection: 'row', gap: 12, justifyContent: 'space-between' }}>
+                {['Body Guard', 'Weapon for Hire'].map((jobType) => (
+                  <TouchableOpacity
+                    key={jobType}
+                    onPress={() => setSelectedJobTypes({ ...selectedJobTypes, [jobType]: !selectedJobTypes[jobType] })}
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      paddingVertical: 12,
+                      paddingHorizontal: 12,
+                      backgroundColor: selectedJobTypes[jobType] ? theme.onPressed : 'rgba(0,0,0,0.1)',
+                      borderRadius: 8,
+                      borderColor: theme.border,
+                      borderWidth: selectedJobTypes[jobType] ? 2 : 1,
+                    }}
+                  >
+                    <View style={{
+                      width: 20,
+                      height: 20,
+                      borderRadius: 4,
+                      borderWidth: 2,
+                      borderColor: theme.border,
+                      marginRight: 12,
+                      backgroundColor: selectedJobTypes[jobType] ? theme.border : 'transparent',
+                    }} />
+                    <Text style={{ color: theme.text, fontSize: 14 }}>{jobType}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+
+            <TouchableOpacity
+              onPress={() => setAffiliationModalVisible(false)}
+              style={{
+                paddingVertical: 10,
+                paddingHorizontal: 20,
+                backgroundColor: theme.border,
+                borderRadius: 8,
+                alignItems: 'center',
+              }}
+            >
+              <Text style={{ color: theme.background, fontWeight: 'bold' }}>Done</Text>
+            </TouchableOpacity>
+          </View>
+        </Pressable>
+      </Modal>
+
       {/* Settings Modal */}
       <Modal
         visible={settingsModalVisible}
@@ -268,6 +494,17 @@ export default function BountyGeneratorPage() {
               <Text style={{ color: theme.text, fontSize: 16, flex: 1 }}>Debug Settings</Text>
             </TouchableOpacity>
 
+            {/* Debug Info Display */}
+            {debugEnabled && (
+              <View style={{ backgroundColor: 'rgba(0,0,0,0.1)', borderRadius: 8, padding: 12, marginVertical: 16, borderColor: theme.border, borderWidth: 1 }}>
+                <Text style={{ color: theme.text, fontSize: 12, marginBottom: 6, fontWeight: 'bold' }}>Current Selections:</Text>
+                <Text style={{ color: theme.text, fontSize: 11, marginBottom: 3 }}>Era: {selectedEra || 'None'}</Text>
+                <Text style={{ color: theme.text, fontSize: 11, marginBottom: 3 }}>Planet: {selectedPlanet?.name || 'None'}</Text>
+                <Text style={{ color: theme.text, fontSize: 11, marginBottom: 3 }}>Affiliations: {Object.entries(selectedAffiliations).filter(([_, isSelected]) => isSelected).map(([name]) => name).join(', ') || 'None'}</Text>
+                <Text style={{ color: theme.text, fontSize: 11 }}>Job Types: {Object.entries(selectedJobTypes).filter(([_, isSelected]) => isSelected).map(([name]) => name).join(', ') || 'None'}</Text>
+              </View>
+            )}
+
             <TouchableOpacity
               onPress={() => setSettingsModalVisible(false)}
               style={{
@@ -294,7 +531,9 @@ export default function BountyGeneratorPage() {
       {debugEnabled && (
         <View style={{ backgroundColor: theme.background, paddingVertical: 12, paddingHorizontal: 16, borderTopColor: theme.darkerborder, borderTopWidth: 1 }}>
           <Text style={{ color: '#FFFFFF', fontSize: 12, marginBottom: 4 }}>Era: {selectedEra || 'None'}</Text>
-          <Text style={{ color: '#FFFFFF', fontSize: 12 }}>Planet: {selectedPlanet?.name || 'None'}</Text>
+          <Text style={{ color: '#FFFFFF', fontSize: 12, marginBottom: 4 }}>Planet: {selectedPlanet?.name || 'None'}</Text>
+          <Text style={{ color: '#FFFFFF', fontSize: 12, marginBottom: 4 }}>Affiliations: {Object.entries(selectedAffiliations).filter(([_, isSelected]) => isSelected).map(([name]) => name).join(', ') || 'None'}</Text>
+          <Text style={{ color: '#FFFFFF', fontSize: 12 }}>Job Types: {Object.entries(selectedJobTypes).filter(([_, isSelected]) => isSelected).map(([name]) => name).join(', ') || 'None'}</Text>
         </View>
       )}
     </View>
